@@ -13,6 +13,7 @@ public class cubeController : MonoBehaviour {
 	public float g_mass;
 	public float g_gap;
 	public float g_offset;
+	public float g_sideOffset;
 	public GameObject g_unitCube;
 
 	// Use this for initialization
@@ -29,6 +30,8 @@ public class cubeController : MonoBehaviour {
 		g_gap = 0.2f;
 		//décalage entre deux couches successives du mur
 		g_offset = 0.7f;
+		//décalage de côté pour les blocs
+		g_sideOffset = 0.2f;
 
 		g_unitCube = GameObject.Find ("Unit Cube");
 		m_cubeLenght = g_unitCube.transform.localScale.x;
@@ -40,9 +43,10 @@ public class cubeController : MonoBehaviour {
 	void Update () {
 
 		//pour créer le mur
-		if (Input.GetKeyDown ("left ctrl")) {
+		if (Input.GetKey ("left ctrl")) {
 			float randomizedGap = Random.Range (-g_gap, g_gap);
-			createCube (new Vector3 ((m_i % g_wallSize) * (m_cubeLenght + 2 * g_gap) + randomizedGap + g_offset * (m_i / g_wallSize % 2), ((m_i / g_wallSize) + m_cubeHeight) + g_dropHigh, 0.0f));
+			float randomizedSideOffset = Random.Range (-g_sideOffset, g_sideOffset);
+			createCube (new Vector3 ((m_i % g_wallSize) * (m_cubeLenght + 2 * g_gap) + randomizedGap + g_offset * (m_i / g_wallSize % 2), ((m_i / g_wallSize) + m_cubeHeight) + g_dropHigh, randomizedSideOffset));
 			m_i++;
 		}
 
