@@ -9,9 +9,9 @@ public class cubeController : MonoBehaviour {
 	List<GameObject> m_cubeList;
 
 	public float g_mass;
-	public float g_gap;
-	public float g_offset;
-	public float g_sideOffset;
+
+
+
 	public GameObject g_unitCube;
 	public GameObject g_currentCube;
 
@@ -20,12 +20,7 @@ public class cubeController : MonoBehaviour {
 
 		//masse des blocs
 		g_mass = 1000.0f;
-		//écart minimal entre deux blocs du mur
-		g_gap = 0.2f;
-		//décalage entre deux couches successives du mur
-		g_offset = 0.7f;
-		//décalage de côté pour les blocs
-		g_sideOffset = 0.2f;
+
 		//liste de tous les cubes posés
 		m_cubeList = new List<GameObject> ();
 
@@ -91,7 +86,6 @@ public class cubeController : MonoBehaviour {
 	void placeCube(){
 		g_currentCube.name = "Placed Cube";
 		g_currentCube.GetComponent<cubeBehaviour> ().g_isPlaced = true;
-		g_currentCube.GetComponent<Rigidbody> ().constraints = RigidbodyConstraints.FreezeAll;
 		m_cubeList.Add (g_currentCube);
 
 	}
