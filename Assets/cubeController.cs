@@ -11,9 +11,9 @@ public class cubeController : MonoBehaviour {
 	public float g_mass;
 
 
-
 	public GameObject g_unitCube;
 	public GameObject g_currentCube;
+	public Rigidbody g_currentRigidbody;
 
 	// Use this for initialization
 	void Start () {
@@ -57,17 +57,18 @@ public class cubeController : MonoBehaviour {
 	}
 
 	void createCube(Vector3 p_pos){
-		g_currentCube = new GameObject ();
+
 		g_currentCube = Instantiate (g_unitCube);
 
 		g_currentCube.name = "Current Cube";
-		Rigidbody rigidBody = g_currentCube.GetComponent<Rigidbody> ();
+		g_currentRigidbody = g_currentCube.GetComponent<Rigidbody> ();
 		g_currentCube.transform.position = p_pos;
 		Debug.Log (p_pos);
-		rigidBody.mass = g_mass;
-		rigidBody.isKinematic = false;
-		rigidBody.MovePosition (p_pos);
-		rigidBody.constraints = RigidbodyConstraints.FreezeRotation;
+		g_currentRigidbody.mass = g_mass;
+		g_currentRigidbody.isKinematic = false;
+		g_currentRigidbody.MovePosition (p_pos);
+		g_currentRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+		g_currentRigidbody.useGravity = false;
 	}
 
 	Vector3 getMousePos(){
@@ -82,12 +83,18 @@ public class cubeController : MonoBehaviour {
 		
 
 	void moveCube(Vector3 p_pos){
-		g_currentCube.transform.position = p_pos;
+		Vector3 cubeToMouseVector = p_pos - g_currentCube.transform.position;
+
+		g_currentRigidbody.AddForce (cubeToMouseVector, ForceMode.VelocityChange);
+		g_currentRigidbody.AddForce (- g_currentRigidbody.velocity, ForceMode.VelocityChange);
+		
 	}
 
 	void placeCube(){
 		g_currentCube.name = "Placed Cube";
-		g_currentCube.GetComponent<cubeBehaviour> ().g_isPlaced = true;
+		cubeBehaviour cBehaviour = g_currentCube.GetComponent<cubeBehaviour> ();
+		cBehaviour.g_isPlaced = true;
+		g_currentRigidbody.useGravity = true;
 		m_cubeList.Add (g_currentCube);
 
 	}
@@ -99,5 +106,6 @@ public class cubeController : MonoBehaviour {
 			gameObject.GetComponent<Rigidbody> ().constraints = RigidbodyConstraints.None;
 		}
 	}
+		
 		
 }
