@@ -57,7 +57,9 @@ public class cubeController : MonoBehaviour {
 	}
 
 	void createCube(Vector3 p_pos){
+		g_currentCube = new GameObject ();
 		g_currentCube = Instantiate (g_unitCube);
+
 		g_currentCube.name = "Current Cube";
 		Rigidbody rigidBody = g_currentCube.GetComponent<Rigidbody> ();
 		g_currentCube.transform.position = p_pos;

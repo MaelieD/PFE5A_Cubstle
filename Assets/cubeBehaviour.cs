@@ -3,14 +3,12 @@ using System.Collections;
 
 public class cubeBehaviour : MonoBehaviour {
 	public bool g_isPlaced;
-	bool m_isColliding;
 	bool m_isFreezed;
 	Rigidbody m_rigidbody;
 
 	// Use this for initialization
 	void Start () {
 		m_rigidbody = this.GetComponent<Rigidbody> ();
-		m_isColliding = false;
 		m_isFreezed = false;
 
 	}
@@ -25,18 +23,11 @@ public class cubeBehaviour : MonoBehaviour {
 				Debug.Log ("Freezed");
 			}
 		}
-
-
-		m_isColliding = false;
+			
 	}
 
 	void OnCollisionEnter(Collision col){
-		GameObject collidedObj = col.collider.gameObject;
-		if(collidedObj.name == "Placed Cube"){
-			if(!collidedObj.GetComponent<cubeBehaviour>().m_isFreezed){
-				m_isColliding = true;
-			}
-		}
+		
 
 	}
 }
