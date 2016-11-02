@@ -176,12 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64a7ea566ea24ec4f9df89a42f1abf4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  g_wallSize: 0
-  g_dropHigh: 0
   g_mass: 0
-  g_gap: 0
-  g_offset: 0
-  g_sideOffset: 0
   g_unitCube: {fileID: 0}
   g_currentCube: {fileID: 0}
 --- !u!1001 &672939253
@@ -301,6 +296,7 @@ GameObject:
   - 65: {fileID: 1949196923}
   - 23: {fileID: 1949196922}
   - 54: {fileID: 1949196921}
+  - 114: {fileID: 1949196926}
   m_Layer: 0
   m_Name: Unit Cube
   m_TagString: Untagged
@@ -384,3 +380,15 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
+--- !u!114 &1949196926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1949196920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e58e21494e6a6b24081e33ecb6488666, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  g_isPlaced: 0
