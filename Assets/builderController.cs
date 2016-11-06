@@ -7,9 +7,8 @@ using System.Collections.Generic;
 public class builderController : MonoBehaviour {
 	
 	List<GameObject> m_cubeList;
-	singleCubeController m_sCC;
-	wallController m_wC;
-
+	enum m_modes {SINGLE_CUBE, WALL, REMOVE, PLAY};
+	int m_currentMode;
 
 	public float g_cubeDistance;
 	public bool g_isWallMode;
@@ -36,6 +35,9 @@ public class builderController : MonoBehaviour {
 		//détermine si l'on est en train de dessiner un mur
 		g_isDrawingWall = false;
 
+		//sert à décrire l'état dans lequel le builder se trouve
+		m_currentMode = (int) m_modes.SINGLE_CUBE;
+
 		singleCubeController.init ();
 		wallController.init ();
 	
@@ -46,70 +48,100 @@ public class builderController : MonoBehaviour {
 
 		Vector3 mousePos = getMousePos ();
 
-		//Au clic souris, on crée un cube
-		if(Input.GetMouseButtonDown(0)){
-
-			if(g_isWallMode){
-				g_isDrawingWall = true;
-				wallController.createWall (mousePos);
+		//contrôles sur les changements de mode
+		if (Input.GetKeyDown ("s")) {
+			if(m_currentMode != (int) m_modes.SINGLE_CUBE){
+				m_currentMode = (int) m_modes.SINGLE_CUBE;
+				enterSingleCubeMode ();
+				exitWallMode ();
+				exitRemoveMode ();
+				exitPlayMode ();
 			}
-			else{
+
+		}
+		else if(Input.GetKeyDown("w")){
+			if(m_currentMode != (int) m_modes.WALL){
+				m_currentMode = (int) m_modes.WALL;
+				enterWallMode ();
+				exitSingleCubeMode ();
+				exitRemoveMode ();
+				exitPlayMode ();
+			}
+
+		}
+		else if(Input.GetKeyDown("r")){
+			if(m_currentMode != (int) m_modes.REMOVE){
+				m_currentMode = (int) m_modes.REMOVE;
+				enterRemoveMode ();
+				exitSingleCubeMode ();
+				exitWallMode ();
+				exitPlayMode ();
+			}
+
+		}
+		else if(Input.GetKeyDown("p")){
+			if(m_currentMode != (int) m_modes.PLAY){
+				m_currentMode = (int) m_modes.PLAY;
+				enterPlayMode ();
+				exitSingleCubeMode ();
+				exitWallMode ();
+				exitRemoveMode ();
+			}
+
+		}
+
+		//SINGLE CUBE MODE
+		if(m_currentMode == (int) m_modes.SINGLE_CUBE){
+			
+			if(Input.GetMouseButtonDown(0)){
 				singleCubeController.createCube (mousePos);
 			}
 
-		}
-
-		//pour déplacer un bloc, en déplaçant la souris avec le clic enfoncé
-		if(Input.GetMouseButton(0)){
-
-			if(g_isWallMode){
-				wallController.drawWall (mousePos);
-			}
-			else{
+			if(Input.GetMouseButton(0)){
 				singleCubeController.moveCube (mousePos);
 			}
 
-		}
-
-		//au relâchement de la souris, on place le bloc
-		if(Input.GetMouseButtonUp(0)){
-
-			if(g_isWallMode){
-				g_isDrawingWall = false;
-				wallController.placeWall ();
-			}
-			else{
+			if(Input.GetMouseButtonUp(0)){
 				singleCubeController.placeCube ();
 				m_cubeList.Add (singleCubeController.g_currentCube);
 			}
-
 		}
 
-		//entrée dans le mode play grâce à la touche p
-		if(Input.GetKeyDown("p")){
-			enterPlayMode ();
-		}
-
-		//entrée ou sortie du mode mur grâce à la touche w
-		if(Input.GetKeyDown("w")){
-			g_isWallMode = !g_isWallMode;
-
-			if(g_isWallMode){
-				Debug.Log ("entered wall mode");
-				wallController.enterWallMode ();
+		//WALL MODE
+		if(m_currentMode == (int) m_modes.WALL){
+			
+			if(Input.GetMouseButtonDown(0)){
+				g_isDrawingWall = true;
+				wallController.createWall (mousePos);
 			}
-			else{
-				Debug.Log ("exited wall mode");
-				wallController.exitWallMode ();
+
+			if(Input.GetMouseButton(0)){
+				wallController.drawWall (mousePos);
 			}
-				
+
+
+			if(Input.GetMouseButtonUp(0)){
+				g_isDrawingWall = false;
+				wallController.placeWall ();
+			}
+
+			if(!g_isDrawingWall){
+				wallController.moveWallStart (mousePos);
+			}
 		}
 
-		if(g_isWallMode && !g_isDrawingWall){
-			wallController.moveWallStart (mousePos);
+		//REMOVE MODE
+		if(m_currentMode == (int) m_modes.REMOVE){
+
 		}
 
-		//Avec la molette, modification de la distance joueur/cube
+		//PLAY MODE
+		if(m_currentMode == (int) m_modes.PLAY){
+
+		}
+			
+
+		//Avec la molette, modification de la distance joueur/outil
 		if(Input.GetAxis("Mouse ScrollWheel") > 0.0f){
 			g_cubeDistance++;
 		}
@@ -138,6 +170,21 @@ public class builderController : MonoBehaviour {
 	}
 		
 
+
+
+	void enterSingleCubeMode(){
+		
+	}
+
+	void enterWallMode(){
+		wallController.enterWallMode ();
+		
+	}
+
+	void enterRemoveMode(){
+
+	}
+
 	//fonction pour entrer dans le mode play
 	//on annule toutes les contraintes sur les blocs
 	void enterPlayMode(){
@@ -146,9 +193,24 @@ public class builderController : MonoBehaviour {
 		foreach(GameObject gameObject in m_cubeList){
 			gameObject.GetComponent<Rigidbody> ().constraints = RigidbodyConstraints.None;
 		}
+
 	}
 
+	void exitSingleCubeMode(){
+		
+	}
 
+	void exitWallMode(){
+		wallController.exitWallMode ();
+	}
+
+	void exitRemoveMode(){
+		
+	}
+
+	void exitPlayMode(){
+		
+	}
 		
 		
 }
