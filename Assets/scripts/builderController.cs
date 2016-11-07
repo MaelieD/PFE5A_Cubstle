@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class builderController : MonoBehaviour {
-	
+
 	enum m_modes {SINGLE_CUBE, WALL, REMOVE, PLAY};
 	int m_currentMode;
 
@@ -11,7 +11,10 @@ public class builderController : MonoBehaviour {
 	wallController m_wallController;
 	removeController m_removeController;
 
-	public float g_cubeDistance;
+	public static float g_cubeDistance = 3.0f;
+	public static float g_cubeDistanceMin = 1.5f;
+	public static float g_cubeDistanceMax = 15.0f;
+
 	public bool g_isDrawingWall;
 	public bool g_isRemoving;
 
@@ -24,13 +27,11 @@ public class builderController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-
-
 		//hauteur d'un bloc
 		g_cubeHeight = 1.0f;
 
 		//distance entre le joueur et le cube
-		g_cubeDistance = 3.0f;
+		//g_cubeDistance = 3.0f;
 
 		//détermine si l'on est en train de dessiner un mur
 		g_isDrawingWall = false;
@@ -44,14 +45,20 @@ public class builderController : MonoBehaviour {
 		m_singleCubeController = g_singleCubeTool.GetComponent<singleCubeController> ();
 		m_wallController = g_wallTool.GetComponent<wallController> ();
 		m_removeController = g_removeTool.GetComponent<removeController> ();
-	
+
 	}
-	
+
+	Vector3 mousePos; 
+
 	// Update is called once per frame
 	void Update () {
 
-		Vector3 mousePos = getMousePos ();
-
+		//Avoid cube proximity
+		if (Vector3.Distance (getMousePos(), transform.position) > g_cubeDistanceMin &&
+			Vector3.Distance (getMousePos(), transform.position) < g_cubeDistanceMax) {
+			mousePos = getMousePos ();
+		}
+	
 		//contrôles sur les changements de mode
 		if (Input.GetKeyDown ("s")) {
 			if(m_currentMode != (int) m_modes.SINGLE_CUBE){
@@ -96,15 +103,15 @@ public class builderController : MonoBehaviour {
 
 		//SINGLE CUBE MODE
 		if(m_currentMode == (int) m_modes.SINGLE_CUBE){
-			
+
 			if(Input.GetMouseButtonDown(0)){
 				m_singleCubeController.setActive (false);
 				m_singleCubeController.createCube (mousePos);
 			}
-				
+
 
 			m_singleCubeController.moveSingleCubeTool (mousePos);
-			
+
 
 			if(Input.GetMouseButtonUp(0)){
 				m_singleCubeController.placeCube ();
@@ -114,7 +121,7 @@ public class builderController : MonoBehaviour {
 
 		//WALL MODE
 		if(m_currentMode == (int) m_modes.WALL){
-			
+
 			if(Input.GetMouseButtonDown(0)){
 				g_isDrawingWall = true;
 				m_wallController.createWall (mousePos);
@@ -149,11 +156,14 @@ public class builderController : MonoBehaviour {
 			m_removeController.moveRemoveTool (mousePos);
 		}
 
+
+		
+
 		//PLAY MODE
 		if(m_currentMode == (int) m_modes.PLAY){
 
 		}
-			
+
 
 		//Avec la molette, modification de la distance joueur/outil
 		if(Input.GetAxis("Mouse ScrollWheel") > 0.0f){
@@ -164,8 +174,8 @@ public class builderController : MonoBehaviour {
 		}
 
 		//on clampe la distance pour éviter de perdre le cube ou de trop le rapprocher de nous
-		g_cubeDistance = Mathf.Clamp (g_cubeDistance, 2.0f, 15.0f);
-	
+		//g_cubeDistance = Mathf.Clamp (g_cubeDistance, g_cubeDistanceMin, g_cubeDistanceMax);
+
 	}
 
 
@@ -182,7 +192,6 @@ public class builderController : MonoBehaviour {
 		}
 		return mousePos;
 	}
-		
 
 
 
@@ -192,7 +201,7 @@ public class builderController : MonoBehaviour {
 
 	void enterWallMode(){
 		m_wallController.setActive (true);
-		
+
 	}
 
 	void enterRemoveMode(){
@@ -226,8 +235,8 @@ public class builderController : MonoBehaviour {
 	}
 
 	void exitPlayMode(){
-		
+
 	}
-		
-		
+
+
 }
