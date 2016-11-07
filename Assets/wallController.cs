@@ -1,24 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class wallController : ScriptableObject {
+public class wallController : MonoBehaviour {
 
 	static Vector3 m_wallStart;
 	static Vector3 m_wallEnd;
 
-	static public GameObject g_currentWall;
-	static public Rigidbody g_currentWallRigidbody;
+	static GameObject m_wallTool;
 
 	// Use this for initialization
-	static public void init () {
-		g_currentWall = GameObject.Find ("Wall Trace");
-		g_currentWallRigidbody = g_currentWall.GetComponent<Rigidbody> ();
+	void Start () {
+		m_wallTool = gameObject;
+	}
+
+	void Update(){
+		
 	}
 
 	//fonction pour démarrer un mur à partir d'une position initiale
 	static public void createWall(Vector3 p_pos){
 		m_wallStart = p_pos;
-		g_currentWall.transform.position = m_wallStart;
+		m_wallTool.transform.position = m_wallStart;
 		Debug.Log ("create wall at position " + p_pos);
 	}
 
@@ -40,20 +42,20 @@ public class wallController : ScriptableObject {
 		m_wallEnd.y = Mathf.Round (p_pos.y - m_wallStart.y) + m_wallStart.y;
 
 		//on définit la taille du mur en fonction de m_wallEnd et m_wallStart
-		g_currentWall.transform.localScale = m_wallEnd - m_wallStart;
+		m_wallTool.transform.localScale = m_wallEnd - m_wallStart;
 		//on passe les valeurs en absolu pour garder des dimensions positives
 		//on rajoute les deux moitiés de bloc non prises en compte aux extrémités à cause du 
 		//fait que m_wallStart et m_wallEnd définissent les centres des positions
-		g_currentWall.transform.localScale = new Vector3 (
-			Mathf.Abs (g_currentWall.transform.localScale.x) + 1.0f,
-			Mathf.Abs (g_currentWall.transform.localScale.y) + 1.0f,
-			Mathf.Abs (g_currentWall.transform.localScale.z) + 1.0f);
+		m_wallTool.transform.localScale = new Vector3 (
+			Mathf.Abs (m_wallTool.transform.localScale.x) + 1.0f,
+			Mathf.Abs (m_wallTool.transform.localScale.y) + 1.0f,
+			Mathf.Abs (m_wallTool.transform.localScale.z) + 1.0f);
 
 		//on place le mur en fonction des dimensions du bloc
-		g_currentWall.transform.position = new Vector3 (
-			m_wallStart.x + 0.5f * (g_currentWall.transform.localScale.x - 1) * Mathf.Sign(m_wallEnd.x - m_wallStart.x),
-			m_wallStart.y + 0.5f * (g_currentWall.transform.localScale.y - 1) * Mathf.Sign(m_wallEnd.y - m_wallStart.y),
-			m_wallStart.z + 0.5f * (g_currentWall.transform.localScale.z - 1) * Mathf.Sign(m_wallEnd.z - m_wallStart.z));
+		m_wallTool.transform.position = new Vector3 (
+			m_wallStart.x + 0.5f * (m_wallTool.transform.localScale.x - 1) * Mathf.Sign(m_wallEnd.x - m_wallStart.x),
+			m_wallStart.y + 0.5f * (m_wallTool.transform.localScale.y - 1) * Mathf.Sign(m_wallEnd.y - m_wallStart.y),
+			m_wallStart.z + 0.5f * (m_wallTool.transform.localScale.z - 1) * Mathf.Sign(m_wallEnd.z - m_wallStart.z));
 		
 
 	}
@@ -62,8 +64,8 @@ public class wallController : ScriptableObject {
 	static public void placeWall(){
 
 		Debug.Log ("place wall between " + m_wallStart + " and " + m_wallEnd);
-		Debug.Log ("current wall size : " + g_currentWall.transform.localScale);
-		Debug.Log ("current wall position : " + g_currentWall.transform.position);
+		Debug.Log ("current wall size : " + m_wallTool.transform.localScale);
+		Debug.Log ("current wall position : " + m_wallTool.transform.position);
 		Vector3 currentPos = m_wallStart;
 
 		//défintion des offset pour savoir s'il faut avancer ou reculer dans chaque composante du mur
@@ -73,13 +75,13 @@ public class wallController : ScriptableObject {
 		int zDir = (int) Mathf.Sign (m_wallEnd.z - m_wallStart.z);
 
 		//nombre de blocs en x
-		int nbCubesX = (int)g_currentWall.transform.localScale.x;
+		int nbCubesX = (int)m_wallTool.transform.localScale.x;
 
 		//nombre de blocs en y
-		int nbCubesY = (int)g_currentWall.transform.localScale.y;
+		int nbCubesY = (int)m_wallTool.transform.localScale.y;
 
 		//nombre de blocs en z
-		int nbCubesZ = (int)g_currentWall.transform.localScale.z;
+		int nbCubesZ = (int)m_wallTool.transform.localScale.z;
 
 		for(int i = 0; i < nbCubesX; i++){
 			for(int j = 0; j < nbCubesY; j++){
@@ -99,19 +101,15 @@ public class wallController : ScriptableObject {
 
 	}
 
-	static public void enterWallMode(){
-		g_currentWall.SetActive (true);
+	static public void setActive(bool p_isActive){
+		m_wallTool.SetActive (p_isActive);
 	}
 
 	static public void moveWallStart(Vector3 p_pos){
-		g_currentWall.GetComponent<Rigidbody> ().MovePosition (p_pos);
-	}
-
-	static public void exitWallMode(){
-		g_currentWall.SetActive (false);
+		m_wallTool.GetComponent<Rigidbody> ().MovePosition (p_pos);
 	}
 
 	static void resetCurrentWall(){
-		g_currentWall.transform.localScale = new Vector3 (1.0f, 1.0f, 1.0f);
+		m_wallTool.transform.localScale = new Vector3 (1.0f, 1.0f, 1.0f);
 	}
 }

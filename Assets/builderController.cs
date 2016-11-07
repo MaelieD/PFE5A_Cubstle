@@ -32,8 +32,6 @@ public class builderController : MonoBehaviour {
 
 		//sert à décrire l'état dans lequel le builder se trouve
 		m_currentMode = (int) m_modes.SINGLE_CUBE;
-
-		wallController.init ();
 	
 	}
 	
@@ -93,6 +91,9 @@ public class builderController : MonoBehaviour {
 
 			if(Input.GetMouseButton(0)){
 				singleCubeController.moveCube (mousePos);
+			}
+			else{
+				singleCubeController.moveSingleCubeTool (mousePos);
 			}
 
 			if(Input.GetMouseButtonUp(0)){
@@ -175,16 +176,16 @@ public class builderController : MonoBehaviour {
 
 
 	void enterSingleCubeMode(){
-		
+		singleCubeController.setActive (true);
 	}
 
 	void enterWallMode(){
-		wallController.enterWallMode ();
+		wallController.setActive (true);
 		
 	}
 
 	void enterRemoveMode(){
-
+		removeController.setActive (true);
 	}
 
 	//fonction pour entrer dans le mode play
@@ -202,15 +203,15 @@ public class builderController : MonoBehaviour {
 	}
 
 	void exitSingleCubeMode(){
-		
+		singleCubeController.setActive (false);
 	}
 
 	void exitWallMode(){
-		wallController.exitWallMode ();
+		wallController.setActive (false);
 	}
 
 	void exitRemoveMode(){
-		
+		removeController.setActive (false);
 	}
 
 	void exitPlayMode(){

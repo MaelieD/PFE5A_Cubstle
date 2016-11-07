@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 public class singleCubeController: MonoBehaviour {
 
+	static GameObject m_singleCubeTool;
+	static Rigidbody m_singleCubeToolRigidbody;
+
 	static public GameObject g_currentCube;
 	static public Rigidbody g_currentRigidbody;
 	static public GameObject g_unitCube;
@@ -17,6 +20,9 @@ public class singleCubeController: MonoBehaviour {
 
 		//liste de tous les cubes posés
 		g_cubeList = new List<GameObject> ();
+
+		m_singleCubeTool = gameObject;
+		m_singleCubeToolRigidbody = GetComponent<Rigidbody>();
 	}
 
 	void Update(){
@@ -57,5 +63,13 @@ public class singleCubeController: MonoBehaviour {
 		g_cubeList.Add (g_currentCube);
 
 
+	}
+
+	static public void moveSingleCubeTool(Vector3 p_pos){
+		m_singleCubeToolRigidbody.MovePosition (p_pos);
+	}
+
+	static public void setActive(bool p_isActive){
+		m_singleCubeTool.SetActive (p_isActive);
 	}
 }

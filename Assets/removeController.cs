@@ -10,7 +10,7 @@ public class removeController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		m_removeTool = this.gameObject;
+		m_removeTool = gameObject;
 		m_removeToolRigidbody = m_removeTool.GetComponent<Rigidbody> ();
 		m_isRemoving = false;
 	
@@ -35,5 +35,9 @@ public class removeController : MonoBehaviour {
 		if(collidedObj.name == "Placed Cube" && m_isRemoving){
 			Destroy (collidedObj);
 		}
+	}
+
+	static public void setActive(bool p_isActive){
+		m_removeTool.SetActive (p_isActive);
 	}
 }
