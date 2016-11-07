@@ -1,16 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class wallController : MonoBehaviour {
 
-	static Vector3 m_wallStart;
-	static Vector3 m_wallEnd;
+	Vector3 m_wallStart;
+	Vector3 m_wallEnd;
+	GameObject m_wallTool;
+	singleCubeController m_singleCubeController;
+	bool m_isColliding;
 
-	static GameObject m_wallTool;
+	public GameObject g_singleCubeTool;
+	public List<Material> g_materialList;
 
 	// Use this for initialization
 	void Start () {
 		m_wallTool = gameObject;
+		m_isColliding = false;
+
+		m_singleCubeController = g_singleCubeTool.GetComponent<singleCubeController> ();
 	}
 
 	void Update(){
@@ -18,7 +26,7 @@ public class wallController : MonoBehaviour {
 	}
 
 	//fonction pour démarrer un mur à partir d'une position initiale
-	static public void createWall(Vector3 p_pos){
+	public void createWall(Vector3 p_pos){
 		m_wallStart = p_pos;
 		m_wallTool.transform.position = m_wallStart;
 		Debug.Log ("create wall at position " + p_pos);
@@ -26,7 +34,7 @@ public class wallController : MonoBehaviour {
 
 	//fonction pour dessiner un mur entre la position initiale et la position finale
 	//on ne dessine des murs que selon l'axe x ou z, donc on cale les positions selon x ou z
-	static public void drawWall(Vector3 p_pos){
+	public void drawWall(Vector3 p_pos){
 		//on positionne m_wallEnd
 		//si le point actuel est plus proche en z du point initial qu'en x, la valeur
 		//du point actuel en x devient la valeur du point initial en x, et inversement
@@ -61,55 +69,73 @@ public class wallController : MonoBehaviour {
 	}
 
 	//fonction pour placer le mur entre la position initiale et la position finale
-	static public void placeWall(){
+	public void placeWall(){
 
-		Debug.Log ("place wall between " + m_wallStart + " and " + m_wallEnd);
-		Debug.Log ("current wall size : " + m_wallTool.transform.localScale);
-		Debug.Log ("current wall position : " + m_wallTool.transform.position);
-		Vector3 currentPos = m_wallStart;
+		if(!m_isColliding){
+			Debug.Log ("place wall between " + m_wallStart + " and " + m_wallEnd);
+			Debug.Log ("current wall size : " + m_wallTool.transform.localScale);
+			Debug.Log ("current wall position : " + m_wallTool.transform.position);
+			Vector3 currentPos = m_wallStart;
 
-		//défintion des offset pour savoir s'il faut avancer ou reculer dans chaque composante du mur
-		//en fonction de la position du départ et de l'arrivée
-		int xDir = (int) Mathf.Sign (m_wallEnd.x - m_wallStart.x);
-		int yDir = (int) Mathf.Sign (m_wallEnd.y - m_wallStart.y);
-		int zDir = (int) Mathf.Sign (m_wallEnd.z - m_wallStart.z);
+			//défintion des offset pour savoir s'il faut avancer ou reculer dans chaque composante du mur
+			//en fonction de la position du départ et de l'arrivée
+			int xDir = (int) Mathf.Sign (m_wallEnd.x - m_wallStart.x);
+			int yDir = (int) Mathf.Sign (m_wallEnd.y - m_wallStart.y);
+			int zDir = (int) Mathf.Sign (m_wallEnd.z - m_wallStart.z);
 
-		//nombre de blocs en x
-		int nbCubesX = (int)m_wallTool.transform.localScale.x;
+			//nombre de blocs en x
+			int nbCubesX = (int)m_wallTool.transform.localScale.x;
 
-		//nombre de blocs en y
-		int nbCubesY = (int)m_wallTool.transform.localScale.y;
+			//nombre de blocs en y
+			int nbCubesY = (int)m_wallTool.transform.localScale.y;
 
-		//nombre de blocs en z
-		int nbCubesZ = (int)m_wallTool.transform.localScale.z;
+			//nombre de blocs en z
+			int nbCubesZ = (int)m_wallTool.transform.localScale.z;
 
-		for(int i = 0; i < nbCubesX; i++){
-			for(int j = 0; j < nbCubesY; j++){
-				for(int k = 0; k < nbCubesZ; k++){
-					singleCubeController.createCube (currentPos);
-					singleCubeController.placeCube ();
-					currentPos.z += zDir;
+			for(int i = 0; i < nbCubesX; i++){
+				for(int j = 0; j < nbCubesY; j++){
+					for(int k = 0; k < nbCubesZ; k++){
+						m_singleCubeController.createCube (currentPos);
+						m_singleCubeController.placeCube ();
+						currentPos.z += zDir;
+					}
+					currentPos.z = m_wallStart.z;
+					currentPos.y += yDir;
 				}
-				currentPos.z = m_wallStart.z;
-				currentPos.y += yDir;
+				currentPos.y = m_wallStart.y;
+				currentPos.x += xDir;
 			}
-			currentPos.y = m_wallStart.y;
-			currentPos.x += xDir;
 		}
 
-		resetCurrentWall ();
+
+
+		resetWallTool ();
 
 	}
 
-	static public void setActive(bool p_isActive){
+	public void setActive(bool p_isActive){
 		m_wallTool.SetActive (p_isActive);
 	}
 
-	static public void moveWallStart(Vector3 p_pos){
-		m_wallTool.GetComponent<Rigidbody> ().MovePosition (p_pos);
+	public void moveWallStart(Vector3 p_pos){
+		m_wallTool.transform.position = p_pos;
 	}
 
-	static void resetCurrentWall(){
+	void resetWallTool(){
 		m_wallTool.transform.localScale = new Vector3 (1.0f, 1.0f, 1.0f);
+	}
+
+	void OnCollisionStay(Collision col){
+		if(col.gameObject.name == "Placed Cube"){
+			m_wallTool.GetComponent<Renderer> ().material = g_materialList [1];
+			m_isColliding = true;
+		}
+	}
+
+	void OnCollisionExit(Collision col){
+		if(col.gameObject.name == "Placed Cube"){
+			m_wallTool.GetComponent<Renderer> ().material = g_materialList [0];
+			m_isColliding = false;
+		}
 	}
 }

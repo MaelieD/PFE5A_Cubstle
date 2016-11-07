@@ -179,6 +179,9 @@ MonoBehaviour:
   g_cubeDistance: 0
   g_isDrawingWall: 0
   g_isRemoving: 0
+  g_singleCubeTool: {fileID: 2104980356}
+  g_wallTool: {fileID: 1251409612}
+  g_removeTool: {fileID: 1747027880}
 --- !u!1001 &672939253
 Prefab:
   m_ObjectHideFlags: 0
@@ -295,7 +298,6 @@ GameObject:
   - 33: {fileID: 1251409615}
   - 65: {fileID: 1251409614}
   - 23: {fileID: 1251409613}
-  - 54: {fileID: 1251409617}
   - 114: {fileID: 1251409618}
   m_Layer: 0
   m_Name: Wall Tool
@@ -341,7 +343,7 @@ BoxCollider:
   m_GameObject: {fileID: 1251409612}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -359,27 +361,12 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1251409612}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.458331, y: 2.721366, z: -39.333332}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
---- !u!54 &1251409617
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1251409612}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!114 &1251409618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -391,6 +378,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c92223fb8c56f0141bc03540570cb072, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  g_singleCubeTool: {fileID: 2104980356}
+  g_materialList:
+  - {fileID: 2100000, guid: a2b7a02e05f4ad94e838aba7696e19c3, type: 2}
+  - {fileID: 2100000, guid: f27965c8c85b39c46955e8f7176fa925, type: 2}
 --- !u!1 &1747027880
 GameObject:
   m_ObjectHideFlags: 0
@@ -403,7 +394,6 @@ GameObject:
   - 135: {fileID: 1747027882}
   - 23: {fileID: 1747027881}
   - 114: {fileID: 1747027885}
-  - 54: {fileID: 1747027886}
   m_Layer: 0
   m_Name: Remove Tool
   m_TagString: Untagged
@@ -466,7 +456,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1747027880}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.589335, y: 0.61, z: -34.156487}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -483,21 +473,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4ca99dec14361f46899a82588dc0010, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!54 &1747027886
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1747027880}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  g_materialList:
+  - {fileID: 2100000, guid: bdf4427ad766c8040a1675c210a11d11, type: 2}
+  - {fileID: 2100000, guid: 7c85b023397f87f479aa44ef10911aae, type: 2}
+  - {fileID: 2100000, guid: 7797c77125dfe0e489d0745582f6802c, type: 2}
+  - {fileID: 2100000, guid: 767a4cd5aeac1694a97e4be8c982dd3e, type: 2}
 --- !u!1 &1949196920
 GameObject:
   m_ObjectHideFlags: 0
@@ -509,8 +489,6 @@ GameObject:
   - 33: {fileID: 1949196924}
   - 65: {fileID: 1949196923}
   - 23: {fileID: 1949196922}
-  - 54: {fileID: 1949196921}
-  - 114: {fileID: 1949196926}
   m_Layer: 0
   m_Name: Unit Cube
   m_TagString: Untagged
@@ -518,21 +496,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!54 &1949196921
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1949196920}
-  serializedVersion: 2
-  m_Mass: 1000
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
 --- !u!23 &1949196922
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -594,19 +557,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
---- !u!114 &1949196926
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1949196920}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e58e21494e6a6b24081e33ecb6488666, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  g_isPlaced: 0
-  g_isColliding: 0
 --- !u!1 &2104980356
 GameObject:
   m_ObjectHideFlags: 0
@@ -619,7 +569,6 @@ GameObject:
   - 65: {fileID: 2104980358}
   - 23: {fileID: 2104980357}
   - 114: {fileID: 2104980361}
-  - 54: {fileID: 2104980362}
   m_Layer: 0
   m_Name: Single Cube Tool
   m_TagString: Untagged
@@ -682,7 +631,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2104980356}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 18.995884, y: 1.78, z: -31.23704}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -699,18 +648,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2a589f8ce5b609419f3874fcdb8d575, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!54 &2104980362
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2104980356}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  g_currentCube: {fileID: 0}
+  g_unitCube: {fileID: 0}
+  g_cubeList: []
+  g_materialList:
+  - {fileID: 2100000, guid: 7ebe099f354488d40aed1accf1282272, type: 2}
+  - {fileID: 2100000, guid: 767a4cd5aeac1694a97e4be8c982dd3e, type: 2}
