@@ -1,17 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class singleCubeController: ScriptableObject {
+public class singleCubeController: MonoBehaviour {
 
 	static public GameObject g_currentCube;
 	static public Rigidbody g_currentRigidbody;
 	static public GameObject g_unitCube;
+	static public List<GameObject> g_cubeList;
 
 	// Use this for initialization
-	static public void init () {
+	 void Start () {
 	
 		//cube unitaire sur lequel on clone les blocs
 		g_unitCube = GameObject.Find ("Unit Cube");
+
+		//liste de tous les cubes posés
+		g_cubeList = new List<GameObject> ();
+	}
+
+	void Update(){
+		
 	}
 	
 
@@ -45,6 +54,7 @@ public class singleCubeController: ScriptableObject {
 		cubeBehaviour cBehaviour = g_currentCube.GetComponent<cubeBehaviour> ();
 		cBehaviour.g_isPlaced = true;
 		g_currentRigidbody.useGravity = true;
+		g_cubeList.Add (g_currentCube);
 
 
 	}

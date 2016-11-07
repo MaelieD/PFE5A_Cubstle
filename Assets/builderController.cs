@@ -2,25 +2,20 @@
 using System.Collections;
 using System.Collections.Generic;
 
-
-
 public class builderController : MonoBehaviour {
 	
-	List<GameObject> m_cubeList;
 	enum m_modes {SINGLE_CUBE, WALL, REMOVE, PLAY};
 	int m_currentMode;
 
 	public float g_cubeDistance;
-	public bool g_isWallMode;
 	public bool g_isDrawingWall;
+	public bool g_isRemoving;
 
 	static public float g_cubeHeight;
 
 	// Use this for initialization
 	void Start () {
 
-		//liste de tous les cubes posés
-		m_cubeList = new List<GameObject> ();
 
 
 		//hauteur d'un bloc
@@ -29,16 +24,15 @@ public class builderController : MonoBehaviour {
 		//distance entre le joueur et le cube
 		g_cubeDistance = 3.0f;
 
-		//détermine si on est en mode construction de mur ou non
-		g_isWallMode = false;
-
 		//détermine si l'on est en train de dessiner un mur
 		g_isDrawingWall = false;
+
+		//détermine si l'on est en train de supprimer des blocs
+		g_isRemoving = false;
 
 		//sert à décrire l'état dans lequel le builder se trouve
 		m_currentMode = (int) m_modes.SINGLE_CUBE;
 
-		singleCubeController.init ();
 		wallController.init ();
 	
 	}
@@ -103,7 +97,6 @@ public class builderController : MonoBehaviour {
 
 			if(Input.GetMouseButtonUp(0)){
 				singleCubeController.placeCube ();
-				m_cubeList.Add (singleCubeController.g_currentCube);
 			}
 		}
 
@@ -133,6 +126,15 @@ public class builderController : MonoBehaviour {
 		//REMOVE MODE
 		if(m_currentMode == (int) m_modes.REMOVE){
 
+			if(Input.GetMouseButtonDown(0)){
+				removeController.setIsRemoving (true);
+			}
+
+			if(Input.GetMouseButtonUp(0)){
+				removeController.setIsRemoving (false);
+			}
+
+			removeController.moveRemoveTool (mousePos);
 		}
 
 		//PLAY MODE
@@ -190,8 +192,11 @@ public class builderController : MonoBehaviour {
 	void enterPlayMode(){
 		Debug.Log ("entered Play Mode");
 
-		foreach(GameObject gameObject in m_cubeList){
-			gameObject.GetComponent<Rigidbody> ().constraints = RigidbodyConstraints.None;
+		foreach(GameObject gameObject in singleCubeController.g_cubeList){
+			if(gameObject != null){
+				gameObject.GetComponent<Rigidbody> ().constraints = RigidbodyConstraints.None;
+			}
+
 		}
 
 	}
