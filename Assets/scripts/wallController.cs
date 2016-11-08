@@ -126,16 +126,14 @@ public class wallController : MonoBehaviour {
 	}
 
 	void OnCollisionStay(Collision col){
-		if(col.gameObject.name == "Placed Cube"){
-			m_wallTool.GetComponent<Renderer> ().material = g_materialList [1];
-			m_isColliding = true;
-		}
+		m_wallTool.GetComponent<Renderer> ().material = g_materialList [1];
+		m_isColliding = true;
+		
 	}
 
 	void OnCollisionExit(Collision col){
-		if(col.gameObject.name == "Placed Cube"){
-			m_wallTool.GetComponent<Renderer> ().material = g_materialList [0];
-			m_isColliding = false;
-		}
+		m_wallTool.GetComponent<Renderer> ().material = g_materialList [0];
+		m_isColliding = false;
+
 	}
 }

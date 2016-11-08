@@ -10,9 +10,11 @@ public class builderController : MonoBehaviour {
 	singleCubeController m_singleCubeController;
 	wallController m_wallController;
 	removeController m_removeController;
+	Vector3 m_mousePos;
+	float m_floorDistanceMin = 1.0f;
 
 	public static float g_cubeDistance = 3.0f;
-	public static float g_cubeDistanceMin = 1.5f;
+	public static float g_cubeDistanceMin = 2.0f;
 	public static float g_cubeDistanceMax = 15.0f;
 
 	public bool g_isDrawingWall;
@@ -47,17 +49,13 @@ public class builderController : MonoBehaviour {
 		m_removeController = g_removeTool.GetComponent<removeController> ();
 
 	}
-
-	Vector3 mousePos; 
+		
 
 	// Update is called once per frame
 	void Update () {
 
-		//Avoid cube proximity
-		if (Vector3.Distance (getMousePos(), transform.position) > g_cubeDistanceMin &&
-			Vector3.Distance (getMousePos(), transform.position) < g_cubeDistanceMax) {
-			mousePos = getMousePos ();
-		}
+		getMousePos ();
+
 	
 		//contrôles sur les changements de mode
 		if (Input.GetKeyDown ("s")) {
@@ -106,11 +104,11 @@ public class builderController : MonoBehaviour {
 
 			if(Input.GetMouseButtonDown(0)){
 				m_singleCubeController.setActive (false);
-				m_singleCubeController.createCube (mousePos);
+				m_singleCubeController.createCube (m_mousePos);
 			}
 
 
-			m_singleCubeController.moveSingleCubeTool (mousePos);
+			m_singleCubeController.moveSingleCubeTool (m_mousePos);
 
 
 			if(Input.GetMouseButtonUp(0)){
@@ -124,11 +122,11 @@ public class builderController : MonoBehaviour {
 
 			if(Input.GetMouseButtonDown(0)){
 				g_isDrawingWall = true;
-				m_wallController.createWall (mousePos);
+				m_wallController.createWall (m_mousePos);
 			}
 
 			if(Input.GetMouseButton(0)){
-				m_wallController.drawWall (mousePos);
+				m_wallController.drawWall (m_mousePos);
 			}
 
 
@@ -138,7 +136,7 @@ public class builderController : MonoBehaviour {
 			}
 
 			if(!g_isDrawingWall){
-				m_wallController.moveWallStart (mousePos);
+				m_wallController.moveWallStart (m_mousePos);
 			}
 		}
 
@@ -153,7 +151,7 @@ public class builderController : MonoBehaviour {
 				m_removeController.setIsRemoving (false);
 			}
 
-			m_removeController.moveRemoveTool (mousePos);
+			m_removeController.moveRemoveTool (m_mousePos);
 		}
 
 
@@ -174,7 +172,7 @@ public class builderController : MonoBehaviour {
 		}
 
 		//on clampe la distance pour éviter de perdre le cube ou de trop le rapprocher de nous
-		//g_cubeDistance = Mathf.Clamp (g_cubeDistance, g_cubeDistanceMin, g_cubeDistanceMax);
+		g_cubeDistance = Mathf.Clamp (g_cubeDistance, g_cubeDistanceMin, g_cubeDistanceMax);
 
 	}
 
@@ -183,14 +181,21 @@ public class builderController : MonoBehaviour {
 	//Renvoie ce que pointe la souris dans les coordonnées du monde
 	//on définit manuellement la distance joueur/bloc
 	//si la hauteur est trop basse, on a rehausse pour éviter de déplacer ou créer un bloc en intersection avec le sol
-	Vector3 getMousePos(){
+	void getMousePos(){
 		var mousePos = Input.mousePosition;
 		mousePos.z = g_cubeDistance;
 		mousePos = Camera.main.ScreenToWorldPoint (mousePos);
-		if(mousePos.y < g_cubeHeight / 2){
-			mousePos.y = g_cubeHeight / 2;
-		}
-		return mousePos;
+
+//		if(mousePos.y < g_cubeHeight / 2){
+//			mousePos.y = g_cubeHeight / 2;
+//			Vector3 playerToMouseVec = (mousePos - transform.position);
+//			float coef = g_cubeDistanceMin / playerToMouseVec.magnitude;
+//
+//			mousePos = transform.position + playerToMouseVec * coef;
+//			mousePos.y = g_cubeHeight / 2;
+//		}
+
+		m_mousePos = mousePos;
 	}
 
 

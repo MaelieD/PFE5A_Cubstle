@@ -67,17 +67,13 @@ public class singleCubeController: MonoBehaviour {
 	}
 
 	void OnCollisionStay(Collision col){
-		if(col.gameObject.name == "Placed Cube"){
 			m_singleCubeTool.GetComponent<Renderer> ().material = g_materialList [1];
 			m_isColliding = true;
 
-		}
 	}
 
 	void OnCollisionExit(Collision col){
-		if(col.gameObject.name == "Placed Cube"){
 			m_singleCubeTool.GetComponent<Renderer> ().material = g_materialList [0];
 			m_isColliding = false;
-		}
 	}
 }
