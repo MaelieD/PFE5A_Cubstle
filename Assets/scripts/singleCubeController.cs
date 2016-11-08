@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class singleCubeController: MonoBehaviour {
 
-	GameObject m_singleCubeTool;
 	bool m_isColliding;
 
 	public GameObject g_currentCube;
@@ -14,14 +13,10 @@ public class singleCubeController: MonoBehaviour {
 
 	// Use this for initialization
 	 void Start () {
-	
-		//cube unitaire sur lequel on clone les blocs
-		g_unitCube = GameObject.Find ("Unit Cube");
 
 		//liste de tous les cubes posés
 		g_cubeList = new List<GameObject> ();
 
-		m_singleCubeTool = gameObject;
 	}
 
 	void Update(){
@@ -50,6 +45,7 @@ public class singleCubeController: MonoBehaviour {
 			g_cubeList.Add (g_currentCube);
 			g_currentCube.AddComponent<Rigidbody> ();
 			g_currentCube.GetComponent<Rigidbody> ().constraints = RigidbodyConstraints.FreezeAll;
+			g_currentCube.GetComponent<Rigidbody> ().useGravity = false;
 		}
 
 		setActive (true);
@@ -58,22 +54,22 @@ public class singleCubeController: MonoBehaviour {
 	}
 
 	public void moveSingleCubeTool(Vector3 p_pos){
-		m_singleCubeTool.transform.position = p_pos;
+		transform.position = p_pos;
 	}
 
 	public void setActive(bool p_isActive){
-		m_singleCubeTool.SetActive (p_isActive);
-		m_singleCubeTool.transform.position = new Vector3 (0.0f, -1.0f, 0.0f);
+		gameObject.SetActive (p_isActive);
+		transform.position = new Vector3 (0.0f, -1.0f, 0.0f);
 	}
 
 	void OnCollisionStay(Collision col){
-			m_singleCubeTool.GetComponent<Renderer> ().material = g_materialList [1];
+			GetComponent<Renderer> ().material = g_materialList [1];
 			m_isColliding = true;
 
 	}
 
 	void OnCollisionExit(Collision col){
-			m_singleCubeTool.GetComponent<Renderer> ().material = g_materialList [0];
+			GetComponent<Renderer> ().material = g_materialList [0];
 			m_isColliding = false;
 	}
 }

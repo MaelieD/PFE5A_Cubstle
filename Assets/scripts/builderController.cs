@@ -4,14 +4,14 @@ using System.Collections.Generic;
 
 public class builderController : MonoBehaviour {
 
-	enum m_modes {SINGLE_CUBE, WALL, REMOVE, PLAY};
+	enum m_modes {SINGLE_CUBE, WALL, REMOVE, PLAY, GRAB};
 	int m_currentMode;
 
 	singleCubeController m_singleCubeController;
 	wallController m_wallController;
 	removeController m_removeController;
+	grabController m_grabController;
 	Vector3 m_mousePos;
-	float m_floorDistanceMin = 1.0f;
 
 	public static float g_cubeDistance = 3.0f;
 	public static float g_cubeDistanceMin = 2.0f;
@@ -23,6 +23,7 @@ public class builderController : MonoBehaviour {
 	public GameObject g_singleCubeTool;
 	public GameObject g_wallTool;
 	public GameObject g_removeTool;
+	public GameObject g_grabTool;
 
 	static public float g_cubeHeight;
 
@@ -47,6 +48,7 @@ public class builderController : MonoBehaviour {
 		m_singleCubeController = g_singleCubeTool.GetComponent<singleCubeController> ();
 		m_wallController = g_wallTool.GetComponent<wallController> ();
 		m_removeController = g_removeTool.GetComponent<removeController> ();
+		m_grabController = g_grabTool.GetComponent<grabController> ();
 
 	}
 		
@@ -65,6 +67,7 @@ public class builderController : MonoBehaviour {
 				exitWallMode ();
 				exitRemoveMode ();
 				exitPlayMode ();
+				exitGrabMode ();
 			}
 
 		}
@@ -75,6 +78,7 @@ public class builderController : MonoBehaviour {
 				exitSingleCubeMode ();
 				exitRemoveMode ();
 				exitPlayMode ();
+				exitGrabMode ();
 			}
 
 		}
@@ -85,6 +89,7 @@ public class builderController : MonoBehaviour {
 				exitSingleCubeMode ();
 				exitWallMode ();
 				exitPlayMode ();
+				exitGrabMode ();
 			}
 
 		}
@@ -95,8 +100,19 @@ public class builderController : MonoBehaviour {
 				exitSingleCubeMode ();
 				exitWallMode ();
 				exitRemoveMode ();
+				exitGrabMode ();
 			}
 
+		}
+		else if(Input.GetKeyDown("g")){
+			if(m_currentMode != (int) m_modes.GRAB){
+				m_currentMode = (int)m_modes.GRAB;
+				enterGrabMode ();
+				exitSingleCubeMode ();
+				exitWallMode ();
+				exitRemoveMode ();
+				exitPlayMode ();
+			}
 		}
 
 		//SINGLE CUBE MODE
@@ -136,7 +152,7 @@ public class builderController : MonoBehaviour {
 			}
 
 			if(!g_isDrawingWall){
-				m_wallController.moveWallStart (m_mousePos);
+				m_wallController.moveWallTool (m_mousePos);
 			}
 		}
 
@@ -155,11 +171,30 @@ public class builderController : MonoBehaviour {
 		}
 
 
-		
 
 		//PLAY MODE
 		if(m_currentMode == (int) m_modes.PLAY){
 
+		}
+
+		//GRAB MODE
+		if(m_currentMode == (int) m_modes.GRAB){
+
+			if(Input.GetMouseButtonDown(0)){
+				m_grabController.setIsGrabbing (true);
+			}
+			if(Input.GetMouseButtonUp(0)){
+				m_grabController.setIsGrabbing (false);
+
+				if(m_grabController.g_hasCube){
+					m_grabController.dropCube ();
+				}
+			}
+
+			m_grabController.moveGrabTool (m_mousePos);
+			if(m_grabController.g_hasCube){
+				m_grabController.moveGrabbedCube (m_mousePos);
+			}
 		}
 
 
@@ -221,10 +256,15 @@ public class builderController : MonoBehaviour {
 		foreach(GameObject gameObject in m_singleCubeController.g_cubeList){
 			if(gameObject != null){
 				gameObject.GetComponent<Rigidbody> ().constraints = RigidbodyConstraints.None;
+				gameObject.GetComponent<Rigidbody> ().useGravity = true;
 			}
 
 		}
 
+	}
+
+	void enterGrabMode(){
+		m_grabController.setActive (true);
 	}
 
 	void exitSingleCubeMode(){
@@ -241,6 +281,10 @@ public class builderController : MonoBehaviour {
 
 	void exitPlayMode(){
 
+	}
+
+	void exitGrabMode(){
+		m_grabController.setActive (false);
 	}
 
 

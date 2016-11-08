@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class removeController : MonoBehaviour {
 
-	GameObject m_removeTool;
 	bool m_isRemoving;
 
 	public List<Material> g_materialList;
@@ -12,7 +11,6 @@ public class removeController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		m_removeTool = gameObject;
 		m_isRemoving = false;
 	
 	}
@@ -23,17 +21,17 @@ public class removeController : MonoBehaviour {
 	}
 
 	public void moveRemoveTool(Vector3 p_pos){
-		m_removeTool.transform.position = p_pos;
+		transform.position = p_pos;
 	}
 
 	public void setIsRemoving(bool p_isRemoving){
 		m_isRemoving = p_isRemoving;
 
 		if(m_isRemoving){
-			m_removeTool.GetComponent<Renderer> ().material = g_materialList [1];
+			GetComponent<Renderer> ().material = g_materialList [1];
 		}
 		else{
-			m_removeTool.GetComponent<Renderer> ().material = g_materialList [0];
+			GetComponent<Renderer> ().material = g_materialList [0];
 		}
 	}
 
@@ -45,23 +43,12 @@ public class removeController : MonoBehaviour {
 			if(m_isRemoving){
 				Destroy (collidedObj);
 			}
-			else{
-				collidedObj.GetComponent<Renderer> ().material = g_materialList [3];
-			}
 		}
 	}
-
-	void OnCollisionExit(Collision col){
-
-		GameObject collidedObj = col.gameObject;
-
-		if(collidedObj.name == "Placed Cube"){
-			collidedObj.GetComponent<Renderer> ().material = g_materialList [2];
-		}
-	}
+		
 
 	public void setActive(bool p_isActive){
-		m_removeTool.SetActive (p_isActive);
+		gameObject.SetActive (p_isActive);
 
 	}
 }
