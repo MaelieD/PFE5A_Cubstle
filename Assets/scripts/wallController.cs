@@ -8,6 +8,7 @@ public class wallController : MonoBehaviour {
 	Vector3 m_wallEnd;
 	bool m_isColliding;
 
+	public bool g_isEmpty;
 	public GameObject g_unitCube;
 	public GameObject g_singleCubeTool;
 	public List<Material> g_materialList;
@@ -17,6 +18,7 @@ public class wallController : MonoBehaviour {
 	void Start () {
 
 		m_isColliding = false;
+		g_isEmpty = false;
 
 	}
 
@@ -30,6 +32,12 @@ public class wallController : MonoBehaviour {
 
 		currentCube.name = "Placed Cube";
 		currentCube.transform.position = p_pos;
+
+		if(builderController.g_isPlayMode){
+			Debug.Log ("play mode");
+			currentCube.GetComponent<Rigidbody> ().constraints = RigidbodyConstraints.None;
+			currentCube.GetComponent<Rigidbody> ().useGravity = true;
+		}
 
 		g_cubeList.Add (currentCube);
 	}
@@ -45,25 +53,28 @@ public class wallController : MonoBehaviour {
 	//on ne dessine des murs que selon l'axe x ou z, donc on cale les positions selon x ou z
 	public void drawWall(Vector3 p_pos){
 
-		m_wallEnd.x = Mathf.Round (p_pos.x - m_wallStart.x) + m_wallStart.x;
-		m_wallEnd.y = Mathf.Round (p_pos.y - m_wallStart.y) + m_wallStart.y;
-		m_wallEnd.z = Mathf.Round (p_pos.z - m_wallStart.z) + m_wallStart.z;
+		if(!m_isColliding){
+			m_wallEnd.x = Mathf.Round (p_pos.x - m_wallStart.x) + m_wallStart.x;
+			m_wallEnd.y = Mathf.Round (p_pos.y - m_wallStart.y) + m_wallStart.y;
+			m_wallEnd.z = Mathf.Round (p_pos.z - m_wallStart.z) + m_wallStart.z;
 
-		//on définit la taille du mur en fonction de m_wallEnd et m_wallStart
-		transform.localScale = m_wallEnd - m_wallStart;
-		//on passe les valeurs en absolu pour garder des dimensions positives
-		//on rajoute les deux moitiés de bloc non prises en compte aux extrémités à cause du 
-		//fait que m_wallStart et m_wallEnd définissent les centres des positions
-		transform.localScale = new Vector3 (
-			Mathf.Abs (transform.localScale.x) + 1.0f,
-			Mathf.Abs (transform.localScale.y) + 1.0f,
-			Mathf.Abs (transform.localScale.z) + 1.0f);
+			//on définit la taille du mur en fonction de m_wallEnd et m_wallStart
+			transform.localScale = m_wallEnd - m_wallStart;
+			//on passe les valeurs en absolu pour garder des dimensions positives
+			//on rajoute les deux moitiés de bloc non prises en compte aux extrémités à cause du 
+			//fait que m_wallStart et m_wallEnd définissent les centres des positions
+			transform.localScale = new Vector3 (
+				Mathf.Abs (transform.localScale.x) + 1.0f,
+				Mathf.Abs (transform.localScale.y) + 1.0f,
+				Mathf.Abs (transform.localScale.z) + 1.0f);
 
-		//on place le mur en fonction des dimensions du bloc
-		transform.position = new Vector3 (
-			m_wallStart.x + 0.5f * (transform.localScale.x - 1) * Mathf.Sign(m_wallEnd.x - m_wallStart.x),
-			m_wallStart.y + 0.5f * (transform.localScale.y - 1) * Mathf.Sign(m_wallEnd.y - m_wallStart.y),
-			m_wallStart.z + 0.5f * (transform.localScale.z - 1) * Mathf.Sign(m_wallEnd.z - m_wallStart.z));
+			//on place le mur en fonction des dimensions du bloc
+			transform.position = new Vector3 (
+				m_wallStart.x + 0.5f * (transform.localScale.x - 1) * Mathf.Sign(m_wallEnd.x - m_wallStart.x),
+				m_wallStart.y + 0.5f * (transform.localScale.y - 1) * Mathf.Sign(m_wallEnd.y - m_wallStart.y),
+				m_wallStart.z + 0.5f * (transform.localScale.z - 1) * Mathf.Sign(m_wallEnd.z - m_wallStart.z));
+		}
+
 		
 
 	}
@@ -95,7 +106,15 @@ public class wallController : MonoBehaviour {
 			for(int i = 0; i < nbCubesX; i++){
 				for(int j = 0; j < nbCubesY; j++){
 					for(int k = 0; k < nbCubesZ; k++){
-						createCube (currentPos);
+						if(!g_isEmpty){
+							createCube (currentPos);
+						}
+						else if((i == 0 || i == nbCubesX - 1 || j == 0 || j == nbCubesY - 1 || k == 0 || k == nbCubesZ - 1)){
+							createCube (currentPos);
+						}
+
+
+
 						currentPos.z += zDir;
 					}
 					currentPos.z = m_wallStart.z;

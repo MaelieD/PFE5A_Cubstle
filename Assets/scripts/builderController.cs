@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public class builderController : MonoBehaviour {
 
-	enum m_modes {IDLE, WALL, REMOVE, PLAY, GRAB};
-	int m_currentMode;
+	public enum g_modes {IDLE, WALL, REMOVE, GRAB};
+
 
 	wallController m_wallController;
 	removeController m_removeController;
@@ -15,6 +15,7 @@ public class builderController : MonoBehaviour {
 	public static float g_cubeDistance = 3.0f;
 	public static float g_cubeDistanceMin = 2.0f;
 	public static float g_cubeDistanceMax = 15.0f;
+	public static int g_currentMode;
 
 	public bool g_isDrawingWall;
 	public bool g_isRemoving;
@@ -24,6 +25,7 @@ public class builderController : MonoBehaviour {
 	public GameObject g_removeTool;
 	public GameObject g_grabTool;
 
+	static public bool g_isPlayMode;
 	static public float g_cubeHeight;
 
 	// Use this for initialization
@@ -42,7 +44,9 @@ public class builderController : MonoBehaviour {
 		g_isRemoving = false;
 
 		//sert à décrire l'état dans lequel le builder se trouve
-		m_currentMode = (int) m_modes.IDLE;
+		g_currentMode = (int) g_modes.IDLE;
+
+		g_isPlayMode = false;
 
 		m_wallController = g_wallTool.GetComponent<wallController> ();
 		m_removeController = g_removeTool.GetComponent<removeController> ();
@@ -59,51 +63,48 @@ public class builderController : MonoBehaviour {
 	
 		//contrôles sur les changements de mode
 		if(Input.GetKeyDown("w")){
-			if(m_currentMode != (int) m_modes.WALL){
-				m_currentMode = (int) m_modes.WALL;
-				enterWallMode ();
-				exitRemoveMode ();
-				exitPlayMode ();
-				exitGrabMode ();
+			if(g_currentMode != (int) g_modes.WALL){
+				g_currentMode = (int) g_modes.WALL;
+				setWallMode (true);
+				setRemoveMode (false);
+				setGrabMode (false);
 			}
 
 		}
 		else if(Input.GetKeyDown("r")){
-			if(m_currentMode != (int) m_modes.REMOVE){
-				m_currentMode = (int) m_modes.REMOVE;
-				enterRemoveMode ();
-				exitWallMode ();
-				exitPlayMode ();
-				exitGrabMode ();
+			if(g_currentMode != (int) g_modes.REMOVE){
+				g_currentMode = (int) g_modes.REMOVE;
+				setRemoveMode (true);
+				setWallMode (false);
+				setGrabMode (false);
 			}
 
 		}
 		else if(Input.GetKeyDown("p")){
-			if(m_currentMode != (int) m_modes.PLAY){
-				m_currentMode = (int) m_modes.PLAY;
-				enterPlayMode ();
-				exitWallMode ();
-				exitRemoveMode ();
-				exitGrabMode ();
+			g_isPlayMode = !g_isPlayMode;
+			if(g_isPlayMode){
+				setPlayMode (true);
+			}
+			else{
+				setPlayMode (false);
 			}
 
 		}
 		else if(Input.GetKeyDown("g")){
-			if(m_currentMode != (int) m_modes.GRAB){
-				m_currentMode = (int)m_modes.GRAB;
-				enterGrabMode ();
-				exitWallMode ();
-				exitRemoveMode ();
-				exitPlayMode ();
+			if(g_currentMode != (int) g_modes.GRAB){
+				g_currentMode = (int)g_modes.GRAB;
+				setGrabMode (true);
+				setWallMode (false);
+				setRemoveMode (false);
 			}
 		}
 			
 
 
-		switch(m_currentMode){
+		switch(g_currentMode){
 
 		//WALL MODE
-		case (int) m_modes.WALL:
+		case (int) g_modes.WALL:
 			if (Input.GetMouseButtonDown (0)) {
 				g_isDrawingWall = true;
 				m_wallController.createWall (m_mousePos);
@@ -122,10 +123,14 @@ public class builderController : MonoBehaviour {
 			if (!g_isDrawingWall) {
 				m_wallController.moveWallTool (m_mousePos);
 			}
+
+			if(Input.GetKeyDown("e")){
+				m_wallController.g_isEmpty = !m_wallController.g_isEmpty;
+			}
 			break;
 
 		//REMOVE MODE
-		case (int) m_modes.REMOVE:
+		case (int) g_modes.REMOVE:
 			if (Input.GetMouseButtonDown (0)) {
 				m_removeController.setIsRemoving (true);
 			}
@@ -137,12 +142,8 @@ public class builderController : MonoBehaviour {
 			m_removeController.moveRemoveTool (m_mousePos);
 			break;
 
-		//PLAY MODE
-		case (int) m_modes.PLAY:
-			break;
-
 		//GRAB MODE
-		case (int) m_modes.GRAB:
+		case (int) g_modes.GRAB:
 			if (Input.GetMouseButtonDown (0)) {
 				m_grabController.setIsGrabbing (true);
 			}
@@ -187,48 +188,52 @@ public class builderController : MonoBehaviour {
 		m_mousePos = mousePos;
 	}
 
-	void enterWallMode(){
-		m_wallController.setActive (true);
-
-	}
-
-	void enterRemoveMode(){
-		m_removeController.setActive (true);
-	}
-
-	//fonction pour entrer dans le mode play
-	//on annule toutes les contraintes sur les blocs
-	void enterPlayMode(){
-		Debug.Log ("entered Play Mode");
-
-		foreach(GameObject gameObject in m_wallController.g_cubeList){
-			if(gameObject != null){
-				gameObject.GetComponent<Rigidbody> ().constraints = RigidbodyConstraints.None;
-				gameObject.GetComponent<Rigidbody> ().useGravity = true;
-			}
-
+	void setWallMode(bool p_isEnter){
+		if(p_isEnter){
+			m_wallController.setActive (true);
 		}
-
+		else{
+			m_wallController.setActive (false);
+		}
 	}
 
-	void enterGrabMode(){
-		m_grabController.setActive (true);
+	void setRemoveMode(bool p_isEnter){
+		if(p_isEnter){
+			m_removeController.setActive (true);
+		}
+		else{
+			m_removeController.setActive (false);
+		}
 	}
 
-	void exitWallMode(){
-		m_wallController.setActive (false);
+	void setGrabMode(bool p_isEnter){
+		if(p_isEnter){
+			m_grabController.setActive (true);
+		}
+		else{
+			m_grabController.setActive (false);
+		}
 	}
 
-	void exitRemoveMode(){
-		m_removeController.setActive (false);
-	}
+	void setPlayMode(bool p_isEnter){
+		if(p_isEnter){
+			foreach(GameObject gameObject in m_wallController.g_cubeList){
+				if(gameObject != null){
+					gameObject.GetComponent<Rigidbody> ().constraints = RigidbodyConstraints.None;
+					gameObject.GetComponent<Rigidbody> ().useGravity = true;
+				}
 
-	void exitPlayMode(){
+			}
+		}
+		else{
+			foreach(GameObject gameObject in m_wallController.g_cubeList){
+				if(gameObject != null){
+					gameObject.GetComponent<Rigidbody> ().constraints = RigidbodyConstraints.FreezeAll;
+					gameObject.GetComponent<Rigidbody> ().useGravity = false;
+				}
 
-	}
-
-	void exitGrabMode(){
-		m_grabController.setActive (false);
+			}
+		}
 	}
 
 
