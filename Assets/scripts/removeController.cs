@@ -39,7 +39,6 @@ public class removeController : MonoBehaviour {
 		GameObject collidedObj = col.gameObject;
 
 		if(collidedObj.name == "Placed Cube"){
-			
 			if(m_isRemoving){
 				Destroy (collidedObj);
 			}

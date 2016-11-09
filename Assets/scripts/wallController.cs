@@ -6,22 +6,32 @@ public class wallController : MonoBehaviour {
 
 	Vector3 m_wallStart;
 	Vector3 m_wallEnd;
-	singleCubeController m_singleCubeController;
 	bool m_isColliding;
 
+	public GameObject g_unitCube;
 	public GameObject g_singleCubeTool;
 	public List<Material> g_materialList;
+	public List<GameObject> g_cubeList;
 
 	// Use this for initialization
 	void Start () {
 
 		m_isColliding = false;
 
-		m_singleCubeController = g_singleCubeTool.GetComponent<singleCubeController> ();
 	}
 
 	void Update(){
 		
+	}
+
+	void createCube(Vector3 p_pos){
+
+		GameObject currentCube = Instantiate (g_unitCube);
+
+		currentCube.name = "Placed Cube";
+		currentCube.transform.position = p_pos;
+
+		g_cubeList.Add (currentCube);
 	}
 
 	//fonction pour démarrer un mur à partir d'une position initiale
@@ -94,8 +104,7 @@ public class wallController : MonoBehaviour {
 			for(int i = 0; i < nbCubesX; i++){
 				for(int j = 0; j < nbCubesY; j++){
 					for(int k = 0; k < nbCubesZ; k++){
-						m_singleCubeController.createCube (currentPos);
-						m_singleCubeController.placeCube ();
+						createCube (currentPos);
 						currentPos.z += zDir;
 					}
 					currentPos.z = m_wallStart.z;

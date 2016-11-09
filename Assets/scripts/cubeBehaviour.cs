@@ -7,6 +7,8 @@ public class cubeBehaviour : MonoBehaviour {
 	public bool g_isGrabbed;
 	public bool g_isColliding;
 	public List<Material> g_materialList;
+
+
 	// Use this for initialization
 	void Start () {
 		g_isColliding = false;
@@ -18,26 +20,26 @@ public class cubeBehaviour : MonoBehaviour {
 	
 	}
 
-	void OnCollisionStay(Collision col){
-		GameObject collidedObj = col.gameObject;
+	void OnCollisionEnter(Collision col){
+
 		int materialIndex = 0;
 
-		switch(collidedObj.name){
+		switch(col.gameObject.name){
+
 		case "Remove Tool":
 			materialIndex = 2;
 			break;
 		case "Grab Tool":
 			materialIndex = 3;
 			break;
-
 		default:
-			if(g_isGrabbed){
+			if (g_isGrabbed) {
 				materialIndex = 1;
 			}
+
 			g_isColliding = true;
 			break;
 		}
-
 		GetComponent<Renderer> ().material = g_materialList [materialIndex];
 	}
 
