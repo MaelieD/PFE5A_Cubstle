@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class cubeBehaviour : MonoBehaviour {
 
+	int m_materialIndex;
 	public bool g_isGrabbed;
 	public bool g_isColliding;
 	public List<Material> g_materialList;
@@ -13,6 +14,7 @@ public class cubeBehaviour : MonoBehaviour {
 	void Start () {
 		g_isColliding = false;
 		g_isGrabbed = false;
+		m_materialIndex = 0;
 	}
 	
 	// Update is called once per frame
@@ -20,7 +22,7 @@ public class cubeBehaviour : MonoBehaviour {
 	
 	}
 
-	void OnCollisionEnter(Collision col){
+	void OnCollisionStay(Collision col){
 
 		int materialIndex = 0;
 
@@ -40,7 +42,11 @@ public class cubeBehaviour : MonoBehaviour {
 			g_isColliding = true;
 			break;
 		}
-		GetComponent<Renderer> ().material = g_materialList [materialIndex];
+		if(m_materialIndex != materialIndex){
+			GetComponent<Renderer> ().material = g_materialList [materialIndex];
+		}
+
+
 	}
 
 	void OnCollisionExit(Collision col){

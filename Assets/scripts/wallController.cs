@@ -44,19 +44,10 @@ public class wallController : MonoBehaviour {
 	//fonction pour dessiner un mur entre la position initiale et la position finale
 	//on ne dessine des murs que selon l'axe x ou z, donc on cale les positions selon x ou z
 	public void drawWall(Vector3 p_pos){
-		//on positionne m_wallEnd
-		//si le point actuel est plus proche en z du point initial qu'en x, la valeur
-		//du point actuel en x devient la valeur du point initial en x, et inversement
-		//et on arrondit les valeurs pour discrétiser les futures dimensions du mur
-		if (Mathf.Abs (p_pos.x - m_wallStart.x) > Mathf.Abs (p_pos.z - m_wallStart.z)) {
-			m_wallEnd.z = m_wallStart.z;
-			m_wallEnd.x = Mathf.Round (p_pos.x - m_wallStart.x) + m_wallStart.x;
-		}
-		else {
-			m_wallEnd.x = m_wallStart.x;
-			m_wallEnd.z = Mathf.Round (p_pos.z - m_wallStart.z) + m_wallStart.z;
-		}
+
+		m_wallEnd.x = Mathf.Round (p_pos.x - m_wallStart.x) + m_wallStart.x;
 		m_wallEnd.y = Mathf.Round (p_pos.y - m_wallStart.y) + m_wallStart.y;
+		m_wallEnd.z = Mathf.Round (p_pos.z - m_wallStart.z) + m_wallStart.z;
 
 		//on définit la taille du mur en fonction de m_wallEnd et m_wallStart
 		transform.localScale = m_wallEnd - m_wallStart;

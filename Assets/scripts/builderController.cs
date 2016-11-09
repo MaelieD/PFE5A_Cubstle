@@ -99,70 +99,67 @@ public class builderController : MonoBehaviour {
 		}
 			
 
-		//WALL MODE
-		if(m_currentMode == (int) m_modes.WALL){
 
-			if(Input.GetMouseButtonDown(0)){
+		switch(m_currentMode){
+
+		//WALL MODE
+		case (int) m_modes.WALL:
+			if (Input.GetMouseButtonDown (0)) {
 				g_isDrawingWall = true;
 				m_wallController.createWall (m_mousePos);
 			}
 
-			if(Input.GetMouseButton(0)){
+			if (Input.GetMouseButton (0)) {
 				m_wallController.drawWall (m_mousePos);
 			}
 
 
-			if(Input.GetMouseButtonUp(0)){
+			if (Input.GetMouseButtonUp (0)) {
 				g_isDrawingWall = false;
 				m_wallController.placeWall ();
 			}
 
-			if(!g_isDrawingWall){
+			if (!g_isDrawingWall) {
 				m_wallController.moveWallTool (m_mousePos);
 			}
-		}
+			break;
 
 		//REMOVE MODE
-		if(m_currentMode == (int) m_modes.REMOVE){
-
-			if(Input.GetMouseButtonDown(0)){
+		case (int) m_modes.REMOVE:
+			if (Input.GetMouseButtonDown (0)) {
 				m_removeController.setIsRemoving (true);
 			}
 
-			if(Input.GetMouseButtonUp(0)){
+			if (Input.GetMouseButtonUp (0)) {
 				m_removeController.setIsRemoving (false);
 			}
 
 			m_removeController.moveRemoveTool (m_mousePos);
-		}
-
-
+			break;
 
 		//PLAY MODE
-		if(m_currentMode == (int) m_modes.PLAY){
-
-		}
+		case (int) m_modes.PLAY:
+			break;
 
 		//GRAB MODE
-		if(m_currentMode == (int) m_modes.GRAB){
-
-			if(Input.GetMouseButtonDown(0)){
+		case (int) m_modes.GRAB:
+			if (Input.GetMouseButtonDown (0)) {
 				m_grabController.setIsGrabbing (true);
 			}
-			if(Input.GetMouseButtonUp(0)){
+			if (Input.GetMouseButtonUp (0)) {
 				m_grabController.setIsGrabbing (false);
 
-				if(m_grabController.g_grabbedCube){
+				if (m_grabController.g_grabbedCube) {
 					m_grabController.dropCube ();
 				}
 			}
 
 			m_grabController.moveGrabTool (m_mousePos);
-			if(m_grabController.g_grabbedCube){
+			if (m_grabController.g_grabbedCube) {
 				m_grabController.moveGrabbedCube (m_mousePos);
 			}
+			break;
 		}
-
 
 		//Avec la molette, modification de la distance joueur/outil
 		if(Input.GetAxis("Mouse ScrollWheel") > 0.0f){
