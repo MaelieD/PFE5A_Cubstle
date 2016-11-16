@@ -410,11 +410,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   g_isEmpty: 0
   g_unitCube: {fileID: 1949196920}
-  g_singleCubeTool: {fileID: 0}
   g_materialList:
   - {fileID: 2100000, guid: a2b7a02e05f4ad94e838aba7696e19c3, type: 2}
   - {fileID: 2100000, guid: bdf4427ad766c8040a1675c210a11d11, type: 2}
-  g_cubeList: []
 --- !u!1 &1310946452
 GameObject:
   m_ObjectHideFlags: 0

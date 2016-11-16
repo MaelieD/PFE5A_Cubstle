@@ -40,7 +40,7 @@ public class removeController : MonoBehaviour {
 
 		if(collidedObj.name == "Placed Cube"){
 			if(m_isRemoving){
-				Destroy (collidedObj);
+				collidedObj.SetActive (false);
 			}
 		}
 	}

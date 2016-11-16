@@ -12,10 +12,14 @@ public class builderController : MonoBehaviour {
 	grabController m_grabController;
 	Vector3 m_mousePos;
 
+	public static List<GameObject> g_cubeList = new List<GameObject>();
 	public static float g_cubeDistance = 3.0f;
 	public static float g_cubeDistanceMin = 2.0f;
 	public static float g_cubeDistanceMax = 15.0f;
 	public static int g_currentMode;
+
+	static public bool g_isPlayMode;
+	static public float g_cubeHeight;
 
 	public bool g_isDrawingWall;
 	public bool g_isRemoving;
@@ -25,8 +29,7 @@ public class builderController : MonoBehaviour {
 	public GameObject g_removeTool;
 	public GameObject g_grabTool;
 
-	static public bool g_isPlayMode;
-	static public float g_cubeHeight;
+
 
 	// Use this for initialization
 	void Start () {
@@ -217,7 +220,7 @@ public class builderController : MonoBehaviour {
 
 	void setPlayMode(bool p_isEnter){
 		if(p_isEnter){
-			foreach(GameObject gameObject in m_wallController.g_cubeList){
+			foreach(GameObject gameObject in g_cubeList){
 				if(gameObject != null){
 					gameObject.GetComponent<Rigidbody> ().constraints = RigidbodyConstraints.None;
 					gameObject.GetComponent<Rigidbody> ().useGravity = true;
@@ -226,7 +229,7 @@ public class builderController : MonoBehaviour {
 			}
 		}
 		else{
-			foreach(GameObject gameObject in m_wallController.g_cubeList){
+			foreach(GameObject gameObject in g_cubeList){
 				if(gameObject != null){
 					gameObject.GetComponent<Rigidbody> ().constraints = RigidbodyConstraints.FreezeAll;
 					gameObject.GetComponent<Rigidbody> ().useGravity = false;
@@ -235,6 +238,4 @@ public class builderController : MonoBehaviour {
 			}
 		}
 	}
-
-
 }

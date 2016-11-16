@@ -19,6 +19,24 @@ public class cubeBehaviour : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		foreach(GameObject cube in builderController.g_cubeList){
+			Vector3 cubeToCurrentCubeVec = cube.transform.position - transform.position;
+			if(cube){
+				if(cubeToCurrentCubeVec.x != 0.0f){
+					cubeToCurrentCubeVec.x = 1.0f / (cubeToCurrentCubeVec.x * 10000.0f);
+				}
+				if(cubeToCurrentCubeVec.y != 0.0f){
+					cubeToCurrentCubeVec.y = 0.0f / (cubeToCurrentCubeVec.y * 10000.0f);
+				}
+				if(cubeToCurrentCubeVec.z != 0.0f){
+					cubeToCurrentCubeVec.z = 1.0f / (cubeToCurrentCubeVec.z * 10000.0f);
+				}
+
+				GetComponent<Rigidbody> ().AddForce (cubeToCurrentCubeVec);
+			}
+
+		}
 	
 	}
 
