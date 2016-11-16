@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class cubeBehaviour : MonoBehaviour {
 
 	int m_materialIndex;
+	Rigidbody m_rigidbody;
 	public bool g_isGrabbed;
 	public bool g_isColliding;
 	public List<Material> g_materialList;
@@ -15,6 +16,7 @@ public class cubeBehaviour : MonoBehaviour {
 		g_isColliding = false;
 		g_isGrabbed = false;
 		m_materialIndex = 0;
+		m_rigidbody = GetComponent<Rigidbody> ();
 	}
 	
 	// Update is called once per frame
@@ -22,18 +24,11 @@ public class cubeBehaviour : MonoBehaviour {
 
 		foreach(GameObject cube in builderController.g_cubeList){
 			Vector3 cubeToCurrentCubeVec = cube.transform.position - transform.position;
-			if(cube){
-				if(cubeToCurrentCubeVec.x != 0.0f){
-					cubeToCurrentCubeVec.x = 1.0f / (cubeToCurrentCubeVec.x * 10000.0f);
-				}
-				if(cubeToCurrentCubeVec.y != 0.0f){
-					cubeToCurrentCubeVec.y = 0.0f / (cubeToCurrentCubeVec.y * 10000.0f);
-				}
-				if(cubeToCurrentCubeVec.z != 0.0f){
-					cubeToCurrentCubeVec.z = 1.0f / (cubeToCurrentCubeVec.z * 10000.0f);
-				}
+			float distance = cubeToCurrentCubeVec.magnitude;
+			if(cube.activeSelf && distance != 0.0f && distance < 1.0f){
+				cubeToCurrentCubeVec.Normalize ();
 
-				GetComponent<Rigidbody> ().AddForce (cubeToCurrentCubeVec);
+				m_rigidbody.AddForce (2 * (1 / Mathf.Pow(2, distance)) * cubeToCurrentCubeVec);
 			}
 
 		}
@@ -52,6 +47,15 @@ public class cubeBehaviour : MonoBehaviour {
 		case "Grab Tool":
 			materialIndex = 3;
 			break;
+
+		case "Placed Cube":
+//			Vector3 cubeToCurrentCubeVec = col.gameObject.transform.position - transform.position;
+//			float distance = cubeToCurrentCubeVec.magnitude;
+//
+//			cubeToCurrentCubeVec.Normalize ();
+//			GetComponent<Rigidbody> ().AddForce (cubeToCurrentCubeVec);
+			break;
+
 		default:
 			if (g_isGrabbed) {
 				materialIndex = 1;
@@ -66,6 +70,17 @@ public class cubeBehaviour : MonoBehaviour {
 
 
 	}
+
+	void OnCollisionEnter(Collision col){
+		if(col.gameObject.name == "Placed Cube"){
+			Vector3 cubeToCurrentCubeVec = col.gameObject.transform.position - transform.position;
+
+			cubeToCurrentCubeVec.Normalize ();
+			m_rigidbody.AddForce (cubeToCurrentCubeVec);
+		}
+	}
+
+
 
 	void OnCollisionExit(Collision col){
 		GetComponent<Renderer> ().material = g_materialList [0];
