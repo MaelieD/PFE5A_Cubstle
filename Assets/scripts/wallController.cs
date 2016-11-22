@@ -99,16 +99,19 @@ public class wallController : MonoBehaviour {
 			//nombre de blocs en z
 			int nbCubesZ = (int)transform.localScale.z;
 
+
 			for(int i = 0; i < nbCubesX; i++){
 				for(int j = 0; j < nbCubesY; j++){
 					for(int k = 0; k < nbCubesZ; k++){
 						if(!g_isEmpty){
 							createCube (currentPos);
 						}
-						else if((i == 0 || i == nbCubesX - 1 || j == 0 || j == nbCubesY - 1 || k == 0 || k == nbCubesZ - 1)){
-							createCube (currentPos);
-						}
+						else{
 
+							if(i == 0 || i == nbCubesX - 1 || k == 0 || k == nbCubesZ - 1){
+								createCube (currentPos);
+							}
+						}
 
 
 						currentPos.z += zDir;
@@ -119,6 +122,8 @@ public class wallController : MonoBehaviour {
 				currentPos.y = m_wallStart.y;
 				currentPos.x += xDir;
 			}
+			
+
 		}
 
 

@@ -22,16 +22,16 @@ public class cubeBehaviour : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		foreach(GameObject cube in builderController.g_cubeList){
-			Vector3 cubeToCurrentCubeVec = cube.transform.position - transform.position;
-			float distance = cubeToCurrentCubeVec.magnitude;
-			if(cube.activeSelf && distance != 0.0f && distance < 1.0f){
-				cubeToCurrentCubeVec.Normalize ();
-
-				m_rigidbody.AddForce (2 * (1 / Mathf.Pow(2, distance)) * cubeToCurrentCubeVec);
-			}
-
-		}
+//		foreach(GameObject cube in builderController.g_cubeList){
+//			Vector3 cubeToCurrentCubeVec = cube.transform.position - transform.position;
+//			float distance = cubeToCurrentCubeVec.magnitude;
+//			if(cube.activeSelf && distance != 0.0f && distance < 1.0f){
+//				cubeToCurrentCubeVec.Normalize ();
+//
+//				m_rigidbody.AddForce (2 * (1 / Mathf.Pow(2, distance)) * cubeToCurrentCubeVec);
+//			}
+//
+//		}
 	
 	}
 
@@ -48,13 +48,13 @@ public class cubeBehaviour : MonoBehaviour {
 			materialIndex = 3;
 			break;
 
-		case "Placed Cube":
+//		case "Placed Cube":
 //			Vector3 cubeToCurrentCubeVec = col.gameObject.transform.position - transform.position;
 //			float distance = cubeToCurrentCubeVec.magnitude;
 //
 //			cubeToCurrentCubeVec.Normalize ();
 //			GetComponent<Rigidbody> ().AddForce (cubeToCurrentCubeVec);
-			break;
+//			break;
 
 		default:
 			if (g_isGrabbed) {
@@ -71,14 +71,14 @@ public class cubeBehaviour : MonoBehaviour {
 
 	}
 
-	void OnCollisionEnter(Collision col){
-		if(col.gameObject.name == "Placed Cube"){
-			Vector3 cubeToCurrentCubeVec = col.gameObject.transform.position - transform.position;
-
-			cubeToCurrentCubeVec.Normalize ();
-			m_rigidbody.AddForce (cubeToCurrentCubeVec);
-		}
-	}
+//	void OnCollisionEnter(Collision col){
+//		if(col.gameObject.name == "Placed Cube"){
+//			Vector3 cubeToCurrentCubeVec = col.gameObject.transform.position - transform.position;
+//
+//			cubeToCurrentCubeVec.Normalize ();
+//			m_rigidbody.AddForce (cubeToCurrentCubeVec);
+//		}
+//	}
 
 
 
