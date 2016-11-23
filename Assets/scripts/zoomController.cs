@@ -46,4 +46,28 @@ public class zoomController : MonoBehaviour {
 
 
 	}
+
+	public void zoomIn(){
+		if (transform.localScale.x > minScale) {
+			transform.localScale -= unitarScaleVector;
+			transform.position = new Vector3(transform.position.x ,transform.localScale.y,transform.position.z);
+
+			builderController.g_cubeDistanceMin -= scaleStep;
+			builderController.g_cubeDistanceMax -= scaleStep;
+			builderController.g_cubeDistance -= scaleStep;
+		}
+	}
+
+	public void zoomOut(){
+		if (transform.localScale.x < maxScale) {
+
+			transform.localScale += unitarScaleVector;
+			transform.position = new Vector3 (transform.position.x, transform.localScale.y, transform.position.z);
+
+			builderController.g_cubeDistanceMin += scaleStep;
+			builderController.g_cubeDistanceMax += scaleStep;
+			builderController.g_cubeDistance += scaleStep;
+
+		}
+	}
 }
