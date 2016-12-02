@@ -28,6 +28,9 @@ public class builderController : MonoBehaviour {
 	public static float g_cubeDistance = 3.0f;
 	public static float g_cubeDistanceMin = 2.0f;
 	public static float g_cubeDistanceMax = 15.0f;
+	public static float g_currentCubeDistance = 3.0f;
+	public static float g_currentCubeDistanceMin = 2.0f;
+	public static float g_currentCubeDistanceMax = 15.0f;
 	public static int g_currentMode;
 
 	static public bool g_isPlayMode;
@@ -219,27 +222,28 @@ public class builderController : MonoBehaviour {
 
 		//Avec la molette, modification de la distance joueur/outil
 		if(Input.GetAxis("Mouse ScrollWheel") > 0.0f){
-			g_cubeDistance++;
+			g_currentCubeDistance++;
 		}
 		if(Input.GetAxis("Mouse ScrollWheel") < 0.0f){
-			g_cubeDistance--;
+			g_currentCubeDistance--;
 		}
 			
 		float touchPadAxisY = m_wandController.GetTouchpadAxis ().y;
 
 		if (m_padPressState == (int)m_pressStates.PRESSING) {
 			if (touchPadAxisY > 0.0f) {
-				m_zoomController.zoomIn ();
+				m_zoomController.zoom (1);
 			}
 			if (touchPadAxisY < 0.0f) {
-				m_zoomController.zoomOut ();
+				m_zoomController.zoom (-1);
 			}
-		} else if(m_padTouchState == (int)m_touchStates.TOUCHING) {
-			g_cubeDistance = ((touchPadAxisY + 1.0f) * g_cubeDistanceMax) / g_cubeDistanceMin;
+		} else if(m_padTouchState == (int)m_touchStates.TOUCHING && touchPadAxisY != 0.0f) {
+			g_currentCubeDistance = ((touchPadAxisY + 1.0f) * g_currentCubeDistanceMax - g_currentCubeDistanceMin) / 2.0f + g_currentCubeDistanceMin;
+			Debug.Log ("distance : " + g_currentCubeDistance + " distanceMax : " + g_currentCubeDistanceMax + " distanceMin : " + g_currentCubeDistanceMin);
 		}
 
 		//on clampe la distance pour éviter de perdre le cube ou de trop le rapprocher de nous
-		g_cubeDistance = Mathf.Clamp (g_cubeDistance, g_cubeDistanceMin, g_cubeDistanceMax);
+//		g_currentCubeDistance = Mathf.Clamp (g_currentCubeDistance, g_currentCubeDistanceMin, g_currentCubeDistanceMax);
 
 		//on défini les états des contrôles sur la durée en fonction du fait qu'ils soient pressés ou non
 		//pressed sur la durée = pressing
@@ -279,7 +283,7 @@ public class builderController : MonoBehaviour {
 	//si la hauteur est trop basse, on a rehausse pour éviter de déplacer ou créer un bloc en intersection avec le sol
 	void getMousePos(){
 		var mousePos = Input.mousePosition;
-		mousePos.z = g_cubeDistance;
+		mousePos.z = g_currentCubeDistance;
 		mousePos = Camera.main.ScreenToWorldPoint (mousePos);
 
 		m_mousePos = mousePos;
@@ -287,7 +291,7 @@ public class builderController : MonoBehaviour {
 
 	void getToolPos(){
 		Ray controllerRay = new Ray (transform.position, transform.forward);
-		m_toolPos = controllerRay.GetPoint (g_cubeDistance);
+		m_toolPos = controllerRay.GetPoint (g_currentCubeDistance);
 	}
 
 	void setWallMode(bool p_isEnter){

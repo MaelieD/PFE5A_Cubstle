@@ -3,10 +3,12 @@ using System.Collections;
 
 public class zoomController : MonoBehaviour {
 
-	public float scaleStep = 0.05f;
+	public float scaleStep = 0.01f;
 	public float maxScale = 100.0f;
 	public float minScale = 1.0f;
+	public GameObject cameraRig;
 	private Vector3 unitarScaleVector;
+	private float scale = 1.0f;
 
 
 	// Use this for initialization
@@ -17,56 +19,24 @@ public class zoomController : MonoBehaviour {
 
 	void Update () {
 			
-		//Zoom out
-		if (Input.GetKey ("i")) {
-			Debug.Log ("Zoom Out");
-			if (transform.localScale.x < maxScale) {
-				
-				transform.localScale +=unitarScaleVector;
-				transform.position = new Vector3(transform.position.x ,transform.localScale.y,transform.position.z);
-		
-				builderController.g_cubeDistanceMin += scaleStep;
-				builderController.g_cubeDistanceMax += scaleStep;
-				builderController.g_cubeDistance += scaleStep;
-
-			}
-		}
-		//Zoom in
-		else if (Input.GetKey ("k")) {
-			Debug.Log ("Zoom int");
-			if (transform.localScale.x > minScale) {
-				transform.localScale -= unitarScaleVector;
-				transform.position = new Vector3(transform.position.x ,transform.localScale.y,transform.position.z);
-
-				builderController.g_cubeDistanceMin -= scaleStep;
-				builderController.g_cubeDistanceMax -= scaleStep;
-				builderController.g_cubeDistance -= scaleStep;
-			}
-		}
-
 
 	}
 
-	public void zoomIn(){
-		if (transform.localScale.x > minScale) {
-			transform.localScale -= unitarScaleVector;
-			transform.position = new Vector3(transform.position.x ,transform.localScale.y,transform.position.z);
+	public void zoom(int zoomCoef){
 
-			builderController.g_cubeDistanceMin -= scaleStep;
-			builderController.g_cubeDistanceMax -= scaleStep;
-			builderController.g_cubeDistance -= scaleStep;
-		}
-	}
+		if((cameraRig.transform.localScale.x < maxScale && zoomCoef == 1) || ( cameraRig.transform.localScale.x > minScale && zoomCoef == -1)){
+			
+			scale += zoomCoef * scaleStep;
+			float zoomFactor = scale / minScale;
+			cameraRig.transform.localScale = new Vector3(minScale, minScale, minScale) * zoomFactor;;
+//			cameraRig.transform.position = new Vector3 (cameraRig.transform.position.x, cameraRig.transform.localScale.y, cameraRig.transform.position.z);
 
-	public void zoomOut(){
-		if (transform.localScale.x < maxScale) {
+			builderController.g_currentCubeDistanceMin = builderController.g_cubeDistanceMin * zoomFactor;
+			builderController.g_currentCubeDistanceMax = builderController.g_cubeDistanceMax * zoomFactor;
+			builderController.g_currentCubeDistance = builderController.g_cubeDistance * zoomFactor;
 
-			transform.localScale += unitarScaleVector;
-			transform.position = new Vector3 (transform.position.x, transform.localScale.y, transform.position.z);
+//			Debug.Log ("scale : " + scale + " zoomFactor : " + zoomFactor + " distance : " + builderController.g_currentCubeDistance + " distanceMin : " + builderController.g_currentCubeDistanceMin + " distanceMax : " + builderController.g_currentCubeDistanceMax);
 
-			builderController.g_cubeDistanceMin += scaleStep;
-			builderController.g_cubeDistanceMax += scaleStep;
-			builderController.g_cubeDistance += scaleStep;
 
 		}
 	}
