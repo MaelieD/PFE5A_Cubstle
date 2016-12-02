@@ -14,6 +14,7 @@ public class zoomController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {		
 		unitarScaleVector = new Vector3(scaleStep,scaleStep,scaleStep);
+		cameraRig.transform.localScale = new Vector3(scale, scale, scale);
 	}
 
 

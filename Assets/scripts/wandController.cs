@@ -97,10 +97,12 @@ public class wandController : SteamVR_TrackedController {
 	public override void OnGripped(ClickedEventArgs e)
 	{
 		base.OnGripped(e);
+		m_builderController.setGripClicked (true);
 	}
 
 	public override void OnUngripped(ClickedEventArgs e)
 	{
 		base.OnUngripped(e);
+		m_builderController.setGripClicked (false);
 	}
 }

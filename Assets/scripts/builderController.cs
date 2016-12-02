@@ -14,6 +14,7 @@ public class builderController : MonoBehaviour {
 	int m_menuState;
 	int m_padPressState;
 	int m_padTouchState;
+	int m_gripState;
 
 	wallController m_wallController;
 	removeController m_removeController;
@@ -66,6 +67,8 @@ public class builderController : MonoBehaviour {
 		m_triggerState = (int)m_pressStates.IDLE;
 		m_menuState = (int)m_pressStates.IDLE;
 		m_padPressState = (int)m_pressStates.IDLE;
+		m_padTouchState = (int)m_touchStates.IDLE;
+		m_gripState = (int)m_pressStates.IDLE;
 
 		g_isPlayMode = false;
 
@@ -138,7 +141,7 @@ public class builderController : MonoBehaviour {
 			}
 
 		}
-		else if(Input.GetKeyDown("p")){
+		else if(Input.GetKeyDown("p") || m_gripState == (int)m_pressStates.PRESSED){
 			g_isPlayMode = !g_isPlayMode;
 			if(g_isPlayMode){
 				setPlayMode (true);
@@ -253,6 +256,7 @@ public class builderController : MonoBehaviour {
 		m_menuState = setContinuousPressState (m_menuState);
 		m_padPressState = setContinuousPressState (m_padPressState);
 		m_padTouchState = setContinousTouchState (m_padTouchState);
+		m_gripState = setContinuousPressState (m_gripState);
 
 	}
 
@@ -371,6 +375,14 @@ public class builderController : MonoBehaviour {
 			m_padTouchState = (int)m_touchStates.TOUCHED;
 		} else {
 			m_padTouchState = (int)m_touchStates.UNTOUCHED;
+		}
+	}
+
+	public void setGripClicked(bool isClicked){
+		if (isClicked) {
+			m_gripState = (int)m_pressStates.PRESSED;
+		} else {
+			m_gripState = (int)m_pressStates.UNPRESSED;
 		}
 	}
 		
