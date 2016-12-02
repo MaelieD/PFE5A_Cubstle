@@ -8,10 +8,12 @@ public class builderController : MonoBehaviour {
 
 	public enum g_modes {IDLE, WALL, REMOVE, GRAB};
 	enum m_pressStates {PRESSED, PRESSING, UNPRESSED, IDLE};
+	enum m_touchStates {TOUCHED, TOUCHING, UNTOUCHED, IDLE};
 
 	int m_triggerState;
 	int m_menuState;
-	int m_padState;
+	int m_padPressState;
+	int m_padTouchState;
 
 	wallController m_wallController;
 	removeController m_removeController;
@@ -60,7 +62,7 @@ public class builderController : MonoBehaviour {
 
 		m_triggerState = (int)m_pressStates.IDLE;
 		m_menuState = (int)m_pressStates.IDLE;
-		m_padState = (int)m_pressStates.IDLE;
+		m_padPressState = (int)m_pressStates.IDLE;
 
 		g_isPlayMode = false;
 
@@ -224,15 +226,16 @@ public class builderController : MonoBehaviour {
 		}
 			
 		float touchPadAxisY = m_wandController.GetTouchpadAxis ().y;
-		if (m_padState == (int)m_pressStates.PRESSING) {
+
+		if (m_padPressState == (int)m_pressStates.PRESSING) {
 			if (touchPadAxisY > 0.0f) {
 				m_zoomController.zoomIn ();
 			}
 			if (touchPadAxisY < 0.0f) {
 				m_zoomController.zoomOut ();
 			}
-		} else {
-			g_cubeDistance += 0.5f * touchPadAxisY;
+		} else if(m_padTouchState == (int)m_touchStates.TOUCHING) {
+			g_cubeDistance = ((touchPadAxisY + 1.0f) * g_cubeDistanceMax) / g_cubeDistanceMin;
 		}
 
 		//on clampe la distance pour éviter de perdre le cube ou de trop le rapprocher de nous
@@ -242,21 +245,34 @@ public class builderController : MonoBehaviour {
 		//pressed sur la durée = pressing
 		//unpressed sur la durée = idle
 
-		m_triggerState = setContinuousState (m_triggerState);
-		m_menuState = setContinuousState (m_menuState);
-		m_padState = setContinuousState (m_padState);
+		m_triggerState = setContinuousPressState (m_triggerState);
+		m_menuState = setContinuousPressState (m_menuState);
+		m_padPressState = setContinuousPressState (m_padPressState);
+		m_padTouchState = setContinousTouchState (m_padTouchState);
 
 	}
 
-	int setContinuousState(int buttonState){
+	int setContinuousPressState(int buttonState){
 		if (buttonState == (int)m_pressStates.PRESSED) {
 			buttonState = (int)m_pressStates.PRESSING;
 		} else if (buttonState == (int)m_pressStates.UNPRESSED) {
 			
 			buttonState = (int)m_pressStates.IDLE;
 		}
+
 		return buttonState;
 	}
+
+	int setContinousTouchState(int buttonState){
+		if (buttonState == (int)m_touchStates.TOUCHED) {
+			buttonState = (int)m_touchStates.TOUCHING;
+		} else if (buttonState == (int)m_touchStates.UNTOUCHED) {
+			buttonState = (int)m_touchStates.IDLE;
+		}
+
+		return buttonState;
+	}
+		
 
 	//Renvoie ce que pointe la souris dans les coordonnées du monde
 	//on définit manuellement la distance joueur/bloc
@@ -340,9 +356,17 @@ public class builderController : MonoBehaviour {
 
 	public void setPadClicked(bool isClicked){
 		if (isClicked) {
-			m_padState = (int)m_pressStates.PRESSED;
+			m_padPressState = (int)m_pressStates.PRESSED;
 		} else {
-			m_padState = (int)m_pressStates.UNPRESSED;
+			m_padPressState = (int)m_pressStates.UNPRESSED;
+		}
+	}
+
+	public void setPadTouched(bool isTouched){
+		if (isTouched) {
+			m_padTouchState = (int)m_touchStates.TOUCHED;
+		} else {
+			m_padTouchState = (int)m_touchStates.UNTOUCHED;
 		}
 	}
 		

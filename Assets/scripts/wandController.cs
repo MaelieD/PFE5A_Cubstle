@@ -85,11 +85,13 @@ public class wandController : SteamVR_TrackedController {
 	public override void OnPadTouched(ClickedEventArgs e)
 	{
 		base.OnPadTouched(e);
+		m_builderController.setPadTouched (true);
 	}
 
 	public override void OnPadUntouched(ClickedEventArgs e)
 	{
 		base.OnPadUntouched(e);
+		m_builderController.setPadTouched (false);
 	}
 
 	public override void OnGripped(ClickedEventArgs e)
