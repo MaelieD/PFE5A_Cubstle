@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class wallController : MonoBehaviour {
 
@@ -11,10 +12,14 @@ public class wallController : MonoBehaviour {
 	public bool g_isEmpty;
 	public GameObject g_unitCube;
 	public List<Material> g_materialList;
+	public Text cubeNumberText;
+
+	public int disabledCubesNumber;
 
 	// Use this for initialization
 	void Start () {
 
+		disabledCubesNumber = 0;
 		m_isColliding = false;
 		g_isEmpty = false;
 
@@ -38,6 +43,7 @@ public class wallController : MonoBehaviour {
 		}
 
 		builderController.g_cubeList.Add (currentCube);
+		updateCubeNumberText ();
 	}
 
 	//fonction pour démarrer un mur à partir d'une position initiale
@@ -154,5 +160,10 @@ public class wallController : MonoBehaviour {
 		GetComponent<Renderer> ().material = g_materialList [0];
 		m_isColliding = false;
 
+	}
+
+	public void updateCubeNumberText(){
+		int cubeNumber = builderController.g_cubeList.Count - disabledCubesNumber;
+		cubeNumberText.text = "Nombre de cubes : " + cubeNumber;
 	}
 }

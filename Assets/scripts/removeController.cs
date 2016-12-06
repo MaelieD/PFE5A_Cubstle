@@ -5,13 +5,17 @@ using System.Collections.Generic;
 public class removeController : MonoBehaviour {
 
 	bool m_isRemoving;
-
+	public GameObject wallTool;
 	public List<Material> g_materialList;
+
+	wallController wC;
+
 
 	// Use this for initialization
 	void Start () {
 
 		m_isRemoving = false;
+		wC = wallTool.GetComponent<wallController> ();
 	
 	}
 	
@@ -41,6 +45,9 @@ public class removeController : MonoBehaviour {
 		if(collidedObj.name == "Placed Cube"){
 			if(m_isRemoving){
 				collidedObj.SetActive (false);
+				wC.disabledCubesNumber++;
+				wC.updateCubeNumberText ();
+
 			}
 		}
 	}
