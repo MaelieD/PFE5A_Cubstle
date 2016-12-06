@@ -94,24 +94,15 @@ public class builderController : MonoBehaviour {
 			switch (g_currentMode) {
 
 			case (int)g_modes.IDLE:
-				g_currentMode = (int)g_modes.WALL;
 				setWallMode (true);
-				setRemoveMode (false);
-				setGrabMode (false);
 				break;
 
 			case (int)g_modes.WALL:
-				g_currentMode = (int)g_modes.REMOVE;
 				setRemoveMode (true);
-				setWallMode (false);
-				setGrabMode (false);
 				break;
 
 			case (int)g_modes.REMOVE:
-				g_currentMode = (int)g_modes.GRAB;
 				setGrabMode (true);
-				setWallMode (false);
-				setRemoveMode (false);
 				break;
 			
 			case (int)g_modes.GRAB:
@@ -142,13 +133,7 @@ public class builderController : MonoBehaviour {
 
 		}
 		else if(Input.GetKeyDown("p") || m_gripState == (int)m_pressStates.PRESSED){
-			g_isPlayMode = !g_isPlayMode;
-			if(g_isPlayMode){
-				setPlayMode (true);
-			}
-			else{
-				setPlayMode (false);
-			}
+			togglePlayMode ();
 
 		}
 		else if(Input.GetKeyDown("g")){
@@ -242,7 +227,7 @@ public class builderController : MonoBehaviour {
 			}
 		} else if(m_padTouchState == (int)m_touchStates.TOUCHING && touchPadAxisY != 0.0f) {
 			g_currentCubeDistance = ((touchPadAxisY + 1.0f) * g_currentCubeDistanceMax - g_currentCubeDistanceMin) / 2.0f + g_currentCubeDistanceMin;
-			Debug.Log ("distance : " + g_currentCubeDistance + " distanceMax : " + g_currentCubeDistanceMax + " distanceMin : " + g_currentCubeDistanceMin);
+//			Debug.Log ("distance : " + g_currentCubeDistance + " distanceMax : " + g_currentCubeDistanceMax + " distanceMin : " + g_currentCubeDistanceMin);
 		}
 
 		//on clampe la distance pour éviter de perdre le cube ou de trop le rapprocher de nous
@@ -298,8 +283,11 @@ public class builderController : MonoBehaviour {
 		m_toolPos = controllerRay.GetPoint (g_currentCubeDistance);
 	}
 
-	void setWallMode(bool p_isEnter){
+	public void setWallMode(bool p_isEnter){
 		if(p_isEnter){
+			g_currentMode = (int)g_modes.WALL;
+			setRemoveMode (false);
+			setGrabMode (false);
 			m_wallController.setActive (true);
 		}
 		else{
@@ -307,8 +295,11 @@ public class builderController : MonoBehaviour {
 		}
 	}
 
-	void setRemoveMode(bool p_isEnter){
+	public void setRemoveMode(bool p_isEnter){
 		if(p_isEnter){
+			g_currentMode = (int)g_modes.REMOVE;
+			setWallMode (false);
+			setGrabMode (false);
 			m_removeController.setActive (true);
 		}
 		else{
@@ -316,13 +307,20 @@ public class builderController : MonoBehaviour {
 		}
 	}
 
-	void setGrabMode(bool p_isEnter){
+	public void setGrabMode(bool p_isEnter){
 		if(p_isEnter){
+			g_currentMode = (int)g_modes.GRAB;
+			setWallMode (false);
+			setRemoveMode (false);
 			m_grabController.setActive (true);
 		}
 		else{
 			m_grabController.setActive (false);
 		}
+	}
+
+	public void toggleEmptyWallMode(){
+		m_wallController.g_isEmpty = !m_wallController.g_isEmpty;
 	}
 
 	void setPlayMode(bool p_isEnter){
@@ -343,6 +341,16 @@ public class builderController : MonoBehaviour {
 				}
 
 			}
+		}
+	}
+
+	public void togglePlayMode(){
+		g_isPlayMode = !g_isPlayMode;
+		if(g_isPlayMode){
+			setPlayMode (true);
+		}
+		else{
+			setPlayMode (false);
 		}
 	}
 
