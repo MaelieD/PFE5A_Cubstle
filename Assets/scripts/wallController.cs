@@ -1,20 +1,33 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class wallController : MonoBehaviour {
 
 	Vector3 m_wallStart;
 	Vector3 m_wallEnd;
 	bool m_isColliding;
+	bool isValid;
+	int maxCubeNumber;
+	int maxCubeInABlocNumber;
+	int nbCubesX;
+	int nbCubesY;
+	int nbCubesZ;
 
 	public bool g_isEmpty;
 	public GameObject g_unitCube;
 	public List<Material> g_materialList;
+	public Text cubeNumberText;
+
+	public int disabledCubesNumber;
 
 	// Use this for initialization
 	void Start () {
-
+		isValid = true;
+		maxCubeNumber = 500;
+		maxCubeInABlocNumber = 500;
+		disabledCubesNumber = 0;
 		m_isColliding = false;
 		g_isEmpty = false;
 
@@ -38,6 +51,7 @@ public class wallController : MonoBehaviour {
 		}
 
 		builderController.g_cubeList.Add (currentCube);
+		updateCubeNumberText ();
 	}
 
 	//fonction pour démarrer un mur à partir d'une position initiale
@@ -71,14 +85,46 @@ public class wallController : MonoBehaviour {
 			m_wallStart.x + 0.5f * (transform.localScale.x - 1) * Mathf.Sign(m_wallEnd.x - m_wallStart.x),
 			m_wallStart.y + 0.5f * (transform.localScale.y - 1) * Mathf.Sign(m_wallEnd.y - m_wallStart.y),
 			m_wallStart.z + 0.5f * (transform.localScale.z - 1) * Mathf.Sign(m_wallEnd.z - m_wallStart.z));
-		
+
+
+		//nombre de blocs en x
+		nbCubesX = (int)transform.localScale.x;
+
+		//nombre de blocs en y
+		nbCubesY = (int)transform.localScale.y;
+
+		//nombre de blocs en z
+		nbCubesZ = (int)transform.localScale.z;
+
+		int nbCubesToCreate = nbCubesX * nbCubesY * nbCubesZ;
+		int emptySpaceX = 0;
+		int emptySpaceZ = 0;
+
+		if (g_isEmpty) {
+			if (nbCubesX > 2) {
+				emptySpaceX = nbCubesX - 2;
+			}
+			if (nbCubesZ > 2) {
+				emptySpaceZ = nbCubesZ - 2;
+			}
+
+			int emptySpace = emptySpaceX * nbCubesY * emptySpaceZ;
+			nbCubesToCreate -= emptySpace;
+		}
+
+		if (builderController.g_cubeList.Count - disabledCubesNumber + nbCubesToCreate > maxCubeNumber || nbCubesToCreate > maxCubeInABlocNumber) {
+			InvalidateWall ();
+		} else {
+
+			ValidateWall ();
+		}
 
 	}
 
 	//fonction pour placer le mur entre la position initiale et la position finale
 	public void placeWall(){
 
-		if(!m_isColliding){
+		if(!m_isColliding && isValid){
 			Debug.Log ("place wall between " + m_wallStart + " and " + m_wallEnd);
 			Debug.Log ("current wall size : " + transform.localScale);
 			Debug.Log ("current wall position : " + transform.position);
@@ -91,13 +137,13 @@ public class wallController : MonoBehaviour {
 			int zDir = (int) Mathf.Sign (m_wallEnd.z - m_wallStart.z);
 
 			//nombre de blocs en x
-			int nbCubesX = (int)transform.localScale.x;
+			nbCubesX = (int)transform.localScale.x;
 
 			//nombre de blocs en y
-			int nbCubesY = (int)transform.localScale.y;
+			nbCubesY = (int)transform.localScale.y;
 
 			//nombre de blocs en z
-			int nbCubesZ = (int)transform.localScale.z;
+			nbCubesZ = (int)transform.localScale.z;
 
 
 			for(int i = 0; i < nbCubesX; i++){
@@ -151,8 +197,26 @@ public class wallController : MonoBehaviour {
 	}
 
 	void OnCollisionExit(Collision col){
-		GetComponent<Renderer> ().material = g_materialList [0];
+		if (isValid) {
+			GetComponent<Renderer> ().material = g_materialList [0];
+		}
+
 		m_isColliding = false;
 
+	}
+
+	void InvalidateWall(){
+		isValid = false;
+		GetComponent<Renderer> ().material = g_materialList [1];
+	}
+
+	void ValidateWall(){
+		isValid = true;
+		GetComponent<Renderer> ().material = g_materialList [0];
+	}
+
+	public void updateCubeNumberText(){
+		int cubeNumber = builderController.g_cubeList.Count - disabledCubesNumber;
+		cubeNumberText.text = "Nombre de cubes : " + cubeNumber;
 	}
 }

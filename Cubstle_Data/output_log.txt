@@ -1,0 +1,95 @@
+Initialize engine version: 5.4.2f2 (b7e030c65c9b)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA GeForce GTX 1070 (ID=0x1b81)
+    Vendor:   NVIDIA
+    VRAM:     8145 MB
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\INSH\Documents\PFE5A_Cubstle\Cubstle_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\INSH\Documents\PFE5A_Cubstle\Cubstle_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\INSH\Documents\PFE5A_Cubstle\Cubstle_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading C:\Users\INSH\Documents\PFE5A_Cubstle\Cubstle_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\INSH\Documents\PFE5A_Cubstle\Cubstle_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\INSH\Documents\PFE5A_Cubstle\Cubstle_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\INSH\Documents\PFE5A_Cubstle\Cubstle_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
+Loading C:\Users\INSH\Documents\PFE5A_Cubstle\Cubstle_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\INSH\Documents\PFE5A_Cubstle\Cubstle_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\INSH\Documents\PFE5A_Cubstle\Cubstle_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\INSH\Documents\PFE5A_Cubstle\Cubstle_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\INSH\Documents\PFE5A_Cubstle\Cubstle_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+- Completed reload, in  0.042 seconds
+Platform assembly: C:\Users\INSH\Documents\PFE5A_Cubstle\Cubstle_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\INSH\Documents\PFE5A_Cubstle\Cubstle_Data\Managed\System.dll (this message is harmless)
+<RI> Initializing input.
+<RI> Input initialized.
+desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
+<RI> Initialized touch support.
+OpenVR initialized!
+ 
+(Filename:  Line: 353)
+
+UnloadTime: 0.537539 ms
+Connected to lighthouse:LHR-D117E0D6
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+Setting up 2 worker threads for Enlighten.
+  Thread -> id: 1394 -> priority: 1 
+  Thread -> id: 1b74 -> priority: 1 
+0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+create wall at position (-2.5, 0.6, 1.7)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+place wall between (-2.5, 0.6, 1.7) and (2.5, 0.6, 2.7)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+current wall size : (6.0, 1.0, 2.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+current wall position : (0.0, 0.6, 2.2)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+2
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+3
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+create wall at position (0.9, 0.6, -7.5)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+place wall between (0.9, 0.6, -7.5) and (8.9, 6.6, -5.5)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+current wall size : (9.0, 7.0, 3.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+current wall position : (4.9, 3.6, -6.5)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+OpenVR Shutdown
+ 
+(Filename:  Line: 707)
+
