@@ -21,7 +21,6 @@ public class builderController : MonoBehaviour {
 	grabController m_grabController;
 	wandController m_wandController;
 	zoomController m_zoomController;
-	Vector3 m_mousePos;
 	Vector3 m_toolPos;
 
 
@@ -85,7 +84,7 @@ public class builderController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		getMousePos ();
+//		getMousePos ();
 		getToolPos ();
 
 	
@@ -270,13 +269,13 @@ public class builderController : MonoBehaviour {
 	//Renvoie ce que pointe la souris dans les coordonnées du monde
 	//on définit manuellement la distance joueur/bloc
 	//si la hauteur est trop basse, on a rehausse pour éviter de déplacer ou créer un bloc en intersection avec le sol
-	void getMousePos(){
-		var mousePos = Input.mousePosition;
-		mousePos.z = g_currentCubeDistance;
-		mousePos = Camera.main.ScreenToWorldPoint (mousePos);
-
-		m_mousePos = mousePos;
-	}
+//	void getMousePos(){
+//		var mousePos = Input.mousePosition;
+//		mousePos.z = g_currentCubeDistance;
+//		mousePos = Camera.main.ScreenToWorldPoint (mousePos);
+//
+//		m_mousePos = mousePos;
+//	}
 
 	void getToolPos(){
 		Ray controllerRay = new Ray (transform.position, transform.forward);

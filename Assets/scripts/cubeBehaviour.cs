@@ -5,7 +5,6 @@ using System.Collections.Generic;
 public class cubeBehaviour : MonoBehaviour {
 
 	int m_materialIndex;
-	Rigidbody m_rigidbody;
 	public bool g_isGrabbed;
 	public bool g_isColliding;
 	public List<Material> g_materialList;
@@ -16,7 +15,6 @@ public class cubeBehaviour : MonoBehaviour {
 		g_isColliding = false;
 		g_isGrabbed = false;
 		m_materialIndex = 0;
-		m_rigidbody = GetComponent<Rigidbody> ();
 	}
 	
 	// Update is called once per frame

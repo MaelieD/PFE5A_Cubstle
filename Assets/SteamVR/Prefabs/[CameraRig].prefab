@@ -189,7 +189,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 146900}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -6.141803, y: 15.01, z: -7.157568}
   m_LocalScale: {x: 7.2499895, y: 7.2499895, z: 7.2499895}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -547,6 +547,8 @@ MonoBehaviour:
   padPressed: 0
   padTouched: 0
   gripped: 0
+  isTeleportationController: 0
+  reticule: {fileID: 0}
 --- !u!114 &114000012875094602
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -565,6 +567,8 @@ MonoBehaviour:
   padPressed: 0
   padTouched: 0
   gripped: 0
+  isTeleportationController: 0
+  reticule: {fileID: 0}
 --- !u!114 &114000012954328926
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -596,3 +600,5 @@ MonoBehaviour:
   maxScale: 100
   minScale: 1
   cameraRig: {fileID: 146900}
+  scale: 1
+  scaleText: {fileID: 0}

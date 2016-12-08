@@ -8,7 +8,6 @@ public class zoomController : MonoBehaviour {
 	public float maxScale = 10.0f;
 	public float minScale = 1.0f;
 	public GameObject cameraRig;
-	private Vector3 unitarScaleVector;
 	public float scale = 1.0f;
 
 	public Text scaleText;
@@ -16,7 +15,6 @@ public class zoomController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {		
-		unitarScaleVector = new Vector3(scaleStep,scaleStep,scaleStep);
 		cameraRig.transform.localScale = new Vector3(scale, scale, scale);
 	}
 
@@ -28,7 +26,7 @@ public class zoomController : MonoBehaviour {
 
 	public void zoom(int zoomCoef){
 
-		Debug.Log("scale : " + scale + " min scale : " + minScale + " maxScale : " + maxScale + " zoomCoef : " + zoomCoef);
+//		Debug.Log("scale : " + scale + " min scale : " + minScale + " maxScale : " + maxScale + " zoomCoef : " + zoomCoef);
 
 		if((scale < maxScale && zoomCoef == 1) || ( scale > minScale && zoomCoef == -1)){
 			

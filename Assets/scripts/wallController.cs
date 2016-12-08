@@ -25,7 +25,7 @@ public class wallController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		isValid = true;
-		maxCubeNumber = 500;
+		maxCubeNumber = 1500;
 		maxCubeInABlocNumber = 500;
 		disabledCubesNumber = 0;
 		m_isColliding = false;
