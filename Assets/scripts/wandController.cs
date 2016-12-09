@@ -7,29 +7,80 @@ public class wandController : SteamVR_TrackedController {
 	public Vector3 velocity { get { return controller.velocity; } }
 	public Vector3 angularVelocity { get { return controller.angularVelocity; } }
 
-	public bool isTeleportationController;
+	public enum m_pressStates {PRESSED, PRESSING, UNPRESSED, IDLE};
+	public enum m_touchStates {TOUCHED, TOUCHING, UNTOUCHED, IDLE};
 
+	public bool isReady;
 
-	builderController m_builderController;
-	translationController m_translationController;
+	public int m_triggerState;
+	public int m_menuState;
+	public int m_padPressState;
+	public int m_padTouchState;
+	public int m_gripState;
+
+	public float m_triggerAxis;
+	public Vector2 m_padAxis;
 
 	// Use this for initialization
 	protected override void Start () {
 		base.Start ();
-		if (isTeleportationController) {
-			m_translationController = GetComponent<translationController> ();
 
-		} else {
-			m_builderController = GetComponent<builderController> ();
-		}
+		isReady = false;
 
+		m_triggerState = (int)m_pressStates.IDLE;
+		m_menuState = (int)m_pressStates.IDLE;
+		m_padPressState = (int)m_pressStates.IDLE;
+		m_padTouchState = (int)m_touchStates.IDLE;
+		m_gripState = (int)m_pressStates.IDLE;
+
+		m_triggerAxis = 0.0f;
+		m_padAxis = new Vector2 (0.0f, 0.0f);
+
+		isReady = true;
 
 	}
 	
 	// Update is called once per frame
 	protected override void Update () {
 		base.Update ();
-	
+
+//		if (m_triggerState == (int)m_pressStates.PRESSED) {
+//			Debug.Log ("wand controller : trigger pressed");
+//		}
+
+		Debug.Log ("wand controller : trigger state : " + m_triggerState);
+
+		m_triggerAxis = GetTriggerAxis ();
+		m_padAxis = GetTouchpadAxis ();
+	}
+
+	int setContinuousPressState(int buttonState){
+		if (buttonState == (int)m_pressStates.PRESSED) {
+			buttonState = (int)m_pressStates.PRESSING;
+		} else if (buttonState == (int)m_pressStates.UNPRESSED) {
+
+			buttonState = (int)m_pressStates.IDLE;
+		}
+
+		return buttonState;
+	}
+
+	int setContinuousTouchState(int buttonState){
+		if (buttonState == (int)m_touchStates.TOUCHED) {
+			buttonState = (int)m_touchStates.TOUCHING;
+		} else if (buttonState == (int)m_touchStates.UNTOUCHED) {
+			buttonState = (int)m_touchStates.IDLE;
+		}
+
+		return buttonState;
+	}
+
+	public void setContinuousMode(){
+		m_triggerState = setContinuousPressState (m_triggerState);
+		m_menuState = setContinuousPressState (m_menuState);
+		m_padPressState = setContinuousPressState (m_padPressState);
+		m_padTouchState = setContinuousTouchState (m_padTouchState);
+		m_gripState = setContinuousPressState (m_gripState);
 	}
 
 	public float GetTriggerAxis()
@@ -55,42 +106,26 @@ public class wandController : SteamVR_TrackedController {
 	public override void OnTriggerClicked(ClickedEventArgs e)
 	{
 		base.OnTriggerClicked (e);
-		if (isTeleportationController) {
-			
-		} else {
-			
-			m_builderController.setTriggerClicked (true);
-		}
+		setTriggerClicked (true);
 
 	}
 
 	public override void OnTriggerUnclicked(ClickedEventArgs e)
 	{
 		base.OnTriggerUnclicked(e);
-		if (isTeleportationController) {
-
-		} else {
-			m_builderController.setTriggerClicked (false);
-		}
+		setTriggerClicked (false);
 	}
 
 	public override void OnMenuClicked(ClickedEventArgs e)
 	{
 		base.OnMenuClicked(e);
-		if (isTeleportationController) {
-		} else {
-			m_builderController.setMenuClicked (true);
-		}
+		setMenuClicked (true);
 	}
 
 	public override void OnMenuUnclicked(ClickedEventArgs e)
 	{
 		base.OnMenuUnclicked(e);
-		if (isTeleportationController) {
-		} else {
-			
-			m_builderController.setMenuClicked (false);
-		}
+		setMenuClicked (false);
 	}
 
 	public override void OnSteamClicked(ClickedEventArgs e)
@@ -101,58 +136,76 @@ public class wandController : SteamVR_TrackedController {
 	public override void OnPadClicked(ClickedEventArgs e)
 	{
 		base.OnPadClicked(e);
-		if (isTeleportationController) {
-			m_translationController.setPadClicked (true);
-		} else {
-			m_builderController.setPadClicked (true);
-		}
-
+		setPadClicked (true);
 	}
 
 	public override void OnPadUnclicked(ClickedEventArgs e)
 	{
 		base.OnPadUnclicked(e);
-		if (isTeleportationController) {
-			m_translationController.setPadClicked (false);
-		} else {
-			m_builderController.setPadClicked (false);
-		}
+		setPadClicked (false);
 	}
 
 	public override void OnPadTouched(ClickedEventArgs e)
 	{
 		base.OnPadTouched(e);
-		if (isTeleportationController) {
-		} else {
-			m_builderController.setPadTouched (true);
-		}
+		setPadTouched (true);
 	}
 
 	public override void OnPadUntouched(ClickedEventArgs e)
 	{
 		base.OnPadUntouched(e);
-		if (isTeleportationController) {
-		} else {
-			m_builderController.setPadTouched (false);
-		}
+		setPadTouched (false);
 	}
 
 	public override void OnGripped(ClickedEventArgs e)
 	{
 		base.OnGripped(e);
-		if (isTeleportationController) {
-		} else {
-			
-			m_builderController.setGripClicked (true);
-		}
+		setGripClicked (true);
 	}
 
 	public override void OnUngripped(ClickedEventArgs e)
 	{
 		base.OnUngripped(e);
-		if (isTeleportationController) {
+		setGripClicked (false);
+	}
+
+	public void setTriggerClicked(bool isClicked){
+		if (isClicked) {
+			m_triggerState = (int)m_pressStates.PRESSED;
 		} else {
-			m_builderController.setGripClicked (false);
+			m_triggerState = (int)m_pressStates.UNPRESSED;
+		}
+	}
+
+	public void setMenuClicked(bool isClicked){
+		if (isClicked) {
+			m_menuState = (int)m_pressStates.PRESSED;
+		} else {
+			m_menuState = (int)m_pressStates.UNPRESSED;
+		}
+	}
+
+	public void setPadClicked(bool isClicked){
+		if (isClicked) {
+			m_padPressState = (int)m_pressStates.PRESSED;
+		} else {
+			m_padPressState = (int)m_pressStates.UNPRESSED;
+		}
+	}
+
+	public void setPadTouched(bool isTouched){
+		if (isTouched) {
+			m_padTouchState = (int)m_touchStates.TOUCHED;
+		} else {
+			m_padTouchState = (int)m_touchStates.UNTOUCHED;
+		}
+	}
+
+	public void setGripClicked(bool isClicked){
+		if (isClicked) {
+			m_gripState = (int)m_pressStates.PRESSED;
+		} else {
+			m_gripState = (int)m_pressStates.UNPRESSED;
 		}
 	}
 }

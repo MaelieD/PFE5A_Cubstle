@@ -363,7 +363,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 176160685}
+      - m_Target: {fileID: 1758258743}
         m_MethodName: toggleEmptyWallMode
         m_Mode: 1
         m_Arguments:
@@ -492,8 +492,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 176160687}
   - 114: {fileID: 176160686}
-  - 114: {fileID: 176160685}
-  - 114: {fileID: 176160683}
   - 114: {fileID: 176160684}
   m_Layer: 0
   m_Name: Controller (right)
@@ -502,24 +500,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &176160683
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114000014031989894, guid: 4d293c8e162f3874b982baadd71153d2,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 176160682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41ca8311f07044f4da095e82008aaeee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scaleStep: 0.05
-  maxScale: 10
-  minScale: 1
-  cameraRig: {fileID: 1758258736}
-  scale: 1
-  scaleText: {fileID: 1616000911}
 --- !u!114 &176160684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -538,24 +518,14 @@ MonoBehaviour:
   padPressed: 0
   padTouched: 0
   gripped: 0
-  isTeleportationController: 0
---- !u!114 &176160685
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114000012954328926, guid: 4d293c8e162f3874b982baadd71153d2,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 176160682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64a7ea566ea24ec4f9df89a42f1abf4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  g_isDrawingWall: 0
-  g_isRemoving: 0
-  g_wallTool: {fileID: 1251409612}
-  g_removeTool: {fileID: 705494910}
-  g_grabTool: {fileID: 1310946452}
+  isReady: 0
+  m_triggerState: 0
+  m_menuState: 0
+  m_padPressState: 0
+  m_padTouchState: 0
+  m_gripState: 0
+  m_triggerAxis: 0
+  m_padAxis: {x: 0, y: 0}
 --- !u!114 &176160686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -782,134 +752,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 283534803}
---- !u!43 &396217219
-Mesh:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: 
-  serializedVersion: 8
-  m_SubMeshes:
-  - serializedVersion: 2
-    firstByte: 0
-    indexCount: 24
-    topology: 0
-    firstVertex: 0
-    vertexCount: 8
-    localAABB:
-      m_Center: {x: 0, y: 0.01, z: 0}
-      m_Extent: {x: 2.1499991, y: 0, z: 1.6499997}
-  m_Shapes:
-    vertices: []
-    shapes: []
-    channels: []
-    fullWeights: []
-  m_BindPose: []
-  m_BoneNameHashes: 
-  m_RootBoneNameHash: 0
-  m_MeshCompression: 0
-  m_IsReadable: 1
-  m_KeepVertices: 1
-  m_KeepIndices: 1
-  m_IndexBuffer: 000004000100010004000500010005000200020005000600020006000300030006000700030007000000000007000400
-  m_Skin: []
-  m_VertexData:
-    m_CurrentChannels: 13
-    m_VertexCount: 8
-    m_Channels:
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 3
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 12
-      format: 0
-      dimension: 4
-    - stream: 0
-      offset: 28
-      format: 0
-      dimension: 2
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    m_DataSize: 288
-    _typelessdata: f9ffff3f0ad7233cfeffbfbf000000000000803f0000803f0000803f0000000000000000f9ffffbf0ad7233cfeffbfbf000000000000803f0000803f0000803f0000803f00000000f9ffffbf0ad7233cfeffbf3f000000000000803f0000803f0000803f0000000000000000f9ffff3f0ad7233cfeffbf3f000000000000803f0000803f0000803f0000803f00000000969909400ad7233c3133d3bf000000000000803f0000803f00000000000000000000803f969909c00ad7233c3133d3bf000000000000803f0000803f000000000000803f0000803f969909c00ad7233c3133d33f000000000000803f0000803f00000000000000000000803f969909400ad7233c3133d33f000000000000803f0000803f000000000000803f0000803f
-  m_CompressedMesh:
-    m_Vertices:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UV:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Normals:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Tangents:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Weights:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_NormalSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_TangentSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_FloatColors:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_BoneIndices:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Triangles:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UVInfo: 0
-  m_LocalAABB:
-    m_Center: {x: 0, y: 0.01, z: 0}
-    m_Extent: {x: 2.1499991, y: 0, z: 1.6499997}
-  m_MeshUsageFlags: 0
-  m_BakedConvexCollisionMesh: 
-  m_BakedTriangleCollisionMesh: 
-  m_MeshOptimized: 0
 --- !u!1 &396604167
 GameObject:
   m_ObjectHideFlags: 0
@@ -1512,6 +1354,134 @@ MonoBehaviour:
   g_materialList:
   - {fileID: 2100000, guid: a2b7a02e05f4ad94e838aba7696e19c3, type: 2}
   - {fileID: 2100000, guid: 9f3ba544f585d5541b797997cde89333, type: 2}
+--- !u!43 &761119000
+Mesh:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  serializedVersion: 8
+  m_SubMeshes:
+  - serializedVersion: 2
+    firstByte: 0
+    indexCount: 24
+    topology: 0
+    firstVertex: 0
+    vertexCount: 8
+    localAABB:
+      m_Center: {x: 0, y: 0.01, z: 0}
+      m_Extent: {x: 2.1499991, y: 0, z: 1.6499997}
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
+  m_MeshCompression: 0
+  m_IsReadable: 1
+  m_KeepVertices: 1
+  m_KeepIndices: 1
+  m_IndexBuffer: 000004000100010004000500010005000200020005000600020006000300030006000700030007000000000007000400
+  m_Skin: []
+  m_VertexData:
+    m_CurrentChannels: 13
+    m_VertexCount: 8
+    m_Channels:
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 3
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 12
+      format: 0
+      dimension: 4
+    - stream: 0
+      offset: 28
+      format: 0
+      dimension: 2
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    m_DataSize: 288
+    _typelessdata: f9ffff3f0ad7233cfeffbfbf000000000000803f0000803f0000803f0000000000000000f9ffffbf0ad7233cfeffbfbf000000000000803f0000803f0000803f0000803f00000000f9ffffbf0ad7233cfeffbf3f000000000000803f0000803f0000803f0000000000000000f9ffff3f0ad7233cfeffbf3f000000000000803f0000803f0000803f0000803f00000000969909400ad7233c3133d3bf000000000000803f0000803f00000000000000000000803f969909c00ad7233c3133d3bf000000000000803f0000803f000000000000803f0000803f969909c00ad7233c3133d33f000000000000803f0000803f00000000000000000000803f969909400ad7233c3133d33f000000000000803f0000803f000000000000803f0000803f
+  m_CompressedMesh:
+    m_Vertices:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UV:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Normals:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Tangents:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Weights:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_NormalSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_TangentSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_FloatColors:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_BoneIndices:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Triangles:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UVInfo: 0
+  m_LocalAABB:
+    m_Center: {x: 0, y: 0.01, z: 0}
+    m_Extent: {x: 2.1499991, y: 0, z: 1.6499997}
+  m_MeshUsageFlags: 0
+  m_BakedConvexCollisionMesh: 
+  m_BakedTriangleCollisionMesh: 
+  m_MeshOptimized: 0
 --- !u!1 &761413899
 GameObject:
   m_ObjectHideFlags: 0
@@ -1650,7 +1620,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 176160685}
+      - m_Target: {fileID: 1758258743}
         m_MethodName: setRemoveMode
         m_Mode: 6
         m_Arguments:
@@ -2235,35 +2205,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1616000909}
---- !u!21 &1632179469
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: Sprites/Default
-  m_Shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 5
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-    - first:
-        name: _MainTex
-      second:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - first:
-        name: PixelSnap
-      second: 0
-    m_Colors:
-    - first:
-        name: _Color
-      second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1715097737
 GameObject:
   m_ObjectHideFlags: 0
@@ -2301,7 +2242,14 @@ MonoBehaviour:
   padPressed: 0
   padTouched: 0
   gripped: 0
-  isTeleportationController: 1
+  isReady: 0
+  m_triggerState: 0
+  m_menuState: 0
+  m_padPressState: 0
+  m_padTouchState: 0
+  m_gripState: 0
+  m_triggerAxis: 0
+  m_padAxis: {x: 0, y: 0}
 --- !u!114 &1715097739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2419,7 +2367,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 176160685}
+      - m_Target: {fileID: 1758258743}
         m_MethodName: setWallMode
         m_Mode: 6
         m_Arguments:
@@ -2477,6 +2425,9 @@ GameObject:
   - 23: {fileID: 1758258739}
   - 33: {fileID: 1758258738}
   - 114: {fileID: 1758258737}
+  - 114: {fileID: 1758258743}
+  - 114: {fileID: 1758258742}
+  - 114: {fileID: 1758258744}
   m_Layer: 0
   m_Name: '[CameraRig]'
   m_TagString: Untagged
@@ -2518,7 +2469,7 @@ MeshFilter:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1758258736}
-  m_Mesh: {fileID: 396217219}
+  m_Mesh: {fileID: 761119000}
 --- !u!23 &1758258739
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2533,7 +2484,7 @@ MeshRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 1632179469}
+  - {fileID: 1816957446}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
@@ -2581,6 +2532,80 @@ Transform:
   - {fileID: 1715097740}
   m_Father: {fileID: 0}
   m_RootOrder: 5
+--- !u!114 &1758258742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1758258736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41ca8311f07044f4da095e82008aaeee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleStep: 0.01
+  maxScale: 10
+  minScale: 1
+  scale: 1
+  scaleText: {fileID: 1616000911}
+--- !u!114 &1758258743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1758258736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64a7ea566ea24ec4f9df89a42f1abf4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  g_isDrawingWall: 0
+  g_isRemoving: 0
+  g_wallTool: {fileID: 1251409612}
+  g_removeTool: {fileID: 705494910}
+  g_grabTool: {fileID: 1310946452}
+  g_leftController: {fileID: 1715097737}
+  g_rightController: {fileID: 176160682}
+--- !u!114 &1758258744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1758258736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3587d71d660ffd45add21749861fbbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!21 &1816957446
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Sprites/Default
+  m_Shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+    - first:
+        name: _MainTex
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - first:
+        name: PixelSnap
+      second: 0
+    m_Colors:
+    - first:
+        name: _Color
+      second: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1853876663
 GameObject:
   m_ObjectHideFlags: 0
@@ -2841,7 +2866,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 176160685}
+      - m_Target: {fileID: 1758258743}
         m_MethodName: togglePlayMode
         m_Mode: 1
         m_Arguments:
@@ -2850,7 +2875,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Toggle+ToggleEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
@@ -2978,7 +3003,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 176160685}
+      - m_Target: {fileID: 1758258743}
         m_MethodName: setGrabMode
         m_Mode: 6
         m_Arguments:

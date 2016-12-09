@@ -7,7 +7,6 @@ public class zoomController : MonoBehaviour {
 	public float scaleStep = 0.01f;
 	public float maxScale = 10.0f;
 	public float minScale = 1.0f;
-	public GameObject cameraRig;
 	public float scale = 1.0f;
 
 	public Text scaleText;
@@ -15,7 +14,7 @@ public class zoomController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {		
-		cameraRig.transform.localScale = new Vector3(scale, scale, scale);
+		transform.localScale = new Vector3(scale, scale, scale);
 	}
 
 
@@ -32,7 +31,7 @@ public class zoomController : MonoBehaviour {
 			
 			scale += zoomCoef * scaleStep;
 			float zoomFactor = scale / minScale;
-			cameraRig.transform.localScale = new Vector3(minScale, minScale, minScale) * zoomFactor;
+			transform.localScale = new Vector3(minScale, minScale, minScale) * zoomFactor;
 //			cameraRig.transform.position = new Vector3 (cameraRig.transform.position.x, cameraRig.transform.localScale.y, cameraRig.transform.position.z);
 
 			builderController.g_currentCubeDistanceMin = builderController.g_cubeDistanceMin * zoomFactor;

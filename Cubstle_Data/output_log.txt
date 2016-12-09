@@ -29,63 +29,139 @@ OpenVR initialized!
  
 (Filename:  Line: 353)
 
-UnloadTime: 0.537539 ms
+UnloadTime: 0.454610 ms
 Connected to lighthouse:LHR-D117E0D6
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
 Setting up 2 worker threads for Enlighten.
-  Thread -> id: 1394 -> priority: 1 
-  Thread -> id: 1b74 -> priority: 1 
-0
+  Thread -> id: 1600 -> priority: 1 
+  Thread -> id: 27a4 -> priority: 1 
+create wall at position (3.3, 15.0, -5.4)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-create wall at position (-2.5, 0.6, 1.7)
+create wall at position (3.0, 13.7, -5.1)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-place wall between (-2.5, 0.6, 1.7) and (2.5, 0.6, 2.7)
+place wall between (3.0, 13.7, -5.1) and (1.0, 13.7, -6.1)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-current wall size : (6.0, 1.0, 2.0)
+current wall size : (3.0, 1.0, 2.0)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-current wall position : (0.0, 0.6, 2.2)
+current wall position : (2.0, 13.7, -5.6)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-1
+create wall at position (1.2, 14.2, -6.0)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-2
+create wall at position (1.4, 14.8, -6.1)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-3
+create wall at position (1.8, 14.5, -5.9)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-0
+create wall at position (1.8, 14.7, -6.0)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-create wall at position (0.9, 0.6, -7.5)
+create wall at position (1.3, 15.1, -6.2)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-place wall between (0.9, 0.6, -7.5) and (8.9, 6.6, -5.5)
+create wall at position (1.9, 15.6, -6.2)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-current wall size : (9.0, 7.0, 3.0)
+place wall between (1.9, 15.6, -6.2) and (1.9, 15.6, -6.2)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
-current wall position : (4.9, 3.6, -6.5)
+current wall size : (1.0, 1.0, 1.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+current wall position : (1.9, 15.6, -6.2)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+create wall at position (1.9, 14.8, -6.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+create wall at position (0.8, 15.6, -6.4)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+place wall between (0.8, 15.6, -6.4) and (0.8, 15.6, -6.4)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+current wall size : (1.0, 1.0, 1.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+current wall position : (0.8, 15.6, -6.4)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+create wall at position (0.1, 15.6, -6.4)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+create wall at position (-0.2, 15.6, -6.4)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+place wall between (-0.2, 15.6, -6.4) and (-2.2, 18.6, -5.4)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+current wall size : (3.0, 4.0, 2.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+current wall position : (-1.2, 17.1, -5.9)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+create wall at position (1.6, 16.7, -6.1)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+place wall between (1.6, 16.7, -6.1) and (1.6, 16.7, -6.1)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+current wall size : (1.0, 1.0, 1.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+current wall position : (1.6, 16.7, -6.1)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+create wall at position (1.5, 17.8, -5.9)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+place wall between (1.5, 17.8, -5.9) and (1.5, 17.8, -5.9)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+current wall size : (1.0, 1.0, 1.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
+
+current wall position : (1.5, 17.8, -5.9)
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 42)
 
