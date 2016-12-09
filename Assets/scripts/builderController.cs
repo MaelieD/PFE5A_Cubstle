@@ -11,7 +11,6 @@ public class builderController : MonoBehaviour {
 	wallController m_wallController;
 	removeController m_removeController;
 	grabController m_grabController;
-	wandController m_leftWandController;
 	wandController m_rightWandController;
 	zoomController m_zoomController;
 	Vector3 m_toolPos;
@@ -65,7 +64,6 @@ public class builderController : MonoBehaviour {
 		m_grabController = g_grabTool.GetComponent<grabController> ();
 		m_zoomController = GetComponent<zoomController> ();
 
-		m_leftWandController = g_leftController.GetComponent<wandController> ();
 		m_rightWandController = g_rightController.GetComponent<wandController> ();
 
 	}
@@ -80,7 +78,7 @@ public class builderController : MonoBehaviour {
 //			Debug.Log ("builder controller : trigger pressed");
 //		}
 
-		Debug.Log ("builder Controller : trigger state " + m_rightWandController.m_triggerState);
+
 
 		if (m_rightWandController.isReady) {
 			
@@ -156,7 +154,6 @@ public class builderController : MonoBehaviour {
 				//			Debug.Log ("distance : " + g_currentCubeDistance + " distanceMax : " + g_currentCubeDistanceMax + " distanceMin : " + g_currentCubeDistanceMin);
 			}
 
-			m_leftWandController.setContinuousMode ();
 			m_rightWandController.setContinuousMode ();
 			
 		}

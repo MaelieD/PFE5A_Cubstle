@@ -47,11 +47,11 @@ public class wandController : SteamVR_TrackedController {
 //		if (m_triggerState == (int)m_pressStates.PRESSED) {
 //			Debug.Log ("wand controller : trigger pressed");
 //		}
-
-		Debug.Log ("wand controller : trigger state : " + m_triggerState);
+//		Debug.Log("wand controller : trigger state : " + m_triggerState);
 
 		m_triggerAxis = GetTriggerAxis ();
 		m_padAxis = GetTouchpadAxis ();
+
 	}
 
 	int setContinuousPressState(int buttonState){
