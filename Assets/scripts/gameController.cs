@@ -30,7 +30,8 @@ public class gameController : MonoBehaviour {
 
 	public void startGame(){
 		gameZonePlane.GetComponent<Renderer> ().material = transparentMaterial;
-		startGameCanvas.SetActive (false);
+		startGameCanvas.GetComponent<AudioSource> ().Play ();
+		startGameCanvas.transform.position = new Vector3(startGameCanvas.transform.position.x, -100.0f, startGameCanvas.transform.position.z);
 		controllerCanvas.SetActive (false);
 
 		foreach (GameObject cube in builderController.g_cubeList) {

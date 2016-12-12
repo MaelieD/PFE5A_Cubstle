@@ -207,9 +207,5 @@ public class builderController : MonoBehaviour {
 		setRemoveMode (false);
 		setGrabMode (false);
 	}
-
-	public void toggleEmptyWallMode(){
-		m_wallController.g_isEmpty = !m_wallController.g_isEmpty;
-	}
 		
 }

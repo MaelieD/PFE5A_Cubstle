@@ -29,7 +29,7 @@ public class wallController : MonoBehaviour {
 		maxCubeInABlocNumber = 500;
 		disabledCubesNumber = 0;
 		m_isColliding = false;
-		g_isEmpty = false;
+		g_isEmpty = true;
 
 	}
 
