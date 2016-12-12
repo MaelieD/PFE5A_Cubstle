@@ -12,12 +12,14 @@ public class gameController : MonoBehaviour {
 
 	public static int g_currentMode;
 	builderController m_builderController;
+	catapultController m_catapultController;
 
 	// Use this for initialization
 	void Start () {
 
 		g_currentMode = (int)modes.BUILD;
 		m_builderController = GetComponent<builderController> ();
+		m_catapultController = GetComponent<catapultController> ();
 	
 	}
 	
@@ -38,6 +40,7 @@ public class gameController : MonoBehaviour {
 			}
 		}
 		m_builderController.setIdleMode ();
+		m_catapultController.startProjectileLaunch ();
 		g_currentMode = (int)modes.PLAY;
 	}
 }

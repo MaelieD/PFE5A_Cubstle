@@ -27,7 +27,7 @@ public class teleportationController : MonoBehaviour {
 //			Debug.Log ("trigger state : " + m_leftWandController.m_triggerState + " target : " + m_reticlePoser.hitTarget.name);
 
 			if (m_leftWandController.m_triggerState == (int)wandController.m_pressStates.PRESSED && m_reticlePoser.hitTarget.name == "Game Zone Plane") {
-				Debug.Log ("teleport");
+//				Debug.Log ("teleport");
 				transform.position = g_reticleSphere.transform.position;
 			}
 		}

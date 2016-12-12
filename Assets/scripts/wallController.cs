@@ -188,6 +188,8 @@ public class wallController : MonoBehaviour {
 
 	void resetWallTool(){
 		transform.localScale = new Vector3 (1.0f, 1.0f, 1.0f);
+		isValid = true;
+		GetComponent<Renderer> ().material = g_materialList [0];
 	}
 
 	void OnCollisionStay(Collision col){
