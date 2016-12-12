@@ -44,8 +44,8 @@ public class wallController : MonoBehaviour {
 		currentCube.name = "Placed Cube";
 		currentCube.transform.position = p_pos;
 
-		if(builderController.g_isPlayMode){
-			Debug.Log ("play mode");
+		if(gameController.g_currentMode == (int)gameController.modes.PLAY){
+//			Debug.Log ("play mode");
 			currentCube.GetComponent<Rigidbody> ().constraints = RigidbodyConstraints.None;
 			currentCube.GetComponent<Rigidbody> ().useGravity = true;
 		}
@@ -58,7 +58,7 @@ public class wallController : MonoBehaviour {
 	public void createWall(Vector3 p_pos){
 		m_wallStart = p_pos;
 		transform.position = m_wallStart;
-		Debug.Log ("create wall at position " + p_pos);
+//		Debug.Log ("create wall at position " + p_pos);
 	}
 
 	//fonction pour dessiner un mur entre la position initiale et la position finale
@@ -125,9 +125,9 @@ public class wallController : MonoBehaviour {
 	public void placeWall(){
 
 		if(!m_isColliding && isValid){
-			Debug.Log ("place wall between " + m_wallStart + " and " + m_wallEnd);
-			Debug.Log ("current wall size : " + transform.localScale);
-			Debug.Log ("current wall position : " + transform.position);
+//			Debug.Log ("place wall between " + m_wallStart + " and " + m_wallEnd);
+//			Debug.Log ("current wall size : " + transform.localScale);
+//			Debug.Log ("current wall position : " + transform.position);
 			Vector3 currentPos = m_wallStart;
 
 			//défintion des offset pour savoir s'il faut avancer ou reculer dans chaque composante du mur

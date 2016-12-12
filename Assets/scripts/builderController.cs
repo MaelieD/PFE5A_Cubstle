@@ -201,39 +201,15 @@ public class builderController : MonoBehaviour {
 		}
 	}
 
+	public void setIdleMode(){
+		g_currentMode = (int)g_modes.IDLE;
+		setWallMode (false);
+		setRemoveMode (false);
+		setGrabMode (false);
+	}
+
 	public void toggleEmptyWallMode(){
 		m_wallController.g_isEmpty = !m_wallController.g_isEmpty;
-	}
-
-	void setPlayMode(bool p_isEnter){
-		if(p_isEnter){
-			foreach(GameObject gameObject in g_cubeList){
-				if(gameObject != null){
-					gameObject.GetComponent<Rigidbody> ().constraints = RigidbodyConstraints.None;
-					gameObject.GetComponent<Rigidbody> ().useGravity = true;
-				}
-
-			}
-		}
-		else{
-			foreach(GameObject gameObject in g_cubeList){
-				if(gameObject != null){
-					gameObject.GetComponent<Rigidbody> ().constraints = RigidbodyConstraints.FreezeAll;
-					gameObject.GetComponent<Rigidbody> ().useGravity = false;
-				}
-
-			}
-		}
-	}
-
-	public void togglePlayMode(){
-		g_isPlayMode = !g_isPlayMode;
-		if(g_isPlayMode){
-			setPlayMode (true);
-		}
-		else{
-			setPlayMode (false);
-		}
 	}
 		
 }

@@ -21,7 +21,7 @@ public class teleportationController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		Debug.Log("trigger state : " + m_leftWandController.m_triggerState);
+//		Debug.Log("trigger state : " + m_leftWandController.m_triggerState);
 	
 		if (m_leftWandController.isReady) {
 //			Debug.Log ("trigger state : " + m_leftWandController.m_triggerState + " target : " + m_reticlePoser.hitTarget.name);
