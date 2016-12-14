@@ -3,6 +3,11 @@ using System.Collections;
 
 public class projectileBehaviour : MonoBehaviour {
 
+	[SerializeField]
+	public Rigidbody rigidbody;
+	[SerializeField]
+	public AudioSource audioSource;
+
 	bool isPlayed;
 
 	// Use this for initialization
@@ -10,14 +15,10 @@ public class projectileBehaviour : MonoBehaviour {
 
 		isPlayed = false;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	}
 
 	void OnCollisionEnter(Collision col){
-		if (col.gameObject.name == "Placed Cube" && GetComponent<Rigidbody>().velocity.magnitude > 3.0f && isPlayed == false) {
-			GetComponent<AudioSource> ().Play ();
+		if (col.gameObject.name == "Placed Cube" && rigidbody.velocity.magnitude > 3.0f && isPlayed == false) {
+			audioSource.Play ();
 			isPlayed = true;
 		}
 	}

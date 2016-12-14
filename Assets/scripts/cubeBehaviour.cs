@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 public class cubeBehaviour : MonoBehaviour {
 
+	[SerializeField]
+	public Renderer rend;
+
 	int m_materialIndex;
 	public bool g_isGrabbed;
 	public bool g_isColliding;
@@ -63,7 +66,7 @@ public class cubeBehaviour : MonoBehaviour {
 			break;
 		}
 		if(m_materialIndex != materialIndex){
-			GetComponent<Renderer> ().material = g_materialList [materialIndex];
+			rend.material = g_materialList [materialIndex];
 		}
 
 
@@ -81,7 +84,7 @@ public class cubeBehaviour : MonoBehaviour {
 
 
 	void OnCollisionExit(Collision col){
-		GetComponent<Renderer> ().material = g_materialList [0];
+		rend.material = g_materialList [0];
 		g_isColliding = false;
 	}
 		

@@ -526,6 +526,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58726e0fb92e2b64b821eb4c0ccefc35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidbody: {fileID: 124792352}
+  audioSource: {fileID: 124792357}
 --- !u!1 &167685421
 GameObject:
   m_ObjectHideFlags: 0
@@ -1374,6 +1376,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4ca99dec14361f46899a82588dc0010, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rend: {fileID: 705494911}
   wallTool: {fileID: 1251409612}
   g_materialList:
   - {fileID: 2100000, guid: a2b7a02e05f4ad94e838aba7696e19c3, type: 2}
@@ -2144,6 +2147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6581120818406b945aead337a3c39be2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rend: {fileID: 1310946453}
   g_grabbedCube: {fileID: 0}
   g_materialList:
   - {fileID: 2100000, guid: a2b7a02e05f4ad94e838aba7696e19c3, type: 2}
@@ -2704,8 +2708,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54b93e0462f73ea46ac09c6cc7dfa214, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rendGameZonePlane: {fileID: 91320125}
+  audioSourceStartGameCanvas: {fileID: 1162749336}
   transparentMaterial: {fileID: 2100000, guid: 399c65f3cebc82f46b8761c8287a7dfc, type: 2}
-  gameZonePlane: {fileID: 91320124}
   startGameCanvas: {fileID: 1162749330}
   controllerCanvas: {fileID: 167685421}
   gameCanvas: {fileID: 1771810794}
@@ -3027,6 +3032,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44c490a21d1faf347be5264746604bcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rend: {fileID: 1949196922}
   g_isGrabbed: 0
   g_isColliding: 0
   g_materialList:

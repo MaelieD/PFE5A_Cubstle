@@ -4,21 +4,14 @@ using System.Collections.Generic;
 
 public class grabController : MonoBehaviour {
 
+	[SerializeField]
+	public Renderer rend;
+
 	bool m_isGrabbing;
 	public GameObject g_grabbedCube;
 	Vector3 m_grabbedCubeStartPos;
 
 	public List<Material> g_materialList;
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
 	public void moveGrabTool(Vector3 p_pos){
 		transform.position = p_pos;
@@ -33,10 +26,10 @@ public class grabController : MonoBehaviour {
 		m_isGrabbing = p_isGrabbing;
 
 		if(m_isGrabbing){
-			GetComponent<Renderer> ().material = g_materialList [1];
+			rend.material = g_materialList [1];
 		}
 		else{
-			GetComponent<Renderer> ().material = g_materialList [0];
+			rend.material = g_materialList [0];
 		}
 	}
 

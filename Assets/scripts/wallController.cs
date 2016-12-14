@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class wallController : MonoBehaviour {
 
+	[SerializeField]
+	public Renderer rend;
+
 	Vector3 m_wallStart;
 	Vector3 m_wallEnd;
 	bool m_isColliding;
@@ -33,10 +36,6 @@ public class wallController : MonoBehaviour {
 
 	}
 
-	void Update(){
-		
-	}
-
 	void createCube(Vector3 p_pos){
 
 		GameObject currentCube = Instantiate (g_unitCube);
@@ -46,8 +45,9 @@ public class wallController : MonoBehaviour {
 
 		if(gameController.g_currentMode == (int)gameController.modes.PLAY){
 //			Debug.Log ("play mode");
-			currentCube.GetComponent<Rigidbody> ().constraints = RigidbodyConstraints.None;
-			currentCube.GetComponent<Rigidbody> ().useGravity = true;
+			Rigidbody currentRigidbody = currentCube.GetComponent<Rigidbody> ();
+			currentRigidbody.constraints = RigidbodyConstraints.None;
+			currentRigidbody.useGravity = true;
 		}
 
 		builderController.g_cubeList.Add (currentCube);
@@ -189,18 +189,18 @@ public class wallController : MonoBehaviour {
 	void resetWallTool(){
 		transform.localScale = new Vector3 (1.0f, 1.0f, 1.0f);
 		isValid = true;
-		GetComponent<Renderer> ().material = g_materialList [0];
+		rend.material = g_materialList [0];
 	}
 
 	void OnCollisionStay(Collision col){
-		GetComponent<Renderer> ().material = g_materialList [1];
+		rend.material = g_materialList [1];
 		m_isColliding = true;
 		
 	}
 
 	void OnCollisionExit(Collision col){
 		if (isValid) {
-			GetComponent<Renderer> ().material = g_materialList [0];
+			rend.material = g_materialList [0];
 		}
 
 		m_isColliding = false;
@@ -209,12 +209,12 @@ public class wallController : MonoBehaviour {
 
 	void InvalidateWall(){
 		isValid = false;
-		GetComponent<Renderer> ().material = g_materialList [1];
+		rend.material = g_materialList [1];
 	}
 
 	void ValidateWall(){
 		isValid = true;
-		GetComponent<Renderer> ().material = g_materialList [0];
+		rend.material = g_materialList [0];
 	}
 
 	public void updateCubeNumberText(){

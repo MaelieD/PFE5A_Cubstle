@@ -5,9 +5,13 @@ using UnityEngine.UI;
 
 public class gameController : MonoBehaviour {
 
+	[SerializeField]
+	public Renderer rendGameZonePlane;
+	[SerializeField]
+	public AudioSource audioSourceStartGameCanvas;
+
 	public enum modes {BUILD, PLAY};
 	public Material transparentMaterial;
-	public GameObject gameZonePlane;
 	public GameObject startGameCanvas;
 	public GameObject controllerCanvas;
 	public GameObject gameCanvas;
@@ -42,8 +46,8 @@ public class gameController : MonoBehaviour {
 	}
 
 	public void startGame(){
-		gameZonePlane.GetComponent<Renderer> ().material = transparentMaterial;
-		startGameCanvas.GetComponent<AudioSource> ().Play ();
+		rendGameZonePlane.material = transparentMaterial;
+		audioSourceStartGameCanvas.Play ();
 		startGameCanvas.transform.position = new Vector3(startGameCanvas.transform.position.x, -100.0f, startGameCanvas.transform.position.z);
 		controllerCanvas.SetActive (false);
 		gameCanvas.SetActive (true);

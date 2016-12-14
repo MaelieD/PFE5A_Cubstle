@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 public class removeController : MonoBehaviour {
 
+	[SerializeField]
+	public Renderer rend;
+
 	bool m_isRemoving;
 	public GameObject wallTool;
 	public List<Material> g_materialList;
@@ -32,10 +35,10 @@ public class removeController : MonoBehaviour {
 		m_isRemoving = p_isRemoving;
 
 		if(m_isRemoving){
-			GetComponent<Renderer> ().material = g_materialList [1];
+			rend.material = g_materialList [1];
 		}
 		else{
-			GetComponent<Renderer> ().material = g_materialList [0];
+			rend.material = g_materialList [0];
 		}
 	}
 
