@@ -46,6 +46,8 @@ public class gameController : MonoBehaviour {
 	}
 
 	public void startGame(){
+		// if text button == Play
+		//Button.text = "Build" 
 		rendGameZonePlane.material = transparentMaterial;
 		audioSourceStartGameCanvas.Play ();
 		startGameCanvas.transform.position = new Vector3(startGameCanvas.transform.position.x, -100.0f, startGameCanvas.transform.position.z);
@@ -62,5 +64,10 @@ public class gameController : MonoBehaviour {
 		m_catapultController.startProjectileLaunch ();
 		g_currentMode = (int)modes.PLAY;
 		startTime = Time.time;
+
+		// if text button == Build
+		//Button.text = "Play" et faire inverse de ci-dessous  
 	}
+
+
 }
