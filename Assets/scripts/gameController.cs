@@ -40,7 +40,7 @@ public class gameController : MonoBehaviour {
 			int minutes = (int)currentTime / 60;
 			int secondes = (int)currentTime % 60;
 
-			timeText.text = "Temps : " + minutes + ":" + secondes;
+			timeText.text = "Temps : " + minutes + ":" + secondes.ToString("D2");
 		}
 
 	}

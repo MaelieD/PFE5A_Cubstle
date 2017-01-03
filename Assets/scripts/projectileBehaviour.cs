@@ -20,6 +20,7 @@ public class projectileBehaviour : MonoBehaviour {
 		if (col.gameObject.name == "Placed Cube" && rigidbody.velocity.magnitude > 3.0f && isPlayed == false) {
 			audioSource.Play ();
 			isPlayed = true;
+			catapultController.contacts++;
 		}
 	}
 }
