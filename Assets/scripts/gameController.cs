@@ -15,12 +15,14 @@ public class gameController : MonoBehaviour {
 	public GameObject startGameCanvas;
 	public GameObject controllerCanvas;
 	public GameObject gameCanvas;
+	public GameObject leftModel;
 
 	public Text timeText;
 
 	public static int g_currentMode;
 	builderController m_builderController;
 	catapultController m_catapultController;
+	catchBehaviour m_catchBehaviour;
 
 	float startTime;
 
@@ -30,6 +32,7 @@ public class gameController : MonoBehaviour {
 		g_currentMode = (int)modes.BUILD;
 		m_builderController = GetComponent<builderController> ();
 		m_catapultController = GetComponent<catapultController> ();
+		m_catchBehaviour = leftModel.GetComponent<catchBehaviour> ();
 	
 	}
 	
@@ -64,6 +67,8 @@ public class gameController : MonoBehaviour {
 		m_catapultController.startProjectileLaunch ();
 		g_currentMode = (int)modes.PLAY;
 		startTime = Time.time;
+
+		m_catchBehaviour.isActive = true;
 
 		// if text button == Build
 		//Button.text = "Play" et faire inverse de ci-dessous  

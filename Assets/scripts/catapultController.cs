@@ -24,7 +24,7 @@ public class catapultController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
-		if (isLaunched && Time.time - lastProjectileLaunchTime > 1.0f) {
+		if (isLaunched && Time.time - lastProjectileLaunchTime > 3.0f) {
 			Vector3 projectilePos = new Vector3 (Random.Range(-1.0f, 1.0f), 0.0f, Random.Range(-1.0f, 1.0f));
 			Vector3 projectileDir = Vector3.Normalize(projectilePos);
 			projectilePos = projectileDir * 50.0f;
