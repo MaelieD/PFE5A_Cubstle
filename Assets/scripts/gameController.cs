@@ -69,6 +69,7 @@ public class gameController : MonoBehaviour {
 		startTime = Time.time;
 
 		m_catchBehaviour.isActive = true;
+		Debug.Log ("game controller :" + m_catchBehaviour.isActive);
 
 		// if text button == Build
 		//Button.text = "Play" et faire inverse de ci-dessous  

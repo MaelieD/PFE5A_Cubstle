@@ -17,6 +17,7 @@ public class catchBehaviour : MonoBehaviour {
 	void Start () {
 
 		isActive = false;
+		Debug.Log ("catch behaviour : " + isActive);
 		m_leftWandController = g_leftController.GetComponent<wandController> ();
 	}
 	
@@ -24,8 +25,11 @@ public class catchBehaviour : MonoBehaviour {
 	void Update () {
 
 		if (isActive) {
+			Debug.Log ("trigger state : " + m_leftWandController.m_triggerState);
 			if (m_leftWandController.m_triggerState == (int)wandController.m_pressStates.PRESSED) {
+				//Debug.Log ("triggered cube : " + triggeredCube.name);
 				if (triggeredCube) {
+//					Debug.Log ("Moving cube");
 					triggeredCube.GetComponent<Rigidbody> ().useGravity = false;
 					triggeredCube.transform.SetParent (transform);
 				}
@@ -48,5 +52,13 @@ public class catchBehaviour : MonoBehaviour {
 		}
 
 	}
+
+	void OnTriggerExit(Collider col) {
+		if (triggeredCube && col.gameObject.name == "Placed Cube") {
+			triggeredCube = null;
+		}
+	}
+	//quand plus en collision, triggered cube à null
+	// pressed  ==> pressing et unpressed ==> idle cause pressed and unpressed se voient pas
 		
 }
