@@ -19,7 +19,11 @@ public class builderController : MonoBehaviour {
 	Vector3 m_toolPos;
 
 	[SerializeField]
-	Text activeToolText;
+	Text m_activeToolText;
+	[SerializeField]
+	GameObject rightCanvas;
+	[SerializeField]
+	GameObject leftCanvas;
 
 	public static List<GameObject> g_cubeList = new List<GameObject>();
 	public static float g_cubeDistance = 3.0f;
@@ -74,6 +78,9 @@ public class builderController : MonoBehaviour {
 		m_rightWandController = g_rightController.GetComponent<wandController> ();
 		m_leftWandController = g_leftController.GetComponent<wandController> ();
 
+		rightCanvas.SetActive (false);
+		leftCanvas.SetActive (false);
+
 	}
 		
 
@@ -81,6 +88,9 @@ public class builderController : MonoBehaviour {
 	void Update () {
 
 		getToolPos ();
+
+		//rightCanvas.SetActive (false);
+		//leftCanvas.SetActive (false);
 
 //		if (m_rightWandController.m_triggerState == (int)wandController.m_pressStates.PRESSED) {
 //			Debug.Log ("builder controller : trigger pressed");
@@ -155,53 +165,64 @@ public class builderController : MonoBehaviour {
 				}
 				break;
 
+			}				
+
+			if(m_rightWandController.m_gripState == (int)wandController.m_pressStates.PRESSED){
+				rightCanvas.SetActive (!rightCanvas.activeSelf);
+				leftCanvas.SetActive (!rightCanvas.activeSelf);
 			}
-				
+
+			m_rightWandController.setContinuousMode ();
+			
+		}
+
+		if(m_leftWandController.isReady) {
+			
 			touchPadAxisY = m_leftWandController.m_padAxis.y;
 			touchPadAxisX = m_leftWandController.m_padAxis.x;
 
 			if (m_leftWandController.m_padPressState == (int)wandController.m_pressStates.PRESSED) {
 				if (touchPadAxisY > 0.7f)
 				{
-					activeToolText.text = "CONSTRUIRE";
+					m_activeToolText.text = "CONSTRUIRE";
 					setWallMode (true);
 				}
 
 				else if (touchPadAxisY < -0.7f)
 				{
-					activeToolText.text = "GOMMER";
+					m_activeToolText.text = "GOMMER";
 					setRemoveMode (true);
 				}
 
 				if (touchPadAxisX > 0.7f)
 				{
-					activeToolText.text = "SELECTIONNER";
+					m_activeToolText.text = "SELECTIONNER";
 					setGrabMode (true);
 
 				}
 
 				else if (touchPadAxisX < -0.7f)
 				{
-					activeToolText.text = "COLORER";
+					m_activeToolText.text = "COLORER";
 					setColorMode (true);
 				}
 
-			}					
+			}	
 
-			if (m_rightWandController.m_padPressState == (int)wandController.m_pressStates.PRESSING) {
+			if (m_leftWandController.m_padPressState == (int)wandController.m_pressStates.PRESSING) {
 				if (touchPadAxisY > 0.0f) {
 					m_zoomController.zoom (1);
 				}
 				if (touchPadAxisY < 0.0f) {
 					m_zoomController.zoom (-1);
 				}
-			} else if (m_rightWandController.m_padTouchState == (int)wandController.m_touchStates.TOUCHING && touchPadAxisY != 0.0f) {
+			} else if (m_leftWandController.m_padTouchState == (int)wandController.m_touchStates.TOUCHING && touchPadAxisY != 0.0f) {
 				g_currentCubeDistance = ((touchPadAxisY + 1.0f) * g_currentCubeDistanceMax - g_currentCubeDistanceMin) / 2.0f + g_currentCubeDistanceMin;
 				//			Debug.Log ("distance : " + g_currentCubeDistance + " distanceMax : " + g_currentCubeDistanceMax + " distanceMin : " + g_currentCubeDistanceMin);
 			}
 
-			m_rightWandController.setContinuousMode ();
 			
+			m_leftWandController.setContinuousMode ();
 		}
 	}
 		

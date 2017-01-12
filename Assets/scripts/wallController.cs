@@ -21,7 +21,7 @@ public class wallController : MonoBehaviour {
 	public bool g_isEmpty;
 	public GameObject g_unitCube;
 	public List<Material> g_materialList;
-	public Text cubeNumberText;
+	//public Text cubeNumberText;
 
 	public int disabledCubesNumber;
 
@@ -219,6 +219,6 @@ public class wallController : MonoBehaviour {
 
 	public void updateCubeNumberText(){
 		int cubeNumber = builderController.g_cubeList.Count - disabledCubesNumber;
-		cubeNumberText.text = "Nombre de cubes : " + cubeNumber;
+		//cubeNumberText.text = "Nombre de cubes : " + cubeNumber;
 	}
 }

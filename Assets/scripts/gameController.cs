@@ -13,7 +13,7 @@ public class gameController : MonoBehaviour {
 	public enum modes {BUILD, PLAY};
 	public Material transparentMaterial;
 	public GameObject startGameCanvas;
-	public GameObject controllerCanvas;
+	//public GameObject controllerCanvas;
 	public GameObject gameCanvas;
 	public GameObject leftModel;
 
@@ -54,7 +54,7 @@ public class gameController : MonoBehaviour {
 		rendGameZonePlane.material = transparentMaterial;
 		audioSourceStartGameCanvas.Play ();
 		startGameCanvas.transform.position = new Vector3(startGameCanvas.transform.position.x, -100.0f, startGameCanvas.transform.position.z);
-		controllerCanvas.SetActive (false);
+		//controllerCanvas.SetActive (false);
 		gameCanvas.SetActive (true);
 
 		foreach (GameObject cube in builderController.g_cubeList) {
