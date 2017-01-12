@@ -9,7 +9,7 @@ public class zoomController : MonoBehaviour {
 	public float minScale = 1.0f;
 	public float scale = 1.0f;
 
-	public Text scaleText;
+	//public Text scaleText;
 
 
 	// Use this for initialization
@@ -45,6 +45,6 @@ public class zoomController : MonoBehaviour {
 	}
 
 	void updateScaleText(){
-		scaleText.text = "Taille : " + scale;
+		//scaleText.text = "Taille : " + scale;
 	}
 }

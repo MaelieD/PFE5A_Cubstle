@@ -3,18 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using HTC.UnityPlugin.Utility;
 using Valve.VR;
+using UnityEngine.UI;
 
 public class builderController : MonoBehaviour {
 
-	public enum g_modes {IDLE, WALL, REMOVE, GRAB};
+	public enum g_modes {IDLE, WALL, REMOVE, GRAB, COLOR};
 
 	wallController m_wallController;
 	removeController m_removeController;
 	grabController m_grabController;
+	colorController m_colorController;
 	wandController m_rightWandController;
+	wandController m_leftWandController;
 	zoomController m_zoomController;
 	Vector3 m_toolPos;
 
+	[SerializeField]
+	Text activeToolText;
 
 	public static List<GameObject> g_cubeList = new List<GameObject>();
 	public static float g_cubeDistance = 3.0f;
@@ -37,7 +42,8 @@ public class builderController : MonoBehaviour {
 	public GameObject g_leftController;
 	public GameObject g_rightController;
 
-
+	private float touchPadAxisY;
+	private float touchPadAxisX;
 
 	// Use this for initialization
 	void Start () {
@@ -62,9 +68,11 @@ public class builderController : MonoBehaviour {
 		m_wallController = g_wallTool.GetComponent<wallController> ();
 		m_removeController = g_removeTool.GetComponent<removeController> ();
 		m_grabController = g_grabTool.GetComponent<grabController> ();
+		m_colorController = GetComponent<colorController> ();
 		m_zoomController = GetComponent<zoomController> ();
 
 		m_rightWandController = g_rightController.GetComponent<wandController> ();
+		m_leftWandController = g_leftController.GetComponent<wandController> ();
 
 	}
 		
@@ -78,10 +86,7 @@ public class builderController : MonoBehaviour {
 //			Debug.Log ("builder controller : trigger pressed");
 //		}
 
-
-
 		if (m_rightWandController.isReady) {
-			
 			
 			switch (g_currentMode) {
 
@@ -138,9 +143,50 @@ public class builderController : MonoBehaviour {
 					m_grabController.moveGrabbedCube (m_toolPos);
 				}
 				break;
+
+				//COLOR MODE
+			case (int) g_modes.COLOR:
+				if (m_rightWandController.m_padPressState == (int)wandController.m_pressStates.PRESSED) {
+					m_colorController.setColor (m_rightWandController.m_padAxis.x, m_rightWandController.m_padAxis.y);
+					Debug.Log ("m_angle : " + Mathf.Rad2Deg * (Mathf.Atan2 (m_rightWandController.m_padAxis.y, m_rightWandController.m_padAxis.x)) + " - " + m_rightWandController.m_padAxis.x + " : " + m_rightWandController.m_padAxis.y);
+				}
+				if (m_rightWandController.m_padPressState == (int)wandController.m_pressStates.PRESSING) {
+					m_colorController.setIsPainting (true);
+				}
+				break;
+
 			}
 				
-			float touchPadAxisY = m_rightWandController.m_padAxis.y;
+			touchPadAxisY = m_leftWandController.m_padAxis.y;
+			touchPadAxisX = m_leftWandController.m_padAxis.x;
+
+			if (m_leftWandController.m_padPressState == (int)wandController.m_pressStates.PRESSED) {
+				if (touchPadAxisY > 0.7f)
+				{
+					activeToolText.text = "CONSTRUIRE";
+					setWallMode (true);
+				}
+
+				else if (touchPadAxisY < -0.7f)
+				{
+					activeToolText.text = "GOMMER";
+					setRemoveMode (true);
+				}
+
+				if (touchPadAxisX > 0.7f)
+				{
+					activeToolText.text = "SELECTIONNER";
+					setGrabMode (true);
+
+				}
+
+				else if (touchPadAxisX < -0.7f)
+				{
+					activeToolText.text = "COLORER";
+					setColorMode (true);
+				}
+
+			}					
 
 			if (m_rightWandController.m_padPressState == (int)wandController.m_pressStates.PRESSING) {
 				if (touchPadAxisY > 0.0f) {
@@ -170,6 +216,7 @@ public class builderController : MonoBehaviour {
 			g_currentMode = (int)g_modes.WALL;
 			setRemoveMode (false);
 			setGrabMode (false);
+			setColorMode (false);
 			m_wallController.setActive (true);
 		}
 		else{
@@ -182,6 +229,7 @@ public class builderController : MonoBehaviour {
 			g_currentMode = (int)g_modes.REMOVE;
 			setWallMode (false);
 			setGrabMode (false);
+			setColorMode (false);
 			m_removeController.setActive (true);
 		}
 		else{
@@ -194,10 +242,24 @@ public class builderController : MonoBehaviour {
 			g_currentMode = (int)g_modes.GRAB;
 			setWallMode (false);
 			setRemoveMode (false);
+			setColorMode (false);
 			m_grabController.setActive (true);
 		}
 		else{
 			m_grabController.setActive (false);
+		}
+	}
+	
+	public void setColorMode(bool p_isEnter){
+		if(p_isEnter){
+			g_currentMode = (int)g_modes.COLOR;
+			setWallMode (false);
+			setRemoveMode (false);
+			setGrabMode (false);
+			m_colorController.setActive (true);
+		}
+		else{
+			m_colorController.setActive (false);
 		}
 	}
 
@@ -206,6 +268,7 @@ public class builderController : MonoBehaviour {
 		setWallMode (false);
 		setRemoveMode (false);
 		setGrabMode (false);
+		setColorMode (false);
 	}
 		
 }
