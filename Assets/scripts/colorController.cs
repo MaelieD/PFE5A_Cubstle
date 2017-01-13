@@ -78,7 +78,7 @@ public class colorController : MonoBehaviour {
 			Material newMaterial = new Material (Shader.Find ("Unlit/Color"));
 			newMaterial.SetColor ("_Color", color);
 			e.target.gameObject.GetComponent<MeshRenderer> ().material = newMaterial;
-			e.target.gameObject.GetComponent<cubeBehaviour> ().g_materialList [0] = newMaterial;
+			//e.target.gameObject.GetComponent<cubeBehaviour> ().g_materialList [0] = newMaterial;
 		}
 	}
 }

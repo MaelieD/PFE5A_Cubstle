@@ -6,18 +6,23 @@ public class cubeBehaviour : MonoBehaviour {
 
 	[SerializeField]
 	public Renderer rend;
+	[SerializeField]
+	Material brokenMaterial;
+	[SerializeField]
+	Material grabMaterial;
+	Material normalMaterial;
 
-	int m_materialIndex;
+	//int m_materialIndex;
 	public bool g_isGrabbed;
 	public bool g_isColliding;
-	public List<Material> g_materialList;
-
+	//public List<Material> g_materialList;
 
 	// Use this for initialization
 	void Start () {
 		g_isColliding = false;
 		g_isGrabbed = false;
-		m_materialIndex = 0;
+		normalMaterial = rend.material;
+		//m_materialIndex = 0;
 	}
 	
 	// Update is called once per frame
@@ -38,15 +43,15 @@ public class cubeBehaviour : MonoBehaviour {
 
 	void OnCollisionStay(Collision col){
 
-		int materialIndex = 0;
+		//int materialIndex = 0;
 
 		switch(col.gameObject.name){
 
 		case "Remove Tool":
-			materialIndex = 2;
+			rend.material = brokenMaterial;//materialIndex = 2;
 			break;
 		case "Grab Tool":
-			materialIndex = 3;
+			rend.material = grabMaterial;//materialIndex = 3;
 			break;
 
 //		case "Placed Cube":
@@ -59,15 +64,15 @@ public class cubeBehaviour : MonoBehaviour {
 
 		default:
 			if (g_isGrabbed) {
-				materialIndex = 1;
+				rend.material = normalMaterial;//materialIndex = 1;
 			}
 
 			g_isColliding = true;
 			break;
 		}
-		if(m_materialIndex != materialIndex){
+		/*if(m_materialIndex != materialIndex){
 			rend.material = g_materialList [materialIndex];
-		}
+		}*/
 
 
 	}
@@ -84,7 +89,9 @@ public class cubeBehaviour : MonoBehaviour {
 
 
 	void OnCollisionExit(Collision col){
-		rend.material = g_materialList [0];
+		//rend.material = g_materialList [0];
+		rend.material = normalMaterial;
+			
 		g_isColliding = false;
 	}
 		
