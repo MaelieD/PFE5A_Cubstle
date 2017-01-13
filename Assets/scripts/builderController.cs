@@ -78,9 +78,6 @@ public class builderController : MonoBehaviour {
 		m_rightWandController = g_rightController.GetComponent<wandController> ();
 		m_leftWandController = g_leftController.GetComponent<wandController> ();
 
-		rightCanvas.SetActive (false);
-		leftCanvas.SetActive (false);
-
 	}
 		
 
@@ -88,9 +85,6 @@ public class builderController : MonoBehaviour {
 	void Update () {
 
 		getToolPos ();
-
-		//rightCanvas.SetActive (false);
-		//leftCanvas.SetActive (false);
 
 //		if (m_rightWandController.m_triggerState == (int)wandController.m_pressStates.PRESSED) {
 //			Debug.Log ("builder controller : trigger pressed");
@@ -102,17 +96,17 @@ public class builderController : MonoBehaviour {
 
 			//WALL MODE
 			case (int) g_modes.WALL:
-				if (m_rightWandController.m_triggerState == (int)wandController.m_pressStates.PRESSED) {
+				if (m_rightWandController.m_padPressState == (int)wandController.m_pressStates.PRESSED) {
 					g_isDrawingWall = true;
 					m_wallController.createWall (m_toolPos);
 				}
 
-				if (m_rightWandController.m_triggerState == (int)wandController.m_pressStates.PRESSING) {
+				if (m_rightWandController.m_padPressState == (int)wandController.m_pressStates.PRESSING) {
 					m_wallController.drawWall (m_toolPos);
 				}
 
 
-				if (m_rightWandController.m_triggerState == (int)wandController.m_pressStates.UNPRESSED) {
+				if (m_rightWandController.m_padPressState == (int)wandController.m_pressStates.UNPRESSED) {
 					g_isDrawingWall = false;
 					m_wallController.placeWall ();
 				}
@@ -124,11 +118,11 @@ public class builderController : MonoBehaviour {
 
 			//REMOVE MODE
 			case (int) g_modes.REMOVE:
-				if (m_rightWandController.m_triggerState == (int)wandController.m_pressStates.PRESSED) {
+				if (m_rightWandController.m_padPressState == (int)wandController.m_pressStates.PRESSED) {
 					m_removeController.setIsRemoving (true);
 				}
 
-				if (m_rightWandController.m_triggerState == (int)wandController.m_pressStates.UNPRESSED) {
+				if (m_rightWandController.m_padPressState == (int)wandController.m_pressStates.UNPRESSED) {
 					m_removeController.setIsRemoving (false);
 				}
 
@@ -137,10 +131,10 @@ public class builderController : MonoBehaviour {
 
 			//GRAB MODE
 			case (int) g_modes.GRAB:
-				if (m_rightWandController.m_triggerState == (int)wandController.m_pressStates.PRESSED) {
+				if (m_rightWandController.m_padPressState == (int)wandController.m_pressStates.PRESSED) {
 					m_grabController.setIsGrabbing (true);
 				}
-				if (m_rightWandController.m_triggerState == (int)wandController.m_pressStates.UNPRESSED) {
+				if (m_rightWandController.m_padPressState == (int)wandController.m_pressStates.UNPRESSED) {
 					m_grabController.setIsGrabbing (false);
 
 					if (m_grabController.g_grabbedCube) {
@@ -158,18 +152,30 @@ public class builderController : MonoBehaviour {
 			case (int) g_modes.COLOR:
 				if (m_rightWandController.m_padPressState == (int)wandController.m_pressStates.PRESSED) {
 					m_colorController.setColor (m_rightWandController.m_padAxis.x, m_rightWandController.m_padAxis.y);
-					Debug.Log ("m_angle : " + Mathf.Rad2Deg * (Mathf.Atan2 (m_rightWandController.m_padAxis.y, m_rightWandController.m_padAxis.x)) + " - " + m_rightWandController.m_padAxis.x + " : " + m_rightWandController.m_padAxis.y);
+					//Debug.Log ("m_angle : " + Mathf.Rad2Deg * (Mathf.Atan2 (m_rightWandController.m_padAxis.y, m_rightWandController.m_padAxis.x)) + " - " + m_rightWandController.m_padAxis.x + " : " + m_rightWandController.m_padAxis.y);
 				}
 				if (m_rightWandController.m_padPressState == (int)wandController.m_pressStates.PRESSING) {
 					m_colorController.setIsPainting (true);
+				}
+				if (m_rightWandController.m_padPressState == (int)wandController.m_pressStates.UNPRESSED) {
+					m_colorController.setIsPainting (false);
 				}
 				break;
 
 			}				
 
-			if(m_rightWandController.m_gripState == (int)wandController.m_pressStates.PRESSED){
+			if (m_rightWandController.m_gripState == (int)wandController.m_pressStates.PRESSING) {
+				m_zoomController.zoom (1);
+			}
+
+			if(m_rightWandController.m_menuState == (int)wandController.m_pressStates.PRESSED){
 				rightCanvas.SetActive (!rightCanvas.activeSelf);
-				leftCanvas.SetActive (!rightCanvas.activeSelf);
+				leftCanvas.SetActive (rightCanvas.activeSelf);
+			}
+
+			if (m_rightWandController.m_padTouchState == (int)wandController.m_touchStates.TOUCHING && m_rightWandController.m_padAxis.y != 0.0f) {
+				g_currentCubeDistance = ((m_rightWandController.m_padAxis.y + 1.0f) * g_currentCubeDistanceMax - g_currentCubeDistanceMin) / 2.0f + g_currentCubeDistanceMin;
+			//			Debug.Log ("distance : " + g_currentCubeDistance + " distanceMax : " + g_currentCubeDistanceMax + " distanceMin : " + g_currentCubeDistanceMin);
 			}
 
 			m_rightWandController.setContinuousMode ();
@@ -209,18 +215,14 @@ public class builderController : MonoBehaviour {
 
 			}	
 
-			if (m_leftWandController.m_padPressState == (int)wandController.m_pressStates.PRESSING) {
-				if (touchPadAxisY > 0.0f) {
-					m_zoomController.zoom (1);
-				}
-				if (touchPadAxisY < 0.0f) {
+			if (m_leftWandController.m_gripState == (int)wandController.m_pressStates.PRESSING) {
 					m_zoomController.zoom (-1);
-				}
-			} else if (m_leftWandController.m_padTouchState == (int)wandController.m_touchStates.TOUCHING && touchPadAxisY != 0.0f) {
-				g_currentCubeDistance = ((touchPadAxisY + 1.0f) * g_currentCubeDistanceMax - g_currentCubeDistanceMin) / 2.0f + g_currentCubeDistanceMin;
-				//			Debug.Log ("distance : " + g_currentCubeDistance + " distanceMax : " + g_currentCubeDistanceMax + " distanceMin : " + g_currentCubeDistanceMin);
 			}
 
+			if(m_leftWandController.m_menuState == (int)wandController.m_pressStates.PRESSED){
+				rightCanvas.SetActive (!rightCanvas.activeSelf);
+				leftCanvas.SetActive (rightCanvas.activeSelf);
+			}
 			
 			m_leftWandController.setContinuousMode ();
 		}

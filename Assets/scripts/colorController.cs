@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//using SteamVR_LaserPointer;
 
 public class colorController : MonoBehaviour {
 
@@ -16,6 +17,7 @@ public class colorController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		m_laserPointer = rightController.GetComponent<SteamVR_LaserPointer> ();
+		m_isPainting = false;
 	}
 
 	// Update is called once per frame
@@ -26,11 +28,13 @@ public class colorController : MonoBehaviour {
 	public void setActive(bool p_isActive){
 		if (p_isActive) {
 			colorPalet.SetActive (true);
+			m_laserPointer.PointerIn += Painting;
 		} else {
 			Material newMaterial = new Material (Shader.Find ("Unlit/Color"));
 			newMaterial.SetColor ("_Color", Color.red);
 			m_laserPointer.pointer.GetComponent<MeshRenderer> ().material = newMaterial;
 			colorPalet.SetActive (false);
+			m_laserPointer.PointerIn -= Painting;
 		}
 	}
 
@@ -69,13 +73,12 @@ public class colorController : MonoBehaviour {
 		m_isPainting = p_isPainting;
 	}
 
-	void OnCollisionStay(Collision col){
-		GameObject collidedObj = col.gameObject;
-
-		if (m_isPainting && collidedObj.name == "Placed Cube") {
+	public void Painting(object sender, PointerEventArgs e) {
+		if (m_isPainting && e.target.gameObject.name == "Placed Cube") {
 			Material newMaterial = new Material (Shader.Find ("Unlit/Color"));
 			newMaterial.SetColor ("_Color", color);
-			m_laserPointer.pointer.GetComponent<MeshRenderer> ().material = newMaterial;
+			e.target.gameObject.GetComponent<MeshRenderer> ().material = newMaterial;
+			e.target.gameObject.GetComponent<cubeBehaviour> ().g_materialList [0] = newMaterial;
 		}
 	}
 }

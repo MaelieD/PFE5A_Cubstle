@@ -54,7 +54,7 @@ namespace HTC.UnityPlugin.Vive
 
                     CVRSystem system;
                     index = ViveRole.GetDeviceIndex(role);
-                    if (!ViveRole.IsValidIndex(index) || (system = OpenVR.System) == null || !system.GetControllerState(index, ref currentState))
+					if (!ViveRole.IsValidIndex(index) || (system = OpenVR.System) == null || !system.GetControllerState(index, ref currentState, (uint)System.Runtime.InteropServices.Marshal.SizeOf(typeof(VRControllerState_t))))
                     {
                         currentState = default(VRControllerState_t);
                     }

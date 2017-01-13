@@ -28,8 +28,8 @@ namespace HTC.UnityPlugin.Vive
                 }
             }
 
-            SteamVR_Utils.Event.Listen("device_connected", OnDeviceConnected);
-            SteamVR_Utils.Event.Listen("TrackedDeviceRoleChanged", RefreshControllerIndex);
+            //SteamVR_Utils.Event.Listen("device_connected", OnDeviceConnected);
+            //SteamVR_Utils.Event.Listen("TrackedDeviceRoleChanged", RefreshControllerIndex);
         }
 
         private static void OnDeviceConnected(params object[] args)

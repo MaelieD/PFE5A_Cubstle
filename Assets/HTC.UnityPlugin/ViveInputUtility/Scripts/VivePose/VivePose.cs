@@ -46,8 +46,8 @@ namespace HTC.UnityPlugin.Vive
                 OnNewPoses(new TrackedDevicePose_t[OpenVR.k_unMaxTrackedDeviceCount]);
             }
 
-            SteamVR_Utils.Event.Listen("input_focus", OnInputFocus);
-            SteamVR_Utils.Event.Listen("new_poses", OnNewPoses);
+            //SteamVR_Utils.Event.Listen("input_focus", OnInputFocus);
+            //SteamVR_Utils.Event.Listen("new_poses", OnNewPoses);
         }
 
         public static bool AddNewPosesListener(INewPoseListener listener)

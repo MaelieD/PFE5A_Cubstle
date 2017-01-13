@@ -22,7 +22,7 @@ public class wandController : SteamVR_TrackedController {
 	public Vector2 m_padAxis;
 
 	// Use this for initialization
-	protected override void Start () {
+	public override void Start () {
 		base.Start ();
 
 		isReady = false;
@@ -41,7 +41,7 @@ public class wandController : SteamVR_TrackedController {
 	}
 	
 	// Update is called once per frame
-	protected override void Update () {
+	public override void Update () {
 		base.Update ();
 
 //		if (m_triggerState == (int)m_pressStates.PRESSED) {
