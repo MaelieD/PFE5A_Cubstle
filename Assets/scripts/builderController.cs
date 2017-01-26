@@ -23,6 +23,8 @@ public class builderController : MonoBehaviour {
 	GameObject rightCanvas;
 	[SerializeField]
 	GameObject leftCanvas;
+	[SerializeField]
+	GameObject startGameCanvas;
 
 	public static List<GameObject> g_cubeList = new List<GameObject>();
 	public static float g_cubeDistance = 3.0f;
@@ -165,7 +167,9 @@ public class builderController : MonoBehaviour {
 			}
 
 			if(m_rightWandController.m_menuState == (int)wandController.m_pressStates.PRESSED){
-				m_gameController.switchGameMode ();
+				//m_gameController.SwitchGameMode ();
+				startGameCanvas.SetActive (!startGameCanvas.activeSelf);
+
 			}
 
 			if (m_rightWandController.m_padTouchState == (int)wandController.m_touchStates.TOUCHING && m_rightWandController.m_padAxis.y != 0.0f) {

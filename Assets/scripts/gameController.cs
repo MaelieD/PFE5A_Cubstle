@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class gameController : MonoBehaviour {
 
@@ -57,7 +58,7 @@ public class gameController : MonoBehaviour {
 
 	}
 
-	public void switchGameMode(){
+	public void SwitchGameMode(){
 		if (g_currentMode == (int)modes.BUILD) {
 			//rendGameZonePlane.material = transparentMaterial;
 			audioSourceStartGameCanvas.Play ();
@@ -91,6 +92,7 @@ public class gameController : MonoBehaviour {
 				}
 			}
 			m_catapultController.stopProjectileLaunch ();
+			m_enemySpawner.stopEnemy ();
 			g_currentMode = (int)modes.BUILD;
 			startTime = 0.0f;
 
@@ -99,6 +101,14 @@ public class gameController : MonoBehaviour {
 			m_catchBehaviour.isActive = false;
 			Debug.Log ("game controller :" + m_catchBehaviour.isActive);	
 		}
+	}
+
+	public void ExitGame() {
+		Application.Quit();
+	}
+
+	public void LaunchMenu() {
+		SceneManager.LoadScene ("menu");
 	}
 
 }

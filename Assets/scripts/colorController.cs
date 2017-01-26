@@ -78,9 +78,7 @@ public class colorController : MonoBehaviour {
 		if (!target)
 			return;
 		if (m_isPainting && target.name == "Placed Cube") {
-			Material newMaterial = new Material (Shader.Find ("Unlit/Color"));
-			newMaterial.SetColor ("_Color", color);
-			target.GetComponent<MeshRenderer> ().material = newMaterial;
+			target.GetComponent<MeshRenderer> ().material.SetColor("_Color", color);// = newMaterial;
 		}
 	}
 
