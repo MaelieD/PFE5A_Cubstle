@@ -93,7 +93,9 @@ public class ToolController : MonoBehaviour {
 			if (!m_isRemoving && builderController.g_currentMode == (int)builderController.g_modes.REMOVE) {
 				e.target.gameObject.GetComponent<MeshRenderer> ().material = eraseMaterial;
 			}
-		}
+		}//else if(e.target.gameObject.tag == "ButtonMenu" && rightController.GetComponent<wandController>().m_padPressState == (int)wandController.m_pressStates.PRESSED) {
+		//	Invoke("LaunchMenu", 0);
+		//}
 	}
 
 	public void PointerGoingOut(object sender, PointerEventArgs e) {

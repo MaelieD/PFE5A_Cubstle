@@ -42,8 +42,6 @@ public class builderController : MonoBehaviour {
 	public bool g_isRemoving;
 
 	public GameObject g_wallTool;
-	public GameObject g_removeTool;
-	public GameObject g_grabTool;
 	public GameObject g_leftController;
 	public GameObject g_rightController;
 	public gameController m_gameController;
@@ -169,7 +167,8 @@ public class builderController : MonoBehaviour {
 			if(m_rightWandController.m_menuState == (int)wandController.m_pressStates.PRESSED){
 				//m_gameController.SwitchGameMode ();
 				startGameCanvas.SetActive (!startGameCanvas.activeSelf);
-
+				//m_activeToolText.text = "SELECTIONNER";
+				//setGrabMode (true);
 			}
 
 			if (m_rightWandController.m_padTouchState == (int)wandController.m_touchStates.TOUCHING && m_rightWandController.m_padAxis.y != 0.0f) {
