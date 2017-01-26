@@ -1,6 +1,9 @@
 ﻿//======= Copyright (c) Valve Corporation, All rights reserved. ===============
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+
+
 
 public struct PointerEventArgs
 {
@@ -25,6 +28,9 @@ public class SteamVR_LaserPointer : MonoBehaviour
     public Transform reference;
     public event PointerEventHandler PointerIn;
     public event PointerEventHandler PointerOut;
+
+	[SerializeField]
+	public Material mat;
 
     Transform previousContact = null;
 
@@ -58,7 +64,7 @@ public class SteamVR_LaserPointer : MonoBehaviour
                 Object.Destroy(collider);
             }
         }
-        Material newMaterial = new Material(Shader.Find("Unlit/Color"));
+		Material newMaterial = mat;
         newMaterial.SetColor("_Color", color);
         pointer.GetComponent<MeshRenderer>().material = newMaterial;
 	}

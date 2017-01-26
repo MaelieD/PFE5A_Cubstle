@@ -10,8 +10,7 @@ public class builderController : MonoBehaviour {
 	public enum g_modes {IDLE, WALL, REMOVE, GRAB, COLOR};
 
 	wallController m_wallController;
-	removeController m_removeController;
-	grabController m_grabController;
+	ToolController m_toolController;
 	colorController m_colorController;
 	wandController m_rightWandController;
 	wandController m_leftWandController;
@@ -45,6 +44,7 @@ public class builderController : MonoBehaviour {
 	public GameObject g_grabTool;
 	public GameObject g_leftController;
 	public GameObject g_rightController;
+	public gameController m_gameController;
 
 	private float touchPadAxisY;
 	private float touchPadAxisX;
@@ -70,8 +70,9 @@ public class builderController : MonoBehaviour {
 		g_isPlayMode = false;
 
 		m_wallController = g_wallTool.GetComponent<wallController> ();
-		m_removeController = g_removeTool.GetComponent<removeController> ();
-		m_grabController = g_grabTool.GetComponent<grabController> ();
+		//m_removeController = g_removeTool.GetComponent<removeController> ();
+		//m_grabController = g_grabTool.GetComponent<grabController> ();
+		m_toolController = GetComponent<ToolController>();
 		m_colorController = GetComponent<colorController> ();
 		m_zoomController = GetComponent<zoomController> ();
 
@@ -118,43 +119,38 @@ public class builderController : MonoBehaviour {
 
 			//REMOVE MODE
 			case (int) g_modes.REMOVE:
-				if (m_rightWandController.m_padPressState == (int)wandController.m_pressStates.PRESSED) {
-					m_removeController.setIsRemoving (true);
+				if (m_rightWandController.m_padPressState == (int)wandController.m_pressStates.PRESSING) {
+					m_toolController.setIsRemoving (true);
 				}
 
 				if (m_rightWandController.m_padPressState == (int)wandController.m_pressStates.UNPRESSED) {
-					m_removeController.setIsRemoving (false);
+					m_toolController.setIsRemoving (false);
 				}
-
-				m_removeController.moveRemoveTool (m_toolPos);
 				break;
 
 			//GRAB MODE
 			case (int) g_modes.GRAB:
-				if (m_rightWandController.m_padPressState == (int)wandController.m_pressStates.PRESSED) {
-					m_grabController.setIsGrabbing (true);
+				if (m_rightWandController.m_padPressState == (int)wandController.m_pressStates.PRESSING) {
+					m_toolController.setIsGrabbing (true);
 				}
 				if (m_rightWandController.m_padPressState == (int)wandController.m_pressStates.UNPRESSED) {
-					m_grabController.setIsGrabbing (false);
+					m_toolController.setIsGrabbing (false);
 
-					if (m_grabController.g_grabbedCube) {
-						m_grabController.dropCube ();
+					if (m_toolController.g_grabbedCube) {
+						m_toolController.dropCube ();
 					}
 				}
 
-				m_grabController.moveGrabTool (m_toolPos);
-				if (m_grabController.g_grabbedCube) {
-					m_grabController.moveGrabbedCube (m_toolPos);
+				if (m_toolController.g_grabbedCube) {
+					m_toolController.moveGrabbedCube (m_toolPos);
 				}
 				break;
 
 				//COLOR MODE
 			case (int) g_modes.COLOR:
-				if (m_rightWandController.m_padPressState == (int)wandController.m_pressStates.PRESSED) {
+				if (m_rightWandController.m_padPressState == (int)wandController.m_pressStates.PRESSING) {
 					m_colorController.setColor (m_rightWandController.m_padAxis.x, m_rightWandController.m_padAxis.y);
 					//Debug.Log ("m_angle : " + Mathf.Rad2Deg * (Mathf.Atan2 (m_rightWandController.m_padAxis.y, m_rightWandController.m_padAxis.x)) + " - " + m_rightWandController.m_padAxis.x + " : " + m_rightWandController.m_padAxis.y);
-				}
-				if (m_rightWandController.m_padPressState == (int)wandController.m_pressStates.PRESSING) {
 					m_colorController.setIsPainting (true);
 				}
 				if (m_rightWandController.m_padPressState == (int)wandController.m_pressStates.UNPRESSED) {
@@ -169,8 +165,7 @@ public class builderController : MonoBehaviour {
 			}
 
 			if(m_rightWandController.m_menuState == (int)wandController.m_pressStates.PRESSED){
-				rightCanvas.SetActive (!rightCanvas.activeSelf);
-				leftCanvas.SetActive (rightCanvas.activeSelf);
+				m_gameController.switchGameMode ();
 			}
 
 			if (m_rightWandController.m_padTouchState == (int)wandController.m_touchStates.TOUCHING && m_rightWandController.m_padAxis.y != 0.0f) {
@@ -253,10 +248,10 @@ public class builderController : MonoBehaviour {
 			setWallMode (false);
 			setGrabMode (false);
 			setColorMode (false);
-			m_removeController.setActive (true);
+			m_toolController.setActive (true);
 		}
 		else{
-			m_removeController.setActive (false);
+			m_toolController.setActive (false);
 		}
 	}
 
@@ -266,10 +261,10 @@ public class builderController : MonoBehaviour {
 			setWallMode (false);
 			setRemoveMode (false);
 			setColorMode (false);
-			m_grabController.setActive (true);
+			m_toolController.setActive (true);
 		}
 		else{
-			m_grabController.setActive (false);
+			m_toolController.setActive (false);
 		}
 	}
 	

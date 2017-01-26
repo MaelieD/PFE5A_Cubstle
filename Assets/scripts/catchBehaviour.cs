@@ -25,7 +25,7 @@ public class catchBehaviour : MonoBehaviour {
 	void Update () {
 
 		if (isActive) {
-			Debug.Log ("trigger state : " + m_leftWandController.m_triggerState);
+//			Debug.Log ("trigger state : " + m_leftWandController.m_triggerState);
 			if (m_leftWandController.m_triggerState == (int)wandController.m_pressStates.PRESSED) {
 				//Debug.Log ("triggered cube : " + triggeredCube.name);
 				if (triggeredCube) {

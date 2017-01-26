@@ -48,4 +48,8 @@ public class catapultController : MonoBehaviour {
 		isLaunched = true;
 		lastProjectileLaunchTime = Time.time;
 	}
+
+	public void stopProjectileLaunch(){
+		isLaunched = false;
+	}
 }

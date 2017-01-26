@@ -10,6 +10,12 @@ public class gameController : MonoBehaviour {
 	[SerializeField]
 	public AudioSource audioSourceStartGameCanvas;
 
+	[SerializeField]
+	public GameObject m_skeletor;
+
+	[SerializeField]
+	public GameObject m_flag;
+
 	public enum modes {BUILD, PLAY};
 	public Material transparentMaterial;
 	public GameObject startGameCanvas;
@@ -22,6 +28,8 @@ public class gameController : MonoBehaviour {
 	public static int g_currentMode;
 	builderController m_builderController;
 	catapultController m_catapultController;
+	enemyController m_enemyController;
+	enemySpawner m_enemySpawner;
 	catchBehaviour m_catchBehaviour;
 
 	float startTime;
@@ -33,6 +41,7 @@ public class gameController : MonoBehaviour {
 		m_builderController = GetComponent<builderController> ();
 		m_catapultController = GetComponent<catapultController> ();
 		m_catchBehaviour = leftModel.GetComponent<catchBehaviour> ();
+		m_enemySpawner = GetComponent<enemySpawner> ();
 	
 	}
 	
@@ -48,32 +57,48 @@ public class gameController : MonoBehaviour {
 
 	}
 
-	public void startGame(){
-		// if text button == Play
-		//Button.text = "Build" 
-		rendGameZonePlane.material = transparentMaterial;
-		audioSourceStartGameCanvas.Play ();
-		startGameCanvas.transform.position = new Vector3(startGameCanvas.transform.position.x, -100.0f, startGameCanvas.transform.position.z);
-		//controllerCanvas.SetActive (false);
-		gameCanvas.SetActive (true);
+	public void switchGameMode(){
+		if (g_currentMode == (int)modes.BUILD) {
+			//rendGameZonePlane.material = transparentMaterial;
+			audioSourceStartGameCanvas.Play ();
+			startGameCanvas.transform.position = new Vector3 (startGameCanvas.transform.position.x, -100.0f, startGameCanvas.transform.position.z);
+			//controllerCanvas.SetActive (false);
+			gameCanvas.SetActive (true);
 
-		foreach (GameObject cube in builderController.g_cubeList) {
-			if(cube != null){
-				cube.GetComponent<Rigidbody> ().constraints = RigidbodyConstraints.None;
-				cube.GetComponent<Rigidbody> ().useGravity = true;
+			foreach (GameObject cube in builderController.g_cubeList) {
+				if (cube != null) {
+					cube.GetComponent<Rigidbody> ().constraints = RigidbodyConstraints.None;
+					cube.GetComponent<Rigidbody> ().useGravity = true;
+				}
 			}
+			m_builderController.setIdleMode ();
+			m_catapultController.startProjectileLaunch ();
+			m_enemySpawner.startEnemy ();
+			g_currentMode = (int)modes.PLAY;
+			startTime = Time.time;
+			m_flag.GetComponent<CapsuleCollider> ().enabled = true;
+
+			m_catchBehaviour.isActive = true;
+			Debug.Log ("game controller :" + m_catchBehaviour.isActive);		
+		} else {
+			//startGameCanvas.transform.position = new Vector3 (startGameCanvas.transform.position.x, -100.0f, startGameCanvas.transform.position.z);
+			gameCanvas.SetActive (false);
+
+			foreach (GameObject cube in builderController.g_cubeList) {
+				if (cube != null) {
+					cube.GetComponent<Rigidbody> ().constraints = RigidbodyConstraints.FreezeAll;
+					cube.GetComponent<Rigidbody> ().useGravity = false;
+				}
+			}
+			m_catapultController.stopProjectileLaunch ();
+			g_currentMode = (int)modes.BUILD;
+			startTime = 0.0f;
+
+			m_flag.GetComponent<CapsuleCollider> ().enabled = true;
+
+			m_catchBehaviour.isActive = false;
+			Debug.Log ("game controller :" + m_catchBehaviour.isActive);	
 		}
-		m_builderController.setIdleMode ();
-		m_catapultController.startProjectileLaunch ();
-		g_currentMode = (int)modes.PLAY;
-		startTime = Time.time;
-
-		m_catchBehaviour.isActive = true;
-		Debug.Log ("game controller :" + m_catchBehaviour.isActive);
-
-		// if text button == Build
-		//Button.text = "Play" et faire inverse de ci-dessous  
 	}
-
 
 }

@@ -7,12 +7,16 @@ public class colorController : MonoBehaviour {
 
 	[SerializeField]
 	GameObject rightController;
+
+	[SerializeField]
+	Material mat;
 	SteamVR_LaserPointer m_laserPointer;
 	Color color = new Color();
 	private bool m_isPainting;
 	private float m_angle;
 	[SerializeField]
 	GameObject colorPalet;
+	GameObject target;
 
 	// Use this for initialization
 	void Start () {
@@ -30,8 +34,7 @@ public class colorController : MonoBehaviour {
 			colorPalet.SetActive (true);
 			m_laserPointer.PointerIn += Painting;
 		} else {
-			Material newMaterial = new Material (Shader.Find ("Unlit/Color"));
-			newMaterial.SetColor ("_Color", Color.red);
+			Material newMaterial = mat;
 			m_laserPointer.pointer.GetComponent<MeshRenderer> ().material = newMaterial;
 			colorPalet.SetActive (false);
 			m_laserPointer.PointerIn -= Painting;
@@ -71,14 +74,17 @@ public class colorController : MonoBehaviour {
 
 	public void setIsPainting(bool p_isPainting) {
 		m_isPainting = p_isPainting;
+		Debug.Log ("painting : " + m_isPainting);
+		if (!target)
+			return;
+		if (m_isPainting && target.name == "Placed Cube") {
+			Material newMaterial = new Material (Shader.Find ("Unlit/Color"));
+			newMaterial.SetColor ("_Color", color);
+			target.GetComponent<MeshRenderer> ().material = newMaterial;
+		}
 	}
 
 	public void Painting(object sender, PointerEventArgs e) {
-		if (m_isPainting && e.target.gameObject.name == "Placed Cube") {
-			Material newMaterial = new Material (Shader.Find ("Unlit/Color"));
-			newMaterial.SetColor ("_Color", color);
-			e.target.gameObject.GetComponent<MeshRenderer> ().material = newMaterial;
-			//e.target.gameObject.GetComponent<cubeBehaviour> ().g_materialList [0] = newMaterial;
-		}
+		target = e.target.gameObject;
 	}
 }
