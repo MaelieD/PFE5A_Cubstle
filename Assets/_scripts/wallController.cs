@@ -54,6 +54,26 @@ public class wallController : MonoBehaviour {
 		updateCubeNumberText ();
 	}
 
+	public void createCube(Vector3 p_pos, Vector4 p_col){
+
+		GameObject currentCube = Instantiate (g_unitCube);
+
+		currentCube.name = "Placed Cube";
+		currentCube.transform.position = p_pos;
+		Color color = new Color (p_col.x, p_col.y, p_col.z, p_col.w);
+		currentCube.GetComponent<MeshRenderer> ().material.SetColor ("_Color", color);
+
+		if(gameController.g_currentMode == (int)gameController.modes.PLAY){
+			//			Debug.Log ("play mode");
+			Rigidbody currentRigidbody = currentCube.GetComponent<Rigidbody> ();
+			currentRigidbody.constraints = RigidbodyConstraints.None;
+			currentRigidbody.useGravity = true;
+		}
+
+		builderController.g_cubeList.Add (currentCube);
+		updateCubeNumberText ();
+	}
+
 	//fonction pour démarrer un mur à partir d'une position initiale
 	public void createWall(Vector3 p_pos){
 		m_wallStart = p_pos;

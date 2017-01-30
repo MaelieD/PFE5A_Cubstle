@@ -11,6 +11,9 @@ namespace Wacki {
 		public Transform load;
 		public Transform quit;
 
+		[SerializeField]
+		GameObject flagScene;
+
         /*public void RotateLight(float amount)
         {
             dirLight.rotation = Quaternion.AngleAxis(amount, Vector3.right);
@@ -29,11 +32,16 @@ namespace Wacki {
 
 		public void Play() {
 			SceneManager.LoadScene ("main");
-		} 
+			//SceneManager.CreateScene ("main");
+		}
 
-		public void Load() {
-			//SceneManager.LoadScene ("menu");
+		public void Load() { // DOESNT WORK !!!
+			Scene sceneMain = SceneManager.GetSceneByName ("main");
+			Debug.Log ("SCENE : " + sceneMain.name);
+			SceneManager.MoveGameObjectToScene (flagScene, sceneMain);
+			SceneManager.LoadScene ("main");
 			// load every scene.unity in _scenes folder --> need a scrollbar
+			//LoadData();
 		}
 
 		public void Quit() {

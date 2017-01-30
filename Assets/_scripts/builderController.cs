@@ -163,19 +163,19 @@ public class builderController : MonoBehaviour {
 
 			}				
 
-			if (m_rightWandController.m_gripState == (int)wandController.m_pressStates.PRESSING) {
+			if (m_rightWandController.m_gripState == (int)wandController.m_pressStates.PRESSING && gameController.g_currentMode != (int)gameController.modes.PLAY) {
 				m_zoomController.zoom (1);
 			}
 
 			if(m_rightWandController.m_menuState == (int)wandController.m_pressStates.PRESSED){
-				m_gameController.SwitchGameMode ();
-				//startGameCanvas.SetActive (!startGameCanvas.activeSelf);
-
-				//m_activeToolText.text = "SELECTIONNER";
-				//setGrabMode (true);
+				//m_gameController.SwitchGameMode ();
+				g_rightController.GetComponent<SteamVR_LaserPointer>().enabled = startGameCanvas.activeSelf;
+				g_rightController.GetComponent<Wacki.ViveUILaserPointer>().enabled = !startGameCanvas.activeSelf;
+				startGameCanvas.SetActive (!startGameCanvas.activeSelf);
+				setIdleMode ();
 			}
 
-			if (m_rightWandController.m_padTouchState == (int)wandController.m_touchStates.TOUCHING && m_rightWandController.m_padAxis.y != 0.0f) {
+			if (m_rightWandController.m_padTouchState == (int)wandController.m_touchStates.TOUCHING && m_rightWandController.m_padAxis.y != 0.0f && gameController.g_currentMode != (int)gameController.modes.PLAY) {
 				g_currentCubeDistance = ((m_rightWandController.m_padAxis.y + 1.0f) * g_currentCubeDistanceMax - g_currentCubeDistanceMin) / 2.0f + g_currentCubeDistanceMin;
 			//			Debug.Log ("distance : " + g_currentCubeDistance + " distanceMax : " + g_currentCubeDistanceMax + " distanceMin : " + g_currentCubeDistanceMin);
 			}
@@ -189,39 +189,39 @@ public class builderController : MonoBehaviour {
 			touchPadAxisY = m_leftWandController.m_padAxis.y;
 			touchPadAxisX = m_leftWandController.m_padAxis.x;
 
-			if (m_leftWandController.m_padPressState == (int)wandController.m_pressStates.PRESSED) {
+			if (m_leftWandController.m_padPressState == (int)wandController.m_pressStates.PRESSED && gameController.g_currentMode != (int)gameController.modes.PLAY) {
 				if (touchPadAxisY > 0.7f)
 				{
-					m_activeToolText.text = "CONSTRUIRE";
+					m_activeToolText.text = "BUILD";
 					setWallMode (true);
 				}
 
 				else if (touchPadAxisY < -0.7f)
 				{
-					m_activeToolText.text = "GOMMER";
+					m_activeToolText.text = "REMOVE";
 					setRemoveMode (true);
 				}
 
 				if (touchPadAxisX > 0.7f)
 				{
-					m_activeToolText.text = "SELECTIONNER";
+					m_activeToolText.text = "SELECT";
 					setGrabMode (true);
 
 				}
 
 				else if (touchPadAxisX < -0.7f)
 				{
-					m_activeToolText.text = "COLORER";
+					m_activeToolText.text = "COLOR";
 					setColorMode (true);
 				}
 
 			}	
 
-			if (m_leftWandController.m_gripState == (int)wandController.m_pressStates.PRESSING) {
+			if (m_leftWandController.m_gripState == (int)wandController.m_pressStates.PRESSING && gameController.g_currentMode != (int)gameController.modes.PLAY) {
 					m_zoomController.zoom (-1);
 			}
 
-			if(m_leftWandController.m_menuState == (int)wandController.m_pressStates.PRESSED){
+			if(m_leftWandController.m_menuState == (int)wandController.m_pressStates.PRESSED && gameController.g_currentMode != (int)gameController.modes.PLAY){
 				rightCanvas.SetActive (!rightCanvas.activeSelf);
 				leftCanvas.SetActive (rightCanvas.activeSelf);
 			}
@@ -294,6 +294,7 @@ public class builderController : MonoBehaviour {
 		setRemoveMode (false);
 		setGrabMode (false);
 		setColorMode (false);
+		m_activeToolText.text = "";
 	}
 		
 }

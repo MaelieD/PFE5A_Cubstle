@@ -7,11 +7,19 @@ public class cubeBehaviour : MonoBehaviour {
 	public bool g_isGrabbed;
 	public bool g_isColliding;
 
+	public Vector3 position;
+	public Color color;
+
 	// Use this for initialization
 	void Start () {
 		g_isColliding = false;
 		g_isGrabbed = false;
 		//m_materialIndex = 0;
+	}
+
+	public cubeBehaviour (Vector3 pos, Color col){
+		position = pos;
+		color = col;
 	}
 	
 	// Update is called once per frame
@@ -26,6 +34,9 @@ public class cubeBehaviour : MonoBehaviour {
 //			}
 //
 //		}
+		if (g_isGrabbed) {
+			position = gameObject.transform.position;
+		}
 	
 	}
 		

@@ -10,6 +10,8 @@ public class gameController : MonoBehaviour {
 	public Renderer rendGameZonePlane;
 	[SerializeField]
 	public AudioSource audioSourceStartGameCanvas;
+	[SerializeField]
+	SavingSystem saveSystem;
 
 	[SerializeField]
 	public GameObject m_skeletor;
@@ -20,6 +22,7 @@ public class gameController : MonoBehaviour {
 	public enum modes {BUILD, PLAY};
 	public Material transparentMaterial;
 	public GameObject startGameCanvas;
+	public Text buttonPlay;
 	//public GameObject controllerCanvas;
 	public GameObject gameCanvas;
 	public GameObject leftModel;
@@ -43,7 +46,7 @@ public class gameController : MonoBehaviour {
 		m_catapultController = GetComponent<catapultController> ();
 		m_catchBehaviour = leftModel.GetComponent<catchBehaviour> ();
 		m_enemySpawner = GetComponent<enemySpawner> ();
-	
+		//Dictionary<int, cubeBehaviour> cubeDictionary = new Dictionary<int, cubeBehaviour> ();
 	}
 	
 	// Update is called once per frame
@@ -59,10 +62,13 @@ public class gameController : MonoBehaviour {
 	}
 
 	public void SwitchGameMode(){
+		startGameCanvas.SetActive (false);
 		if (g_currentMode == (int)modes.BUILD) {
 			//rendGameZonePlane.material = transparentMaterial;
 			audioSourceStartGameCanvas.Play ();
-			startGameCanvas.transform.position = new Vector3 (startGameCanvas.transform.position.x, -100.0f, startGameCanvas.transform.position.z);
+			buttonPlay.text = "STOP";
+			saveSystem.SaveData ();
+			//startGameCanvas.transform.position = new Vector3 (startGameCanvas.transform.position.x, -100.0f, startGameCanvas.transform.position.z);
 			//controllerCanvas.SetActive (false);
 			gameCanvas.SetActive (true);
 
@@ -89,7 +95,8 @@ public class gameController : MonoBehaviour {
 		} else {
 			//startGameCanvas.transform.position = new Vector3 (startGameCanvas.transform.position.x, -100.0f, startGameCanvas.transform.position.z);
 			gameCanvas.SetActive (false);
-
+			buttonPlay.text = "PLAY";
+			saveSystem.LoadData ();
 			foreach (GameObject cube in builderController.g_cubeList) {
 				if (cube != null) {
 					cube.GetComponent<Rigidbody> ().constraints = RigidbodyConstraints.FreezeAll;
@@ -114,12 +121,19 @@ public class gameController : MonoBehaviour {
 		}
 	}
 
-	public void ExitGame() {
+	public void Quit() {
 		Application.Quit();
 	}
 
 	public void LaunchMenu() {
 		SceneManager.LoadScene ("menu");
+	}
+		
+	public void Save() {
+		saveSystem.SaveData ();
+		//foreach (GameObject cube in GameObject.Find ("Placed Cube")) {
+		//	cubeDictionary.Add (++i, );
+		//}
 	}
 
 }
