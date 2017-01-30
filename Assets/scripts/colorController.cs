@@ -74,7 +74,6 @@ public class colorController : MonoBehaviour {
 
 	public void setIsPainting(bool p_isPainting) {
 		m_isPainting = p_isPainting;
-		Debug.Log ("painting : " + m_isPainting);
 		if (!target)
 			return;
 		if (m_isPainting && target.name == "Placed Cube") {

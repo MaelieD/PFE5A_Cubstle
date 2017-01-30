@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class catapultController : MonoBehaviour {
 
@@ -8,6 +9,7 @@ public class catapultController : MonoBehaviour {
 	public Text projectileText; 
 	public Text collisionText;
 
+	List<GameObject> projectileList = new List<GameObject>();
 	float lastProjectileLaunchTime;
 	bool isLaunched;
 
@@ -30,6 +32,8 @@ public class catapultController : MonoBehaviour {
 			projectilePos = projectileDir * 50.0f;
 
 			GameObject currentProjectile = GameObject.Instantiate (projectile);
+			Debug.Log ("projectile : " + currentProjectile.name);
+			projectileList.Add (currentProjectile);
 			currentProjectile.transform.position = projectilePos;
 			currentProjectile.GetComponent<Rigidbody> ().constraints = RigidbodyConstraints.None;
 			currentProjectile.GetComponent<Rigidbody> ().velocity =  new Vector3 (- projectileDir.x, 1.0f, - projectileDir.z) * Random.Range(15.0f, 20.0f);
@@ -51,5 +55,12 @@ public class catapultController : MonoBehaviour {
 
 	public void stopProjectileLaunch(){
 		isLaunched = false;
+	}
+
+	public void flushProjectileList(){
+		foreach (GameObject projectile in projectileList.ToArray()) {
+			projectileList.Remove (projectile);
+			Destroy (projectile);
+		}
 	}
 }

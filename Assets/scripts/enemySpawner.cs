@@ -66,6 +66,10 @@ public class enemySpawner : MonoBehaviour {
 
 	public void stopEnemy(){
 		start = false;
+		foreach (GameObject skeleton in skeletorList.ToArray()) {
+			skeletorList.Remove (skeleton);
+			Destroy (skeleton);
+		}
 	}
 
 	void sortFlag(){

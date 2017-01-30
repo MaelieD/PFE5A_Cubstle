@@ -79,8 +79,13 @@ public class gameController : MonoBehaviour {
 			startTime = Time.time;
 			m_flag.GetComponent<CapsuleCollider> ().enabled = true;
 
-			m_catchBehaviour.isActive = true;
-			Debug.Log ("game controller :" + m_catchBehaviour.isActive);		
+			m_builderController.leftCanvas.SetActive (false);
+			m_builderController.rightCanvas.SetActive (false);
+			m_builderController.rightControllerCanvas.SetActive (false);
+			m_builderController.setIdleMode ();
+
+			//m_catchBehaviour.isActive = true;
+			//Debug.Log ("game controller :" + m_catchBehaviour.isActive);		
 		} else {
 			//startGameCanvas.transform.position = new Vector3 (startGameCanvas.transform.position.x, -100.0f, startGameCanvas.transform.position.z);
 			gameCanvas.SetActive (false);
@@ -92,14 +97,20 @@ public class gameController : MonoBehaviour {
 				}
 			}
 			m_catapultController.stopProjectileLaunch ();
+			m_catapultController.flushProjectileList ();
 			m_enemySpawner.stopEnemy ();
 			g_currentMode = (int)modes.BUILD;
 			startTime = 0.0f;
 
 			m_flag.GetComponent<CapsuleCollider> ().enabled = true;
 
-			m_catchBehaviour.isActive = false;
-			Debug.Log ("game controller :" + m_catchBehaviour.isActive);	
+			m_builderController.leftCanvas.SetActive (true);
+			m_builderController.rightCanvas.SetActive (true);
+			m_builderController.rightControllerCanvas.SetActive (true);
+			m_builderController.setIdleMode ();
+
+			//m_catchBehaviour.isActive = false;
+			//Debug.Log ("game controller :" + m_catchBehaviour.isActive);	
 		}
 	}
 

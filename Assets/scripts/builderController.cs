@@ -20,11 +20,14 @@ public class builderController : MonoBehaviour {
 	[SerializeField]
 	Text m_activeToolText;
 	[SerializeField]
-	GameObject rightCanvas;
+	public GameObject rightCanvas;
 	[SerializeField]
-	GameObject leftCanvas;
+	public GameObject leftCanvas;
 	[SerializeField]
 	GameObject startGameCanvas;
+
+	[SerializeField]
+	public GameObject rightControllerCanvas;
 
 	public static List<GameObject> g_cubeList = new List<GameObject>();
 	public static float g_cubeDistance = 3.0f;
@@ -165,8 +168,9 @@ public class builderController : MonoBehaviour {
 			}
 
 			if(m_rightWandController.m_menuState == (int)wandController.m_pressStates.PRESSED){
-				//m_gameController.SwitchGameMode ();
-				startGameCanvas.SetActive (!startGameCanvas.activeSelf);
+				m_gameController.SwitchGameMode ();
+				//startGameCanvas.SetActive (!startGameCanvas.activeSelf);
+
 				//m_activeToolText.text = "SELECTIONNER";
 				//setGrabMode (true);
 			}
