@@ -27,8 +27,10 @@ public class SavingSystem : MonoBehaviour {
 	}
 
 	public void SaveData() {
+		if (!Directory.Exists (Application.persistentDataPath + "/Saves"))
+			Directory.CreateDirectory (Application.persistentDataPath + "/Saves");
 		BinaryFormatter bf = new BinaryFormatter ();
-		FileStream file = File.Create (Application.persistentDataPath + "/Data.dat");
+		FileStream file = File.Create (Application.persistentDataPath + "/Saves" + "/Data.dat");
 		CubeListData data = new CubeListData ();
 
 		cubes = GameObject.FindGameObjectsWithTag ("Placed Cube");
@@ -58,9 +60,9 @@ public class SavingSystem : MonoBehaviour {
 	}
 
 	public void LoadData() {
-		if (File.Exists (Application.persistentDataPath + "/Data.dat")) {
+		if (File.Exists (Application.persistentDataPath + "/Saves" + "/Data.dat")) {
 			BinaryFormatter bf = new BinaryFormatter ();
-			FileStream file = File.Open (Application.persistentDataPath + "/Data.dat", FileMode.Open);
+			FileStream file = File.Open (Application.persistentDataPath + "/Saves" + "/Data.dat", FileMode.Open);
 			CubeListData data = (CubeListData)bf.Deserialize (file);
 			file.Close ();
 			//SceneManager.LoadScene (data.sceneName, LoadSceneMode.Single);
@@ -81,7 +83,7 @@ public class SavingSystem : MonoBehaviour {
 class CubeListData
 {
 	public string sceneName;
-
+	// public string playerName;
 	public CubeData[] cubes;
 }
 

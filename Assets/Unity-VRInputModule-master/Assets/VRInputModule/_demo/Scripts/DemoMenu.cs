@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Wacki {
 
@@ -10,6 +12,8 @@ namespace Wacki {
 		public Transform play;
 		public Transform load;
 		public Transform quit;
+
+		string[] files;
 
 		[SerializeField]
 		GameObject flagScene;
@@ -36,12 +40,27 @@ namespace Wacki {
 		}
 
 		public void Load() { // DOESNT WORK !!!
-			Scene sceneMain = SceneManager.GetSceneByName ("main");
-			Debug.Log ("SCENE : " + sceneMain.name);
-			SceneManager.MoveGameObjectToScene (flagScene, sceneMain);
-			SceneManager.LoadScene ("main");
+			
+			//Scene sceneMain = SceneManager.GetSceneByName ("main");
+			//Debug.Log ("SCENE : " + sceneMain.name);
+			//SceneManager.MoveGameObjectToScene (flagScene, sceneMain);
+			//SceneManager.LoadScene ("main");
 			// load every scene.unity in _scenes folder --> need a scrollbar
 			//LoadData();
+			Debug.Log (Application.persistentDataPath + "/Saves");
+			if (Directory.Exists (Application.persistentDataPath + "/Saves")) {
+				files = Directory.GetFiles (Application.persistentDataPath + "/Saves");
+				foreach(string f in files){
+					BinaryFormatter bf = new BinaryFormatter ();
+					FileStream file = File.Open (f, FileMode.Open);
+					CubeListData data = (CubeListData)bf.Deserialize (file);
+					file.Close ();
+					SceneManager.LoadScene (data.sceneName, LoadSceneMode.Single);
+					Debug.Log (data.sceneName);
+					//Debug.Log(data.playerName);
+					// list file name text on button to click to load the good scene
+				}
+			}
 		}
 
 		public void Quit() {
