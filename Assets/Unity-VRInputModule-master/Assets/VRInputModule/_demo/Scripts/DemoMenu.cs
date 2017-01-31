@@ -55,10 +55,12 @@ namespace Wacki {
 					FileStream file = File.Open (f, FileMode.Open);
 					CubeListData data = (CubeListData)bf.Deserialize (file);
 					file.Close ();
-					SceneManager.LoadScene (data.sceneName, LoadSceneMode.Single); // need to load the scene before finding it
-					Scene sceneToLoad = SceneManager.GetSceneByName (data.sceneName);
-					Debug.Log (sceneToLoad.name);
+					int index = SceneUtility.GetBuildIndexByScenePath("Assets/_scenes/" + data.sceneName + ".unity");
+					SceneManager.LoadScene (index, LoadSceneMode.Single); // need to load the scene before finding it
+					Scene sceneToLoad = SceneManager.GetSceneByBuildIndex (index);
+					Debug.Log (flagScene.name);
 					SceneManager.MoveGameObjectToScene (flagScene, sceneToLoad);
+
 
 					//Debug.Log(data.playerName);
 					// list file name text on button to click to load the good scene
