@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class SavingSystem : MonoBehaviour {
 
 	GameObject[] cubes;
+	GameObject flagScene;
 
 	[SerializeField]
 	wallController m_wallController;
@@ -17,7 +18,8 @@ public class SavingSystem : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		if(GameObject.Find("FlagScene"))
+		flagScene = GameObject.Find ("FlagScene");
+		if(flagScene)
 			LoadData ();
 	}
 	
@@ -30,7 +32,7 @@ public class SavingSystem : MonoBehaviour {
 		if (!Directory.Exists (Application.persistentDataPath + "/Saves"))
 			Directory.CreateDirectory (Application.persistentDataPath + "/Saves");
 		BinaryFormatter bf = new BinaryFormatter ();
-		FileStream file = File.Create (Application.persistentDataPath + "/Saves" + "/Data.dat");
+		FileStream file = File.Create (Application.persistentDataPath + "/Saves/" + flagScene.GetComponent<DataLoad>().playerName + ".dat");
 		CubeListData data = new CubeListData ();
 
 		cubes = GameObject.FindGameObjectsWithTag ("Placed Cube");
@@ -52,6 +54,7 @@ public class SavingSystem : MonoBehaviour {
 
 		scene = SceneManager.GetActiveScene ();
 		data.sceneName = scene.name;
+		data.playerName = flagScene.GetComponent<DataLoad> ().playerName;
 
 		Debug.Log ("Data : " + data);
 
@@ -60,7 +63,7 @@ public class SavingSystem : MonoBehaviour {
 	}
 
 	public void LoadData() {
-		if (File.Exists (Application.persistentDataPath + "/Saves" + "/Data.dat")) {
+		if (File.Exists (Application.persistentDataPath + "/Saves/" + flagScene.GetComponent<DataLoad>().playerName + ".dat")) {
 			BinaryFormatter bf = new BinaryFormatter ();
 			FileStream file = File.Open (Application.persistentDataPath + "/Saves" + "/Data.dat", FileMode.Open);
 			CubeListData data = (CubeListData)bf.Deserialize (file);
@@ -80,15 +83,15 @@ public class SavingSystem : MonoBehaviour {
 }
 
 [System.Serializable]
-class CubeListData
+public class CubeListData
 {
 	public string sceneName;
-	// public string playerName;
+	public string playerName;
 	public CubeData[] cubes;
 }
 
 [System.Serializable]
-class CubeData
+public class CubeData
 {
 	public float posx;
 	public float posy;
